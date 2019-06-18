@@ -1,0 +1,276 @@
+@(cat6: GeneralData,listDataMainDoc:List[MainDocument],
+        listImportant:List[ImportantDocument],listSuggestion:List[SuggustionDocument])
+@import java.math.BigInteger; var i = 1; var n=1; var j=1;
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+<br>
+<br>
+<form action="/selectCat" method="post">
+    <input type="hidden" id="idDoc3" name="idDoc3" value="@cat6.getId">
+    <div class="row">
+        <div class="col-md-4" align="left"><h5 style="margin-top: 7px ;">วิชา:@cat6.getCourse.getNameTH</h5></div>
+        <div class="col-md-4">
+            <select id="nameCat" name="nameCat" class="form-control">
+                <option value="cat1">หมวดที่ 1 Success...</option>
+                @if(cat6.getCourseDestinationList.size()==0||cat6.getCourseObjectivesList.size()==0){
+                    <option value="cat2" style="color: red">หมวดที่ 2 wait...</option>
+                }else{
+                    <option value="cat2" style="color: green">หมวดที่ 2 Success...</option>
+                }
+                @if(cat6.getDataHoursList().size() == 0 || cat6.getSuggestion() == null){
+                    <option value="cat3" style="color: red">หมวดที่ 3 wait...</option>
+                }else{
+                    <option value="cat3" style="color: green">หมวดที่ 3 Success...</option>
+                }
+                @if(cat6.getData_listDevelopmentList().size() == 0|| cat6.getData_methodTeachingList().size() == 0 || cat6.getData_methodEvaluationList().size() == 0){
+                    <option value="cat4" style="color: red">หมวดที่ 4 wait...</option>
+                }else{
+                    <option value="cat4" style="color: green">หมวดที่ 4 Success...</option>
+                }
+                @if(cat6.getPlanTeachingDataList().size() == 0 ||cat6.getEvaluationPlanDataList().size() == 0){
+                    <option value="cat5" style="color: red">หมวดที่ 5 wait...</option>
+                }else{
+                    <option value="cat5" style="color: green">หมวดที่ 5 Success...</option>
+                }
+                @if(cat6.getMainDocumentList().size() == 0 ||cat6.getImportantDocumentList().size() == 0 || cat6.getSuggustionDocumentList().size() == 0){
+                    <option value="cat6" style="color: red" selected>หมวดที่ 6 wait...</option>
+                }else{
+                    <option value="cat6" style="color: green" selected>หมวดที่ 6 Success...</option>
+                }
+                @if(cat6.getCourseAssessmentStrategiesList().size() == 0 || cat6.getTeachingStrategiesDataList().size() == 0 ||cat6.getImproveTeachingDataList().size() == 0 || cat6.getStandardReviews().size() == 0 ||
+                        cat6.getReviewAndPlanList().size() == 0){
+                    <option value="cat7" style="color: red">หมวดที่ 7 wait...</option>
+                }else{
+                    <option value="cat7" style="color: green">หมวดที่ 7 Success...</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+    </div>
+</form>
+<br>
+@*<form method="post" action="/saveCategory6">*@
+    @*<input type="hidden" name="genId" value="@cat6.getId">*@
+    @*<button type="submit" class="btn btn-info" style="font-family: 'Mitr', sans-serif ;">*@
+        @*<i class='	fa fa-floppy-o' style="color: #f7fff6 ;*@
+            @*font-size: 18px ; " > บันทึก</i>*@
+    @*</button>*@
+@*</form>*@
+@*<br>*@
+<center>
+    <a href="/formatPrintCat6/@cat6.getId()" class="btn btn-outline-info">
+        <i class='far fa-file-alt' style="color: #000000;
+            font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์
+    </a>
+    <br>
+    <br>
+    <h3>หมวดที่ 6 ทรัพยากรประกอบการเรียนการสอน</h3>
+</center>
+<br>
+<div class="row">
+    <div class="col-md-11">
+        1. <b>เอกสารและตำราหลัก</b>    <br>
+            @for(dataMaindoc <- listDataMainDoc){
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/deleteMainDoc/@dataMaindoc.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและตำราหลักนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+                    <a href="/editMainDoc/@dataMaindoc.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+                    1.@i @dataMaindoc.getDetail <br>
+                    @(i=i+1)
+            }
+            @if(listDataMainDoc.size==0){
+                <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+            }
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMainDoc"> <i class='	fa fa-plus-circle'></i></button><br> <hr>
+           <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#selectMainDoc"> <i class='fa fa-check-square-o'></i> เลือก</button>  -->
+        2. <b style="font-style: inherit">เอกสารและข้อมูลสำคัญ</b>    <br>
+            @for(dataImDoc <- listImportant){
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/deleteImportant/@dataImDoc.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและข้อมูลสำคัญนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+                <a href="/editImportantDocument/@dataImDoc.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+                2.@n @dataImDoc.getDetail <br>
+                @(n=n+1)
+            }
+            @if(listImportant.size==0){
+                <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+            }
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addImportant"> <i class='	fa fa-plus-circle' ></i></button><br> <hr>
+          <!--  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#selectImportant"> <i class='fa fa-check-square-o' ></i> เลือก</button>  -->
+        3. <b>เอกสารและเอกสารเเละข้อมูลเเนะนำ</b>    <br>
+            @for(dataSugDoc <- listSuggestion){
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/deleteSuggestions/@dataSugDoc.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและข้อมูลเเนะนำนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+                <a href="/editSuggestion/@dataSugDoc.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+                3.@j @dataSugDoc.getDetail <br>
+                @(j=j+1)
+            }
+            @if(listSuggestion.size==0){
+                <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+            }
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSuggestion"> <i class='	fa fa-plus-circle' ></i></button><br> <hr>
+           <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#selectSuggestion"> <i class='fa fa-check-square-o'></i> เลือก</button>  -->
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+    <!-- Modal selectMainDocument-->
+<div class="modal fade" id="selectMainDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เอกสารและตำราหลัก</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/selectMainDoc" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat6.getId">
+                    @for(mDoc <- listDataMainDoc){
+                        <input type="checkbox" name="idMainDoc" value="@mDoc.getId">  @i @mDoc.getDetail<br>
+                            @(i=i+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal AddMainDocument-->
+<div class="modal fade" id="addMainDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เอกสารและตำราหลัก</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/addMainDoc" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat6.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="mainDocument" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal SelectImportantDocument-->
+<div class="modal fade" id="selectImportant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เอกสารและข้อมูลสำคัญ </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/selectImportant" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat6.getId">
+                    @for(iDoc <- listImportant){
+                        <input type="checkbox" name="idImportant" value="@iDoc.getId">@n @iDoc.getDetail<br>
+                            @(n=n+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal AddImportantDocument-->
+<div class="modal fade" id="addImportant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เอกสารและข้อมูลสำคัญ </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/addImportant" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat6.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="detailImportant" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal SelectSuggestion-->
+<div class="modal fade" id="selectSuggestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เอกสารและเอกสารเเละข้อมูลเเนะนำ </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/selectSuggestion" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat6.getId">
+                    @for(sDoc <- listSuggestion){
+                        <input type="checkbox" name="idSuggestion" value="@sDoc.getId">@j @sDoc.getDetail<br>
+                            @(j=j+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal AddSuggestionDocument-->
+<div class="modal fade" id="addSuggestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เอกสารและเอกสารเเละข้อมูลเเนะนำ </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/addSuggestion" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat6.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="detailSuggestion" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

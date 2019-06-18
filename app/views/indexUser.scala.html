@@ -1,0 +1,12 @@
+
+<br>
+<div class="row">
+    <div class="col col-2"></div>
+    <div class="col col-7">
+        <center>
+        @if(flash.containsKey("UserError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด!</strong>@flash.get("UserError"). </div>
+        }
+        </center></div>
+    <div class="col col-3"></div>
+</div>

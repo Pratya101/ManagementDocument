@@ -1,0 +1,7 @@
+@(DesList : List[BasketDestination])
+@for(dataDes <- DesList){
+    ID : @dataDes.getId <br>
+    Detail : @dataDes.getDetail <br>
+    Gen : @dataDes.getGeneralData.getId <br>
+}
+<br>

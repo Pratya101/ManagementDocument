@@ -1,0 +1,36 @@
+@(teacher: Teacher)
+<br>
+
+<center>
+    <h3>ตารางรายละเอียดข้อมูลอาจารย์</h3>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-11">
+
+            <table class="table table-hover">
+                <tr>
+                    <th>รหัสอาจารย์ :</th>
+                    <td>@teacher.getId</td>
+                </tr>
+                <tr>
+                    <th>ชื่อ-นามสกุล :</th>
+                    <td>@teacher.getName @teacher.getSername</td>
+                </tr>
+                <tr>
+                    <th>Username :</th>
+                    <td>@teacher.getUsername</td>
+                </tr>
+                <tr>
+                    <th>ตำแหน่ง :</th>
+                    <td>@teacher.getPosition</td>
+                </tr>
+                <tr>
+                    <th>สาขาวิชา :</th>
+                    <td>@teacher.getDepartment.getNameTh</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</center>

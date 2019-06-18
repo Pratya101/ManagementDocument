@@ -1,0 +1,36 @@
+@(dataGenerelList : List[GeneralData])
+<br>
+<center>
+
+    <h3>ข้อมูลทั่วไป</h3>
+
+    @if(flash.containsKey("noGeneralTeach")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("noGeneralTeach"). </div>
+    }
+    @if(flash.containsKey("dataGeneralError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataGeneralError"). </div>
+    }
+    </center>
+<br>
+<a href="/formAddGeneralData" class="btn btn-info" style="font-family: 'Mitr', sans-serif;">เพิ่มข้อมูลทั่วไป</a>
+<br>
+<br>
+<table class="table table-hover">
+    <tr>
+        <th>รหัส(มคอ.3)</th>
+        <th>รายวิชา</th>
+        <th>ดูเพิ่มเติม</th>
+        <th>แก้ไข</th>
+        <th>ลบ</th>
+    </tr>
+
+    @for( generalData <- dataGenerelList) {
+        <tr>
+            <td>@generalData.getId</td>
+            <td>@generalData.getCourse.getNameTH</td>
+            <td><a href="/detailGeneralData/@generalData.getId"> <i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+            <td><a href="/editGeneralData/@generalData.getId"> <i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></td>
+            <td><a href="/deleteGeneralData/@generalData.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลอาจารย์ท่านนี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a></td>
+        </tr>
+    }
+</table>

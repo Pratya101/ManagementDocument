@@ -1,0 +1,106 @@
+<meta name="description" content="Sufee Admin - HTML5 Admin Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="apple-touch-icon" href="/assets/sidebar2/apple-icon.png">
+<link rel="shortcut icon" href="/assets/sidebar2/favicon.ico">
+<link rel="stylesheet" href="/assets/sidebar2/vendors/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/sidebar2/vendors/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/sidebar2/vendors/themify-icons/css/themify-icons.css">
+<link rel="stylesheet" href="/assets/sidebar2/vendors/flag-icon-css/css/flag-icon.min.css">
+<link rel="stylesheet" href="/assets/sidebar2/vendors/selectFX/css/cs-skin-elastic.css">
+<link rel="stylesheet" href="/assets/sidebar2/vendors/jqvmap/dist/jqvmap.min.css">
+<script src="/assets/sidebar2/vendors/jquery/dist/jquery.min.js"></script>
+<script src="/assets/sidebar2/vendors/popper.js/dist/umd/popper.min.js"></script>
+<script src="/assets/sidebar2/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/assets/sidebar2/assets/js/main.js"></script>
+<script src="/assets/sidebar2/vendors/chart.js/dist/Chart.bundle.min.js"></script>
+<script src="/assets/sidebar2/assets/js/dashboard.js"></script>
+<script src="/assets/sidebar2/assets/js/widgets.js"></script>
+<script src="/assets/sidebar2/vendors/jqvmap/dist/jquery.vmap.min.js"></script>
+<script src="/assets/sidebar2/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<script src="/assets/sidebar2/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script>
+        (function($) {
+            "use strict";
+            jQuery('#vmap').vectorMap({
+                map: 'world_en',
+                backgroundColor: null,
+                color: '#ffffff',
+                hoverOpacity: 0.7,
+                selectedColor: '#1de9b6',
+                enableZoom: true,
+                showTooltip: true,
+                values: sample_data,
+                scaleColors: ['#1de9b6', '#03a9f5'],
+                normalizeFunction: 'polynomial'
+            });
+        })(jQuery);
+    </script>
+<link rel="stylesheet" href="/assets/sidebar2/assets/css/style.css">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+            <br>
+                <div >
+                    <img src="/assets/login/images/RMUTI.png" width="110" height="auto">
+                </div>
+                <br>
+        </div>
+        @if(session.get("position")=="ผู้ดูเเลระบบ"){
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> ข้อมูลพื้นฐาน</h3><!-- /.menu-title -->
+                    <li><a href="/listFaculty"> <i class="fa fa-pencil"></i> จัดการข้อมูลคณะฯ </a></li>
+                    <li><a href="/listDepartment"> <i class="fa fa-pencil"></i> จัดการข้อมูลสาขาฯ </a></li>
+                    <li><a href="/listTeacher"> <i class="fa fa-pencil"></i> จัดการข้อมูลอาจารย์ </a></li>
+                    <li><a href="/listSyllabusCourse"> <i class="fa fa-pencil"></i> จัดการข้อมูลหลักสูตร </a></li>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                </ul>
+            </div>
+        }else{
+        @if(session.get("position")=="หัวหน้าสาขา"){
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <h3 class="menu-title" style="font-size: 18px; font-family: 'Bai Jamjuree', sans-serif; " ><i class="fa fa-navicon"></i> เมนูจัดการข้อมูล </h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="Doc"){class="active"}>
+                        <a href="/showDoc3"> <i class="fa fa-sticky-note"></i> รายการเอกสาร(มคอ.3) </a>
+                    </li>
+                    @*<li><a href="/selectCourse"> <i class="fa fa-pencil"></i> จัดทำเอกสาร(มคอ.3)  </a></li>*@
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> ข้อมูลการพัฒนาการเรียนรู้</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="dataDev"){class="active"}><a href="/selecCategoryCourseForDev"> <i class="fa fa-pencil"></i> ข้อมูลการพัฒนาผลการเรียนรู้ </a></li>
+                    @*<li @if(session.get("numMenu")=="dataDev"){class="active"}><a href="/listDevelopmentalLearning"> <i class="fa fa-pencil"></i> ข้อมูลการพัฒนาผลการเรียนรู้ </a></li>*@
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> การกระจายความรับผิดชอบ</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="CouresList"){class="active"}><a href="/listCourseMap"> <i class="fa fa-pencil"></i> Mapping </a></li>
+                    <li  @if(session.get("numMenu")=="listCourseForMapping"){class="active"}><a href="/listCourseForMapping"> <i class="fa fa-pencil"></i> รายวิชาที่ทำการ Mapping เเล้ว </a></li>
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> กำหนดตัวผู้สอน</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="listYearAndTerm"){class="active"}><a href="/listYearAndTerm"> <i class="fa fa-pencil"></i> กำหนดตัวผู้สอน </a></li>
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> รายงาน</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="conditionData"){class="active"}><a href="/reportData"> <i class="fa fa-pencil"></i> รายงาน </a></li>
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> แจ้งเตือน</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="notify"){class="active"}><a href="/sendData"> <i class="fa fa-pencil"></i> ส่งการเเจ้งเตือน </a></li>
+                </ul>
+            </div>
+        }else{
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <h3 class="menu-title" style="font-size: 18px; font-family: 'Bai Jamjuree', sans-serif; " ><i class="fa fa-navicon"></i> เมนูจัดการข้อมูล </h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="Doc"){class="active"}>
+                        <a href="/showDoc3"> <i class="fa fa-sticky-note"></i> รายการเอกสาร(มคอ.3) </a>
+                    </li>
+                    @*<li><a href="/selectCourse"> <i class="fa fa-pencil"></i> จัดทำเอกสาร(มคอ.3)  </a></li>*@
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> ข้อมูลการพัฒนาการเรียนรู้</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="dataDev"){class="active"}><a href="/selecCategoryCourseForDev"> <i class="fa fa-pencil"></i> ข้อมูลการพัฒนาผลการเรียนรู้ </a></li>
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> การกระจายความรับผิดชอบ</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="CouresList"){class="active"}><a href="/listCourseMap"> <i class="fa fa-pencil"></i> Mapping </a></li>
+                    <li  @if(session.get("numMenu")=="listCourseForMapping"){class="active"}><a href="/listCourseForMapping"> <i class="fa fa-pencil"></i> รายวิชาที่ทำการ Mapping เเล้ว </a></li>
+                    <h3 class="menu-title"><i class="fa fa-pencil-square-o"></i> รายงาน</h3><!-- /.menu-title -->
+                    <li @if(session.get("numMenu")=="conditionData"){class="active"}><a href="/reportData"> <i class="fa fa-pencil"></i> รายงาน </a></li>
+                </ul>
+            </div>
+        }
+        }
+    </nav>
+</aside>

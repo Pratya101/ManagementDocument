@@ -1,0 +1,850 @@
+@(cat4: GeneralData, listdomain: List[DevelopmentalLearning], domainId: String, numDoamin: String,dd:String,
+        domainMapping: List[Curriculum], listTeach: List[TeachingStrategies],
+        listEvaluation: List[EvaluationStrategy], listDevelopment: List[Data_ListDevelopment],
+        listTeachData: List[Data_MethodTeaching], listEvaData: List[Data_MethodEvaluation])
+@import java.util.ArrayList;
+@import java.lang.Integer; var i = 1; var y = 1; var n = 1; var x = 1;var xl = 1;
+@import java.lang.String; var nameDev = ""; var chk = "1";
+@import scala.Any;
+@import scala.util.control.Breaks;val loop = new Breaks;
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+@if(flash.containsKey("Nodata")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("Nodata"). </div>
+}
+<br>
+<br>
+<form action="/selectCat" method="post">
+    <input type="hidden" id="idDoc3" name="idDoc3" value="@cat4.getId">
+    <div class="row">
+        <div class="col-md-4" align="left"><h5 style="margin-top: 7px ;">วิชา:@cat4.getCourse.getNameTH</h5></div>
+        <div class="col-md-4">
+            <select id="nameCat" name="nameCat" class="form-control">
+                <option value="cat1">หมวดที่ 1 Success...</option>
+                @if(cat4.getCourseDestinationList.size()==0||cat4.getCourseObjectivesList.size()==0){
+                    <option value="cat2" style="color: red">หมวดที่ 2 wait...</option>
+                }else{
+                    <option value="cat2" style="color: green">หมวดที่ 2 Success...</option>
+                }
+                @if(cat4.getDataHoursList().size() == 0 || cat4.getSuggestion() == null){
+                    <option value="cat3" style="color: red">หมวดที่ 3 wait...</option>
+                }else{
+                    <option value="cat3" style="color: green">หมวดที่ 3 Success...</option>
+                }
+                @if(cat4.getData_listDevelopmentList().size() == 0|| cat4.getData_methodTeachingList().size() == 0 || cat4.getData_methodEvaluationList().size() == 0){
+                    <option value="cat4" style="color: red" selected>หมวดที่ 4 wait...</option>
+                }else{
+                    <option value="cat4" style="color: green" selected>หมวดที่ 4 Success...</option>
+                }
+                @if(cat4.getPlanTeachingDataList().size() == 0 ||cat4.getEvaluationPlanDataList().size() == 0){
+                    <option value="cat5" style="color: red">หมวดที่ 5 wait...</option>
+                }else{
+                    <option value="cat5" style="color: green">หมวดที่ 5 Success...</option>
+                }
+                @if(cat4.getMainDocumentList().size() == 0 ||cat4.getImportantDocumentList().size() == 0 || cat4.getSuggustionDocumentList().size() == 0){
+                    <option value="cat6" style="color: red">หมวดที่ 6 wait...</option>
+                }else{
+                    <option value="cat6" style="color: green">หมวดที่ 6 Success...</option>
+                }
+                @if(cat4.getCourseAssessmentStrategiesList().size() == 0 || cat4.getTeachingStrategiesDataList().size() == 0 ||cat4.getImproveTeachingDataList().size() == 0 || cat4.getStandardReviews().size() == 0 ||
+                        cat4.getReviewAndPlanList().size() == 0){
+                    <option value="cat7" style="color: red">หมวดที่ 7 wait...</option>
+                }else{
+                    <option value="cat7" style="color: green">หมวดที่ 7 Success...</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+    </div>
+</form>
+<br>
+<center>
+    <h3>หมวดที่ 4 การพัฒนาการเรียนรู้ของนักศึกษา</h3>
+</center>
+@if(domainMapping.length == 0) {
+    <div class="alert alert-danger"><strong>ผิดพลาด! </strong>
+        เนื่องจากรายวิชานี้ยังไม่ได้ทำการ Mapping กรุณาไปทำการ Mapping เพื่อสร้างหมวด 4  ด้วยครับ</div>
+
+} else {
+    <br>
+    <form action="/selectCat" method="post">
+        <input type="hidden" id="idDoc3" name="idDoc3" value="@cat4.getId">
+        <input type="hidden" id="nameCat" name="nameCat" value="cat4">
+        <input type="hidden" id="n" name="n" value="@n">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-5">
+                <select id="domainId" name="domainId" class="form-control" onchange="this.form.submit()">
+                @for(domain <- listdomain.sortWith(_.getNumDomain<_.getNumDomain)) {
+                    @if(domainId == domain.getId) {
+                        <option  value="@domain.getId" selected>@domain.getNumDomain. @domain.getName</option>
+                        @(n=domain.getNumDomain.toInt)
+                    } else {
+                        <option value="@domain.getId">@domain.getNumDomain. @domain.getName</option>
+                        @(n=domain.getNumDomain.toInt)
+                    }
+                }
+                </select>
+            </div>
+            <div class="col-md-4">  </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-11">
+        @if(numDoamin == "1") {
+            <center>
+                <form action="/formatPrintCat4" method="post">
+                    <input type="hidden" name="idDomain" value="@domainId">
+                    <input type="hidden" name="genId" value="@cat4.getId">
+                    <button type="submit" class="btn btn-outline-info"> <i class='far fa-file-alt   ' style="color: #000000;
+                        font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์</button>
+                </form>
+            </center>
+            <b>1. คุณธรรม จริยธรรม</b>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    1.1 คุณธรรมจริยธรรม ที่ต้องพัฒนา <br>
+                    @for(data <- listDevelopment) {
+                        <div style="padding-left: 4em">
+                            @if(data.getCurriculum.getImportance == "2") {
+                                <td style="font-size: 20px;" align="center">●</td>
+                            } else {
+                                @if(data.getCurriculum.getImportance == "1") {
+                                    <td style="font-size: 20px;" align="center">○</td>
+                                } else {
+                                    <td style="font-size: 20px;" align="center">...</td>
+                                }
+                            }1.1.@i @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                        </div>
+                        @(i = i + 1)
+                    }
+                        @if(listDevelopment.size==0){
+                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                            <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#selectDevList">
+                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                    font-size: 13px;" ></i>
+                            </button>
+                        }else{
+                            <form action="/deleteCat4_1" method="post">
+                                <input type="hidden" name="idDomain" value="@domainId">
+                                <input type="hidden" name="genId" value="@cat4.getId">
+                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                        font-size: 13px;" ></i>
+                                </button>
+                            </form>
+                        }
+
+
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    1.2 วีธีการสอน <br>
+                    @for(data <- listTeachData) {
+                        <div style="padding-left: 4em">
+                                    1.2.@x @data.getTeachingStrategies.getTeachingMethods
+                                </div>
+                        @(x = x + 1)
+                    }
+                        @if(listTeachData.size==0){
+                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecteach">
+                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                    font-size: 13px;" ></i>
+                            </button>
+                        }else{
+                            <form action="/deleteCat4_2" method="post">
+                                <input type="hidden" name="idDomain" value="@domainId">
+                                <input type="hidden" name="genId" value="@cat4.getId">
+                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                        font-size: 13px;" ></i>
+                                </button>
+                            </form>
+                        }
+
+
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    1.3 วีธีการประเมินผล <br>
+                    @for(data <- listEvaData) {
+                        <div style="padding-left: 4em">
+                                    1.3.@y @data.getEvaluationStrategy.getEvaluationMethod
+                                </div>
+                        @(y = y + 1)
+                    }
+                        @if(listEvaData.size==0){
+                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecEvaluation">
+                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                    font-size: 13px;" ></i>
+                            </button>
+                        }else{
+                            <form action="/deleteCat4_3" method="post">
+                                <input type="hidden" name="idDomain" value="@domainId">
+                                <input type="hidden" name="genId" value="@cat4.getId">
+                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                        font-size: 13px;" ></i>
+                                </button>
+                            </form>
+                        }
+
+
+                </div>
+            </div>
+            <hr>
+        } else {
+            @if(numDoamin == "2") {
+                <center>
+                    <form action="/formatPrintCat4" method="post">
+                        <input type="hidden" name="idDomain" value="@domainId">
+                        <input type="hidden" name="genId" value="@cat4.getId">
+                        <button type="submit" class="btn btn-outline-info"> <i class='fa fa-print' style="color: #000000;
+                            font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์</button>
+                    </form>
+                </center>
+                <b>2. ความรู้</b>
+                <br>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
+                        2.1 ความรู้ที่ต้องได้รับ <br>
+                        @for(data <- listDevelopment) {
+                            <div style="padding-left: 4em">
+                                @if(data.getCurriculum.getImportance == "2") {
+                                    <td style="font-size: 20px;" align="center">●</td>
+                                } else {
+                                    @if(data.getCurriculum.getImportance == "1") {
+                                        <td style="font-size: 20px;" align="center">○</td>
+                                    } else {
+                                        <td style="font-size: 20px;" align="center">...</td>
+                                    }
+                                }1.1.@i @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                            </div>
+                            @(i = i + 1)
+                        }
+                            @if(listDevelopment.size==0){
+                                <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectDevList">
+                                    <i class='fa fa-plus-circle' style="color: #ffffff;
+                                        font-size: 13px;" ></i>
+                                </button>
+                            }else{
+                                <form action="/deleteCat4_1" method="post">
+                                    <input type="hidden" name="idDomain" value="@domainId">
+                                    <input type="hidden" name="genId" value="@cat4.getId">
+                                    <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                        <i class='fas fa-trash-alt' style="color: #ffffff;
+                                            font-size: 13px;" ></i>
+                                    </button>
+                                </form>
+                            }
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
+                        2.2 วีธีการสอน <br>
+                        @for(data <- listTeachData) {
+                            <div style="padding-left: 4em">
+                                    2.2.@x @data.getTeachingStrategies.getTeachingMethods
+                                </div>
+                            @(x = x + 1)
+                        }
+                            @if(listTeachData.size==0){
+                                <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecteach">
+                                    <i class='fa fa-plus-circle' style="color: #ffffff;
+                                        font-size: 13px;" ></i>
+                                </button>
+                            }else{
+                                <form action="/deleteCat4_2" method="post">
+                                    <input type="hidden" name="idDomain" value="@domainId">
+                                    <input type="hidden" name="genId" value="@cat4.getId">
+                                    <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                        <i class='fas fa-trash-alt' style="color: #ffffff;
+                                            font-size: 13px;" ></i>
+                                    </button>
+                                </form>
+                            }
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
+                        2.3 วีธีการประเมินผล <br>
+                        @for(data <- listEvaData) {
+                            <div style="padding-left: 4em">
+                                    2.3.@y @data.getEvaluationStrategy.getEvaluationMethod
+                                </div>
+                            @(y = y + 1)
+                        }
+                            @if(listEvaData.size==0){
+                                <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecEvaluation">
+                                    <i class='fa fa-plus-circle' style="color: #ffffff;
+                                        font-size: 13px;" ></i>
+                                </button>
+                            }else{
+                                <form action="/deleteCat4_3" method="post">
+                                    <input type="hidden" name="idDomain" value="@domainId">
+                                    <input type="hidden" name="genId" value="@cat4.getId">
+                                    <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                        <i class='fas fa-trash-alt' style="color: #ffffff;
+                                            font-size: 13px;" ></i>
+                                    </button>
+                                </form>
+                            }
+                    </div>
+                </div>
+                <hr>
+            } else {
+                @if(numDoamin == "3") {
+                    <center>
+                        <form action="/formatPrintCat4" method="post">
+                            <input type="hidden" name="idDomain" value="@domainId">
+                            <input type="hidden" name="genId" value="@cat4.getId">
+                            <button type="submit" class="btn btn-outline-info"> <i class='fa fa-print' style="color: #000000;
+                                font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์</button>
+                        </form>
+                    </center>
+                    <b>3. ทักษะทางปัญญา</b>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            3.1 ทักษะทางปัญาที่ต้องพัฒนา<br>
+                            @for(data <- listDevelopment) {
+                                <div style="padding-left: 4em">
+                                    @if(data.getCurriculum.getImportance == "2") {
+                                        <td style="font-size: 20px;" align="center">●</td>
+                                    } else {
+                                        @if(data.getCurriculum.getImportance == "1") {
+                                            <td style="font-size: 20px;" align="center">○</td>
+                                        } else {
+                                            <td style="font-size: 20px;" align="center">...</td>
+                                        }
+                                    }
+                                    1.1.@i @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                                </div>
+                                @(i = i + 1)
+                            }
+                                @if(listDevelopment.size==0){
+                                    <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectDevList">
+                                        <i class='fa fa-plus-circle' style="color: #ffffff;
+                                            font-size: 13px;" ></i>
+                                    </button>
+                                }else{
+                                    <form action="/deleteCat4_1" method="post">
+                                        <input type="hidden" name="idDomain" value="@domainId">
+                                        <input type="hidden" name="genId" value="@cat4.getId">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                font-size: 13px;" ></i>
+                                        </button>
+                                    </form>
+                                }
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            3.2 วีธีการสอน <br>
+                            @for(data <- listTeachData) {
+                                <div style="padding-left: 4em">
+                                    3.2.@x @data.getTeachingStrategies.getTeachingMethods
+                                </div>
+                                @(x = x + 1)
+                            }
+                                @if(listTeachData.size==0){
+                                    <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecteach">
+                                        <i class='fa fa-plus-circle' style="color: #ffffff;
+                                            font-size: 13px;" ></i>
+                                    </button>
+                                }else{
+                                    <form action="/deleteCat4_2" method="post">
+                                        <input type="hidden" name="idDomain" value="@domainId">
+                                        <input type="hidden" name="genId" value="@cat4.getId">
+                                        <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                            <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                font-size: 13px;" ></i>
+                                        </button>
+                                    </form>
+                                }
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+                            3.3 วีธีการประเมินผล <br>
+                            @for(data <- listEvaData) {
+                                <div style="padding-left: 4em">
+                                    3.3.@y @data.getEvaluationStrategy.getEvaluationMethod
+                                </div>
+                                @(y = y + 1)
+                            }
+                                @if(listEvaData.size==0){
+                                    <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecEvaluation">
+                                        <i class='fa fa-plus-circle' style="color: #ffffff;
+                                            font-size: 13px;" ></i>
+                                    </button>
+                                }else{
+                                    <form action="/deleteCat4_3" method="post">
+                                        <input type="hidden" name="idDomain" value="@domainId">
+                                        <input type="hidden" name="genId" value="@cat4.getId">
+                                        <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                            <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                font-size: 13px;" ></i>
+                                        </button>
+                                    </form>
+                                }
+                        </div>
+                    </div>
+                    <hr>
+                } else {
+                    @if(numDoamin == "4") {
+                        <center>
+                            <form action="/formatPrintCat4" method="post">
+                                <input type="hidden" name="idDomain" value="@domainId">
+                                <input type="hidden" name="genId" value="@cat4.getId">
+                                <button type="submit" class="btn btn-outline-info"> <i class='fa fa-print' style="color: #000000;
+                                    font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์</button>
+                            </form>
+                        </center>
+                        <b>4. ทักษะความสัมพันธ์ระหว่างบุคคลเเละความรับผิดชอบ</b>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+                                4.1 ทักษะความสัมพันธ์ระหว่างบุคคลเเละความรับผิดชอบที่ต้องพัฒนา <br>
+                                @for(data <- listDevelopment) {
+                                    <div style="padding-left: 4em">
+                                        @if(data.getCurriculum.getImportance == "2") {
+                                            <td style="font-size: 20px;" align="center">●</td>
+                                        } else {
+                                            @if(data.getCurriculum.getImportance == "1") {
+                                                <td style="font-size: 20px;" align="center">○</td>
+                                            } else {
+                                                <td style="font-size: 20px;" align="center">...</td>
+                                            }
+                                        }
+                                        1.1.@i @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                                    </div>
+                                    @(i = i + 1)
+                                }
+                                    @if(listDevelopment.size==0){
+                                        <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectDevList">
+                                            <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                font-size: 13px;" ></i>
+                                        </button>
+                                    }else{
+                                        <form action="/deleteCat4_1" method="post">
+                                            <input type="hidden" name="idDomain" value="@domainId">
+                                            <input type="hidden" name="genId" value="@cat4.getId">
+                                            <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        </form>
+                                    }
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+                                4.2 วีธีการสอน <br>
+                                @for(data <- listTeachData) {
+                                    <div style="padding-left: 4em">
+                                    4.2.@x @data.getTeachingStrategies.getTeachingMethods
+                                </div>
+                                    @(x = x + 1)
+                                }
+                                    @if(listTeachData.size==0){
+                                        <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecteach">
+                                            <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                font-size: 13px;" ></i>
+                                        </button>
+                                    }else{
+                                        <form action="/deleteCat4_2" method="post">
+                                            <input type="hidden" name="idDomain" value="@domainId">
+                                            <input type="hidden" name="genId" value="@cat4.getId">
+                                            <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        </form>
+                                    }
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+                                4.3 วีธีการประเมินผล <br>
+                                @for(data <- listEvaData) {
+                                    <div style="padding-left: 4em">
+                                    4.3.@y @data.getEvaluationStrategy.getEvaluationMethod
+                                </div>
+                                    @(y = y + 1)
+                                }
+                                    @if(listEvaData.size==0){
+                                        <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecEvaluation">
+                                            <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                font-size: 13px;" ></i>
+                                        </button>
+                                    }else{
+                                        <form action="/deleteCat4_3" method="post">
+                                            <input type="hidden" name="idDomain" value="@domainId">
+                                            <input type="hidden" name="genId" value="@cat4.getId">
+                                            <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        </form>
+                                    }
+                            </div>
+                        </div>
+                        <hr>
+                    } else {
+                        @if(numDoamin == "5") {
+                            <center>
+                                <form action="/formatPrintCat4" method="post">
+                                    <input type="hidden" name="idDomain" value="@domainId">
+                                    <input type="hidden" name="genId" value="@cat4.getId">
+                                    <button type="submit" class="btn btn-outline-info"> <i class='fa fa-print' style="color: #000000;
+                                        font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์</button>
+                                </form>
+                            </center>
+                            <b>5. ทักษะการวิเคราะห์เชิงตัวเลข การสื่อสาร และการใช้เทคโนโลยีสารสนเทศ</b>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    5.1 ทักษะการวิเคราะห์เชิงตัวเลข การสื่อสาร และการใช้เทคโนโลยีสารสนเทศที่ต้องพัฒนา
+                                    <br>
+                                    @for(data <- listDevelopment) {
+                                        <div style="padding-left: 4em">
+                                            @if(data.getCurriculum.getImportance == "2") {
+                                                <td style="font-size: 20px;" align="center">●</td>
+                                            } else {
+                                                @if(data.getCurriculum.getImportance == "1") {
+                                                    <td style="font-size: 20px;" align="center">○</td>
+                                                } else {
+                                                    <td style="font-size: 20px;" align="center">...</td>
+                                                }
+                                            }
+                                            1.1.@i @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                                        </div>
+                                        @(i = i + 1)
+                                    }
+                                        @if(listDevelopment.size==0){
+                                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectDevList">
+                                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        }else{
+                                            <form action="/deleteCat4_1" method="post">
+                                                <input type="hidden" name="idDomain" value="@domainId">
+                                                <input type="hidden" name="genId" value="@cat4.getId">
+                                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                        font-size: 13px;" ></i>
+                                                </button>
+                                            </form>
+                                        }
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    5.2 วีธีการสอน <br>
+                                    @for(data <- listTeachData) {
+                                        <div style="padding-left: 4em">
+                                    5.2.@x @data.getTeachingStrategies.getTeachingMethods
+                                </div>
+                                        @(x = x + 1)
+                                    }
+                                        @if(listTeachData.size==0){
+                                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecteach">
+                                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        }else{
+                                            <form action="/deleteCat4_2" method="post">
+                                                <input type="hidden" name="idDomain" value="@domainId">
+                                                <input type="hidden" name="genId" value="@cat4.getId">
+                                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                        font-size: 13px;" ></i>
+                                                </button>
+                                            </form>
+                                        }
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    5.3 วีธีการประเมินผล <br>
+                                    @for(data <- listEvaData) {
+                                        <div style="padding-left: 4em">
+                                    5.3.@y @data.getEvaluationStrategy.getEvaluationMethod
+                                </div>
+                                        @(y = y + 1)
+                                    }
+                                        @if(listEvaData.size==0){
+                                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecEvaluation">
+                                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        }else{
+                                            <form action="/deleteCat4_3" method="post">
+                                                <input type="hidden" name="idDomain" value="@domainId">
+                                                <input type="hidden" name="genId" value="@cat4.getId">
+                                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                        font-size: 13px;" ></i>
+                                                </button>
+                                            </form>
+                                        }
+                                </div>
+                            </div>
+                            <hr>
+                        } else {
+                            <center>
+                                <form action="/formatPrintCat4" method="post">
+                                    <input type="hidden" name="idDomain" value="@domainId">
+                                    <input type="hidden" name="genId" value="@cat4.getId">
+                                    <button type="submit" class="btn btn-outline-info"> <i class='fa fa-print' style="color: #000000;
+                                        font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์</button>
+                                </form>
+                            </center>
+                            <b>6. บัณฑิตนักปฏิบัติ</b>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    6.1 บัณฑิตนักปฏิบัติที่ต้องพัฒนา <br>
+                                    @for(data <- listDevelopment) {
+                                        <div style="padding-left: 4em">
+                                            @if(data.getCurriculum.getImportance == "2") {
+                                                <td style="font-size: 20px;" align="center">●</td>
+                                            } else {
+                                                @if(data.getCurriculum.getImportance == "1") {
+                                                    <td style="font-size: 20px;" align="center">○</td>
+                                                } else {
+                                                    <td style="font-size: 20px;" align="center">...</td>
+                                                }
+                                            }
+                                            1.1.@i @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                                        </div>
+                                        @(i = i + 1)
+                                    }
+                                        @if(listDevelopment.size==0){
+                                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectDevList">
+                                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        }else{
+                                            <form action="/deleteCat4_1" method="post">
+                                                <input type="hidden" name="idDomain" value="@domainId">
+                                                <input type="hidden" name="genId" value="@cat4.getId">
+                                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                        font-size: 13px;" ></i>
+                                                </button>
+                                            </form>
+                                        }
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    6.2 วีธีการสอน <br>
+                                    @for(data <- listTeachData) {
+                                        <div style="padding-left: 4em">
+                                    6.2.@x @data.getTeachingStrategies.getTeachingMethods
+                                </div>
+                                        @(x = x + 1)
+                                    }
+                                        @if(listTeachData.size==0){
+                                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecteach">
+                                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        }else{
+                                            <form action="/deleteCat4_2" method="post">
+                                                <input type="hidden" name="idDomain" value="@domainId">
+                                                <input type="hidden" name="genId" value="@cat4.getId">
+                                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                        font-size: 13px;" ></i>
+                                                </button>
+                                            </form>
+                                        }
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    6.3 วีธีการประเมินผล <br>
+                                    @for(data <- listEvaData) {
+                                        <div style="padding-left: 4em">
+                                    6.3.@y @data.getEvaluationStrategy.getEvaluationMethod
+                                </div>
+                                        @(y = y + 1)
+                                    }
+                                        @if(listEvaData.size==0){
+                                            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selecEvaluation">
+                                                <i class='fa fa-plus-circle' style="color: #ffffff;
+                                                    font-size: 13px;" ></i>
+                                            </button>
+                                        }else{
+                                            <form action="/deleteCat4_3" method="post">
+                                                <input type="hidden" name="idDomain" value="@domainId">
+                                                <input type="hidden" name="genId" value="@cat4.getId">
+                                                <button type="submit" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายการนี้นี้ใช่หรือไม่?')" class="btn btn-primary">
+                                                    <i class='fas fa-trash-alt' style="color: #ffffff;
+                                                        font-size: 13px;" ></i>
+                                                </button>
+                                            </form>
+                                        }
+                                </div>
+                            </div>
+                            <hr>
+                            }
+                    }
+                }
+            }
+        }
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+}
+    <!-- Modal -->
+<div class="modal fade" id="selectDevList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">แผนการสอน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/insertDevListData" method="post">
+                <input type="hidden" name="genId" value="@cat4.getId">
+                <input type="hidden" name="domainId" value="@domainId">
+                <div class="modal-body">
+                @for(data <- domainMapping) {
+                    <input type="checkbox" name="listDev" value="@data.getId" @if(data.getImportance == "2") {
+                        checked="checked"}>
+                    @if(data.getImportance == "2") {
+                        <td style="font-size: 20px;" align="center">●</td>
+                    } else {
+                        @if(data.getImportance == "1") {
+                            <td style="font-size: 20px;" align="center">○</td>
+                        } else {
+                            <td style="font-size: 20px;" align="center">...</td>
+                        }
+                    } @data.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                    <br>
+                        @(i = i + 1)
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="selecteach" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">แผนการสอน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/insertTeachingData" method="post">
+                <input type="hidden" name="genId" value="@cat4.getId">
+                <input type="hidden" name="domainId" value="@domainId">
+                <div class="modal-body">
+                @for(data <- listTeach) {
+                    <input type="checkbox" name="teachId" value="@data.getId" >
+                    @x. @data.getTeachingMethods()
+                    <br>
+                        @(x = x + 1)
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="selecEvaluation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">แผนการสอน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/insertDataEvaluation" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat4.getId">
+                    <input type="hidden" name="domainId" value="@domainId">
+                    @for(data <- listEvaluation) {
+                        <input type="checkbox" name="dataEvaluation" value="@data.getId" >
+                        @y. @data.getEvaluationMethod()
+                        <br>
+                            @(y = y + 1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

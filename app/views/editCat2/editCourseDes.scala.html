@@ -1,0 +1,68 @@
+@(generalData: GeneralData,courseDes : CourseDestination,courseObjectives : CourseObjectives)
+@import java.math.BigInteger; var i = 1; var x = 1 ;var no =1;var noo =1;var nIndex=0;
+@import java.lang.String;var detail ="";
+@import scala.collection.mutable.ArrayBuffer;var fruits = ArrayBuffer[String]()
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+<br>
+<br>
+<form action="/selectCat" method="post">
+    <input type="hidden" name="idDoc3" value="@generalData.getId">
+    <div class="row">
+        <div class="col-md-4" align="right"><h5 style="margin-top : 7px ;">วิชา:@generalData.getCourse.getNameTH</h5></div>
+        <div class="col-md-4">
+            <select id="nameCat" name="nameCat" class="form-control">
+                <option value="cat1">หมวดที่ 1</option>
+                <option value="cat2" selected>หมวดที่ 2</option>
+                <option value="cat3">หมวดที่ 3</option>
+                <option value="cat4">หมวดที่ 4</option>
+                <option value="cat5">หมวดที่ 5</option>
+                <option value="cat6">หมวดที่ 6</option>
+                <option value="cat7">หมวดที่ 7</option>
+            </select>
+        </div>
+        <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+    </div>
+</form>
+<br>
+
+<center>
+    <br>
+    <br>
+    <h3>หมวดที่ 2 จุดมุ่งหมายเเละวัตถุประสงค์</h3>
+</center>
+
+<div class="row">
+    <div class="col-md-11">
+        @if(courseDes!=null){
+            <b>แก้ไขจุดมุ่งหมายของรายวิชา</b>
+            <form action="/updateCourseDes"method="post">
+                @if(courseDes!=null){
+                    <input type="hidden"name="idDes" value="@courseDes.getId">
+                }
+                <textarea name="detailDes" rows="5" class="form-control">@courseDes.getDetail</textarea>
+                <input type="submit" class="btn btn-success" value="บันทึก">
+
+            </form>
+        }else{
+            <b>แก้ไขวัตุประสงค์ในการพัฒนา/ปรับปรุงรายวิชา</b>
+            <form action="/updatecourseObj" method="post">
+                @if(courseObjectives!=null){
+                    <input type="hidden"name="idObj" value="@courseObjectives.getId">
+                }
+                <textarea name="detailObj" rows="5" class="form-control">@courseObjectives.getDetail</textarea>
+                <input type="submit" class="btn btn-success" value="บันทึก">
+            </form>
+
+        }
+
+        <button class="btn btn-info" onclick="goBack()" >Go Back</button>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<script>
+        function goBack() {
+            window.history.back();
+        }
+</script>

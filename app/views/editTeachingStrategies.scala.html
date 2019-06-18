@@ -1,0 +1,22 @@
+@(editTeacherStrategies: Form[TeachingStrategies],DevelopmentalLearning: List[DevelopmentalLearning])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>แก้ไขข้อมูลกลยุทธ์การสอน</h3>
+        </center>
+        @if(flash.containsKey("dataTeacherStrategiesError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataTeacherStrategiesError"). </div>
+        }
+        @helper.form(action = routes.Development.updateTeachingStrategies(), 'enctype -> "multipart/form-data") {
+            @inputText(editTeacherStrategies("id"), '_label -> "รหัสกลยุทธ์การสอน", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            @textarea(editTeacherStrategies("teachingMethods"), '_label -> "วิธ๊การสอน",'rows->"3",'cols->"60", 'required -> "required", 'class -> "form-control")
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <input type="reset" value="เคลียร์" class="btn btn-danger"  style="font-family: 'Mitr', sans-serif;">
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

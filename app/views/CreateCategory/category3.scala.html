@@ -1,0 +1,355 @@
+ @(cat3: GeneralData, hours: DataHours)
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+
+<br>
+<br>
+<form action="/selectCat" method="post">
+    <input type="hidden" id="idDoc3" name="idDoc3" value="@cat3.getId">
+    <div class="row">
+        <div class="col-md-4" align="left"><h5 style="margin-top : 7px ;">วิชา:@cat3.getCourse.getNameTH</h5></div>
+        <div class="col-md-4">
+            <select id="nameCat" name="nameCat" class="form-control">
+                <option value="cat1" >หมวดที่ 1 Success...</option>
+                @if(cat3.getCourseDestinationList.size()==0||cat3.getCourseObjectivesList.size()==0){
+                    <option value="cat2" style="color: red" >หมวดที่ 2 wait...</option>
+                }else{
+                    <option value="cat2" style="color: green" >หมวดที่ 2 Success...</option>
+                }
+                @if(cat3.getDataHoursList().size() == 0 || cat3.getSuggestion() == null){
+                    <option value="cat3" style="color: red" selected>หมวดที่ 3 wait...</option>
+                }else{
+                    <option value="cat3" style="color: green" selected>หมวดที่ 3 Success...</option>
+                }
+                @if(cat3.getData_listDevelopmentList().size() == 0|| cat3.getData_methodTeachingList().size() == 0 || cat3.getData_methodEvaluationList().size() == 0){
+                    <option value="cat4" style="color: red">หมวดที่ 4 wait...</option>
+                }else{
+                    <option value="cat4" style="color: green">หมวดที่ 4 Success...</option>
+                }
+                @if(cat3.getPlanTeachingDataList().size() == 0 ||cat3.getEvaluationPlanDataList().size() == 0){
+                    <option value="cat5" style="color: red">หมวดที่ 5 wait...</option>
+                }else{
+                    <option value="cat5" style="color: green">หมวดที่ 5 Success...</option>
+                }
+                @if(cat3.getMainDocumentList().size() == 0 ||cat3.getImportantDocumentList().size() == 0 || cat3.getSuggustionDocumentList().size() == 0){
+                    <option value="cat6" style="color: red">หมวดที่ 6 wait...</option>
+                }else{
+                    <option value="cat6" style="color: green">หมวดที่ 6 Success...</option>
+                }
+                @if(cat3.getCourseAssessmentStrategiesList().size() == 0 || cat3.getTeachingStrategiesDataList().size() == 0 ||cat3.getImproveTeachingDataList().size() == 0 || cat3.getStandardReviews().size() == 0 ||
+                        cat3.getReviewAndPlanList().size() == 0){
+                    <option value="cat7" style="color: red">หมวดที่ 7 wait...</option>
+                }else{
+                    <option value="cat7" style="color: green">หมวดที่ 7 Success...</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+    </div>
+</form>
+<br>
+
+@*<form method="post" action="/saveCategory3">*@
+    @*<input type="hidden" name="genId" value="@cat3.getId">*@
+    @*<button type="submit" class="btn btn-info" style="font-family : 'Mitr', sans-serif ;">*@
+        @*<i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18 px ; " > บันทึก</i>*@
+    @*</button>*@
+@*</form>*@
+@*<br>*@
+<center>
+    <a href="/formatPrintCat3/@cat3.getId()" class="btn btn-outline-info">
+        <i class='far fa-file-alt' style="color: #000000;
+            font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์
+    </a>
+    <br>
+    <br>
+    <h3>หมวดที่ 3 ลักษณะของการดำเนินงาน </h3>
+</center>
+<br>
+<div class="row">
+    <div class="col-md-11">
+
+        <table class="table table-hover">
+            <tr style="background-color : #b3bbc1">
+                <td align="center">
+                    <b> 1.คำอธิบายรายวิชา </b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                @cat3.getCourse.getDetialTH
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="background-color : #b3bbc1">
+                    <b> 2. จำนวนชั่วโมงที่ใชต่อภาคการศึกษา </b>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <br>
+                    @if(hours==null){
+                        <div class="alert alert-danger"><strong>เตือน !</strong> ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                    }
+                    @if(hours == null) {
+                            <table border="1">
+                                <tr>
+                                    <td valign="middle" align="center">บรรยาย</td>
+                                    <td valign="middle" align="center">สอนเสริม</td>
+                                    <td align="center">การฝึกปฏิบัติ/งาน<br>ภาคสนาม/การฝึกงาน</td>
+                                    <td valign="middle" align="center">การศึกษาด้วยตนเอง</td>
+                                </tr>
+                                <tr>
+                                    <td>......................ชั่วโมง</td>
+                                    <td>......................ชั่วโมง</td>
+                                    <td>......................ชั่วโมง</td>
+                                    <td>......................ชั่วโมง</td>
+                                </tr>
+                            </table>
+                        }else{
+                            <table border="1px">
+                                <tr  border="1px">
+                                    <td valign="middle" align="center">บรรยาย</td>
+                                    <td valign="middle" align="center">สอนเสริม</td>
+                                    <td align="center">การฝึกปฏิบัติ/งาน<br>ภาคสนาม/การฝึกงาน</td>
+                                    <td valign="middle" align="center">การศึกษาด้วยตนเอง</td>
+                                </tr>
+                                <tr>
+                                    <td>@hours.gethDescribe() ชั่วโมง</td>
+                                    <td>@hours.gethSupplementary() ชั่วโมง</td>
+                                    <td>@hours.gethWork() ชั่วโมง</td>
+                                    <td>@hours.gethStudy() ชั่วโมง</td>
+                                </tr>
+                            </table>
+                        }
+                    @if(hours != null){
+                        <br>
+                        <center>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editHour">
+                                <i class='fas fa-edit' style="color: black;font-size: 16px;" ></i> แก้ไข
+                            </button>
+                            <a href="/deleteHours/@hours.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูล จุดมุ่งหมายนี้ใช่หรือไม่?')">
+                                <button type="button" class="btn btn-warning">
+                                    <i class='	fas fa-trash-alt' style="color: black;font-size: 16px;" ></i> ลบ
+                                </button>
+                            </a>
+                        </center>
+                    }else{
+                        <br>
+                        <center>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddHour">
+                                ระบุจำนวนชั่วโมงการสอน
+                            </button>
+                        </center>
+                    }
+
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="background-color : #b3bbc1">
+                    <b> 3. จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษา เเละนำทางวิชาแก่นักศึกษาเป็นรายบุคคล </b>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+
+                @if(cat3.getSuggestion == null){
+                    @if(hours==null){
+                        <div class="alert alert-danger"><strong>เตือน !</strong> ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                    }
+                }else{
+                    @cat3.getSuggestion
+
+                }
+                </td>
+            </tr>
+        </table>
+        @if(cat3.getSuggestion != null){
+            <center>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editSuggestion">
+                    <i class='fas fa-edit' style="color: black;font-size: 16px;" ></i> แก้ไข
+                </button>
+                <a href="/deleteSuggestion/@cat3.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูล จุดมุ่งหมายนี้ใช่หรือไม่?')">
+                    <button type="button" class="btn btn-warning">
+                        <i class='fas fa-trash-alt' style="color: black;font-size: 16px;" ></i> ลบ
+                    </button>
+                </a>
+            </center>
+        }else{
+            <center>
+                <br>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSuggestion">
+                    ระบุจำนวนชั่วโมงการสอนต่อสัปดาห์
+                </button>
+            </center>
+        }
+
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+
+
+<br> <br>
+<div class="modal fade" id="AddHour" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/addHours" method="post">
+                <input type="hidden" name="genId" value="@cat3.getId">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">จำนวนชั่วโมงที่ใช้ต่อภาคการศึกษา</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">ชั่วโมงบรรยาย</label>
+                        <input type="number" class="form-control" id="describe" name="describe" id="message-text">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">ชั่วโมงสอนเสริม</label>
+                        <input type="number" class="form-control" id="supplementary" name="supplementary" id="message-text">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">ชั่วโมงการฝึกปฏิบัติ/งาน/ภาคสนาม/การฝึกงาน</label>
+                        <input type="number" class="form-control" id="work" name="work" id="message-text">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">ชั่วโมงการศึกษาด้วยตนเอง</label>
+                        <input type="number" class="form-control" id="study" name="study" id="message-text">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br> <br>
+    @if(hours != null){
+        <div class="modal fade" id="editHour" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="/editHour" method="post">
+                        <input type="hidden" name="genId" value="@cat3.getId">
+                        <input type="hidden" name="hourId" value="@hours.getId">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">จำนวนชั่วโมงที่ใชต่อภาคการศึกษา</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">ชั่วโมงบรรยาย</label>
+                                <input type="number" class="form-control" id="describe" name="describe" id="message-text"
+                                    @if(hours.gethDescribe() != null){
+                                        value="@hours.gethDescribe()"
+                                    }else{
+                                        value=""
+                                    }
+                                >
+
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">ชั่วโมงสอนเสริม</label>
+                                <input type="number" class="form-control" id="supplementary" name="supplementary" id="message-text"
+                                        @if(hours.gethSupplementary() != null){
+                                            value="@hours.gethSupplementary()"
+                                        }else{
+                                            value=""
+                                            }
+                                min="5" max="1000"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">ชั่วโมงการฝึกปฏิยัติ/งาน/ภาคสนาม/การฝึกงาน</label>
+                                <input type="number" class="form-control" id="work" name="work" id="message-text"
+                                        @if(hours.gethWork() != null){
+                                            value="@hours.gethWork()"
+                                        }else{
+                                            value=""
+                                            }
+
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">ชั่วโมงการจำศึกด้วยตนเอง</label>
+                                <input type="number" class="form-control" id="study" name="study" id="message-text"
+                                        @if(hours.gethStudy() != null){
+                                            value="@hours.gethStudy()"
+                                        }else{
+                                            value=""
+                                            }
+
+                                >
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                            <button type="submit" class="btn btn-primary">บันทึก</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+<br> <br>
+<div class="modal fade" id="addSuggestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/addsuggestion" method="post">
+                <input type="hidden" name="genId" value="@cat3.getId">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษา เเละนำทางวิชารแก่นัหศึหษาเป็นรายบุคคล</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายระเอียดของการให้คำเเนะนำพร้อมจำนวนชั่วโมง</label>
+                        <textarea class="form-control" id="suggestion" name="suggestion" id="message-text" rows="6"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editSuggestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/editSuggestion" method="post">
+                <input type="hidden" name="genId" value="@cat3.getId">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษา เเละนำทางวิชารแก่นัหศึหษาเป็นรายบุคคล</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายระเอียดของการให้คำเเนะนำพร้อมจำนวนชั่วโมง</label>
+                        <textarea class="form-control" id="suggestion" name="suggestion" id="message-text" rows="6">
+                            @cat3.getSuggestion
+                        </textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

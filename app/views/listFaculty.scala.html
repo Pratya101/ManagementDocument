@@ -1,0 +1,58 @@
+@(facultyList: List[Faculty])
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <center>
+            @if(flash.containsKey("noDelOK")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("noDelOK"). </div>
+            }
+            @if(flash.containsKey("delOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("delOK"). </div>
+            }
+            @if(flash.containsKey("insertOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("insertOK"). </div>
+            }
+            @if(flash.containsKey("updateOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("updateOK"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<center>
+<h3>รายชื่อข้อมูลคณะทั้งหมด</h3>
+</center>
+<br>
+@if(facultyList.size==0){
+    <a href="/formAddFaculty" class="btn btn-info" style="font-family: 'Bai Jamjuree', sans-serif;"><i class='	fa fa-plus-circle' style="color: #f7fff6;font-size: 18px;" ></i> เพิ่มคณะ</a>
+}
+
+<br>
+<br>
+
+<div class="row">
+    <div class="col-md-11">
+        <table id="example" class="table table-striped table-bordered">
+            <thead>
+            <tr style="background-color: #b3bbc1">
+                <td align="center"><b>ชื่อคณะ </b></td>
+                <td align="center"><b>ชื่อย่อคณะ</b></td>
+                <td align="center"><b>แก้ไข</b></td>
+                @*<td align="center"><b>ลบ</b></td>*@
+            </tr>
+            </thead>
+            <tbody>
+            @for(faculty <- facultyList) {
+                <tr>
+                    <td>@faculty.getName</td>
+                    <td>@faculty.getShotname</td>
+                    <td align="center"><a href="/editFaculty/@faculty.getId"><i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    @*<td align="center"><a href="/deleteFaculty/@faculty.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูล คณะนี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a></td>*@
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>

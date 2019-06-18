@@ -1,0 +1,53 @@
+@(instructors: Instructors)
+<br>
+
+<center>
+    <h3>ตารางรายละเอียดข้อมูลอาจารย์</h3>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-11">
+
+            <table class="table table-hover">
+                <tr>
+                    <th>รหัสกำหนดผู้สอน</th>
+                    <td>@instructors.getId</td>
+                </tr>
+                <tr>
+                    <th>ภาคเรียน</th>
+                    <td>@instructors.getTerm</td>
+                </tr>
+                <tr>
+                    <th>ปีการศึกษา</th>
+                    <td>@instructors.getYear</td>
+                </tr>
+                <tr>
+                    <th>ชื่อรายวิชาที่สอน</th>
+                    <td>@instructors.getCourse.getNameTH <br>
+                    @instructors.getCourse.getNameENG
+                    </td>
+                </tr>
+                <tr>
+                    <th>ผู้สอน</th>
+                    <td>@instructors.getTeacher.getName @instructors.getTeacher.getSername</td>
+                </tr>
+                <tr>
+                    <th>ห้องที่สอน</th>
+                    <td>@instructors.getRoom</td>
+                </tr>
+                <tr>
+                    <th>สถานะการรับผิดชอบ</th>
+                    @if(instructors.getStatus == "1"){
+                        <td>ผู้รับผิดชอบหลัก</td>
+                    }else{
+                        <td>ผู้รับผิดชอบห่วม</td>
+                    }
+
+                </tr>
+
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+</center>

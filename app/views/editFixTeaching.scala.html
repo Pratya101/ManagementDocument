@@ -1,0 +1,149 @@
+@(listC: List[Course], listT: List[Teacher], listCat: List[CategoryCourse], listG: List[GroupCourse], namecat: String, nameGroup: String,fnameTeacher : String,lnameTeacher:String,status : String,room :String,nameCoures : String,idCoures:String)
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>แก้ไขรายวิชาที่จะกำหนดตัวผู้สอน <br> ภาคการศึกษาที่ @session.get("t")/@session.get("y") <br>
+            @session.get("nameSyll")
+            </h3>
+        </center>
+
+        @if(flash.containsKey("noData")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("noData"). </div>
+        }
+        @if(flash.containsKey("failFix")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("failFix"). </div>
+        }
+        <form action="/loadDataEdit" method="post">
+            <input type="hidden" name="fnameTeacher" value="@fnameTeacher">
+            <input type="hidden" name="lnameTeacher" value="@lnameTeacher">
+            <input type="hidden" name="status" value="@status">
+            <input type="hidden" name="room" value="@room">
+            <lable for="cat" ><b>หมวดหมู่รายวิชา</b></lable>
+            <select id="cat" name="cat" onchange="this.form.submit()" class="form-control">
+            @if(namecat == "") {
+                <option value="0"> -----เลือกหมวดวิชา-----</option>
+                @for(ca <- listCat) {
+                    @if(namecat == ca.getName) {
+                        <option value="@ca.getId" selected>@ca.getName</option>
+                    } else {
+                        <option value="@ca.getId">@ca.getName</option>
+                    }
+                }
+            } else {
+                @for(ca <- listCat) {
+                    @if(namecat == ca.getName) {
+                        <option value="@ca.getId" selected>@ca.getName</option>
+                    } else {
+                        <option value="@ca.getId">@ca.getName</option>
+                    }
+                }
+            }
+
+            </select>
+        </form>
+        <form action="/loadDataEdit" method="post">
+            <input type="hidden" name="fnameTeacher" value="@fnameTeacher">
+            <input type="hidden" name="lnameTeacher" value="@lnameTeacher">
+            <input type="hidden" name="status" value="@status">
+            <input type="hidden" name="room" value="@room">
+            <input type="hidden" name="category" value="@namecat" >
+            <lable for="group" ><b>กลุ่มรายวิชา : </b></lable>
+            <select id="group" name="group" onchange="this.form.submit()" class="form-control">
+                @if(namecat != "" && nameGroup == "") {
+                    <option value="0"> -----เลือกหมวดวิชา-----</option>
+                    @for(lgs <- listG) {
+                        @if(nameGroup == lgs.getName) {
+                            <option value="@lgs.getId" selected>@lgs.getName</option>
+                        } else {
+                            <option value="@lgs.getId">@lgs.getName</option>
+                        }
+                    }
+                } else {
+                    @for(lgs <- listG) {
+                        @if(nameGroup == lgs.getName) {
+                            <option value="@lgs.getId" selected>@lgs.getName</option>
+                        } else {
+                            <option value="@lgs.getId">@lgs.getName</option>
+                        }
+                    }
+                }
+            </select>
+        </form>
+
+
+        <form action="/updateInsttrutors" method="post">
+            <lable for="course" ><b>รายวิชา : </b></lable>
+            <select id="course" name="course" class="form-control">
+
+                @if(nameCoures!=null){
+                    <option value="@idCoures" selected>@nameCoures</option>
+                    @for(lc <- listC) {
+                        <option value="@lc.getId">@lc.getNameTH</option>
+                    }
+                }else{
+                    @for(lc <- listC) {
+                        <option value="@lc.getId">@lc.getNameTH</option>
+                    }
+                }
+
+
+            </select>
+            @if(listC.size != 0) {
+                <label for="nameT"><b>ผู้สอน : </b></label>
+                <select id="nameT" name="nameT" class="form-control" required="required">
+                @for(th <- listT) {
+                    @if(fnameTeacher == th.getName && lnameTeacher == th.getSername){
+                        <option value="@th.getId" selected  >@th.getName @th.getSername</option>
+                    }else{
+                        <option value="@th.getId">@th.getName @th.getSername</option>
+                    }
+
+                }
+                </select>
+                <label for="room"><b>ห้องที่สอน :</b></label>
+                <select id="room" name="room" class="form-control" required="required">
+                    <option value="@room" selected >@room</option>
+                    <option value="BIS1/1N">BIS1/1N</option>
+                    <option value="BIS1/2N">BIS1/2N</option>
+                    <option value="BIS1/3N">BIS1/3N</option>
+                    <option value="BIS2/1N">BIS2/1N</option>
+                    <option value="BIS2/2N">BIS2/3N</option>
+                    <option value="BIS2/3N">BIS2/3N</option>
+                    <option value="BIS3/1N">BIS3/1N</option>
+                    <option value="BIS3/2N">BIS3/2N</option>
+                    <option value="BIS3/3N">BIS3/3N</option>
+                    <option value="BIS4/1N">BIS4/1N</option>
+                    <option value="BIS4/2N">BIS4/2N</option>
+                    <option value="BIS4/3N">BIS4/3N</option>
+                    <option value="BIS3Q">BIS3Q</option>
+                    <option value="BIS4Q">BIS4Q</option>
+                </select>
+                <br>
+                <label for="room"><b>สถานะการรับผิดชอบ : </b></label>
+                @if(status =="1"){
+                    <input type="radio" name="status" value="1" checked>ผู้รับผิดชอบหลัก
+                    <input type="radio" name="status" value="0" >ผู้รับผิดชอบร่วม
+                }else{
+                    <input type="radio" name="status" value="1" >ผู้รับผิดชอบหลัก
+                    <input type="radio" name="status" value="0" checked>ผู้รับผิดชอบร่วม
+                }
+            } else {
+            }
+            <br>
+            <input type="submit" value="Save" class="btn btn-success">
+        </form>
+        <br>
+
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" align="center"><a href="/listInstructors/@session.get("tandYid")" class="btn btn-dark" style="font-family : 'Mitr', sans-serif ;"><i class='	fa fa-undo' style="color : #3b9bff ; font-size : 18 px ; color : white" ></i>
+        กลับไปหน้าช้อมูลการกำหนดผู้สอน</a>
+    </div>
+    <div class="col-md-2"></div>
+</div>

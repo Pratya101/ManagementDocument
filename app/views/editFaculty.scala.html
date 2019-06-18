@@ -1,0 +1,27 @@
+@(fromFaculty : Form[Faculty])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>แก้ไขข้อมูลคณะ</h3>
+        </center>
+        @if(flash.containsKey("dataFacError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataFacError") </div>
+        }
+        @helper.form(action = routes.Application.updateFaculty(), 'enctype -> "multipart/form-data") {
+            @inputText(fromFaculty("id"), '_label -> "รหัสคณะ", 'size -> "10px", 'required -> "required",'readonly->"readonly", 'class -> "form-control")
+            @inputText(fromFaculty("name"), '_label -> "ชื่อคณะ", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @inputText(fromFaculty("shotname"), '_label -> "ชื่อย่อคณะ", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            <button type="submit" class="btn btn-success">
+                <i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px ;"></i> บันทึก
+            </button>
+            <button type="reset" class="btn btn-danger">
+                <i class='	fa fa-file-o' style="color : #f7fff6 ; font-size : 18px ;"></i> เคลียร์
+            </button>
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

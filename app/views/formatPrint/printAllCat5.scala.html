@@ -1,0 +1,118 @@
+@(generalData: GeneralData)
+@import java.lang.String; var actTmp="";
+<br>
+<a onclick="PrintDiv()" class="btn btn-info" style="color: white" >
+    <i class='fa fa-print' style="color: #f7fff6;
+        font-size: 18px;" ></i> Print...
+</a>
+<div id="allcat5">
+<br><br><br><br><br>
+<center>
+    <p class="titleForPrint"><b>หมวดที่ 5 แผนการสอนเเละการประเมินผล</b></p>
+</center>
+<br>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-9">
+        <div style="font-family: 'Sarabun', sans-serif">
+            <div style="font-weight: bold">1. แผนการสอน</div>
+            <table border="1" width="100%">
+                <tr>
+                    <td align="center"><b>สัปดาห์<br>ที่</b></td>
+                    <td valign="middle" align="center"><b>รายละเอียด</b></td>
+                    <td align="center"><b>จำนวน<br>ชั่วโมง</b></td>
+                    <td align="center"><b>กิจกรรมการเรียน<br>สื่อที่ใช้</b></td>
+                    <td valign="middle" align="center" width="150px" ><b>ผู้สอน</b></td>
+                </tr>
+                @for(planTeaching <- generalData.getPlanTeachingDataList()){
+                    <tr style="font-size: 18px">
+                        <td align="center">@planTeaching.getWeek()</td>
+                        <td>@HtmlFormat.raw(planTeaching.getDetail()) </td>
+                        <td align="center">@planTeaching.getHours()</td>
+                        <td>@HtmlFormat.raw(planTeaching.getMedia())</td>
+                        <td width="150px"style="font-size: 14px">@HtmlFormat.raw(planTeaching.getInstructor())</td>
+                    </tr>
+                }
+                </table>
+        </div>
+    </div>
+    <div class="col-1"></div>
+</div>
+<br>
+<div style="page-break-after: always"></div>
+<br><br><br><br><br>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <table style="font-family: 'Sarabun', sans-serif;" width="100%">
+            <tr>
+                <td valign="top"><b>
+                    2. แผนการประเมินผลการเรียนรู้ </b><br>
+                    <table border="1" width="100%">
+                        <tr>
+                            <td align="center"  valign="middle"><b>กิจกรรม<br>ที่</b></td>
+                            <td valign="middle" align="center"><b>ผลการ<br>เรียนรู้</b></td>
+                            <td align="center"  valign="middle"><b>วิธีการประเมิน</b></td>
+                            <td align="center"  valign="middle"width="90px"><b>สัปดาห์ที่<br>ประเมิน</b></td>
+                            <td valign="middle" align="center" ><b>สัดส่วนของกการ<br>ประเมินผล</b></td>
+                        </tr>
+                        @for(evaluation <- generalData.getEvaluationPlanDataList()){
+                            @for(data <- evaluation.getDetailPlanEvaluations) {
+                                <tr>
+                                    @if(actTmp != evaluation.getActivity) {
+                                        @(actTmp = evaluation.getActivity)
+                                        <td align="center">@evaluation.getActivity</td>
+                                        <td align="center">@evaluation.getLearningOutcome</td>
+                                    } else {
+                                        <td></td>
+                                        <td></td>
+                                    }
+                                <td>
+                                                - @data.getEvaluationStrategy.getEvaluationMethod <br>
+
+                                            </td>
+
+                                <td align="left" valign="top" width="90px">
+                                    @data.getEvaluationWeek <br>
+                                </td>
+
+                                <td align="center" valign="top">
+                                    @data.getRatingScale()% <br>
+
+                                </td>
+                                    @*<td align="center"><a href="/"> <i class='fas fa-edit' style="color: #3b9bff;*@
+                                    @*font-size: 18px;"></i></a>*@
+                                    @*</td>*@
+
+                                </tr>
+                            }
+                        }
+                    </table>
+                    <br>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="col-1"></div>
+</div>
+<br><br>
+</div>
+<script type="text/javascript">
+        function PrintDiv() {
+            var divToPrint = document.getElementById('allcat5'); // เลือก div id ที่เราต้องการพิมพ์
+            var html = '<html>' + //
+                    '<head>' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/BS4/css/bootstrap.css">' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/main.css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">' +
+                    '</head>' +
+                    '<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>' +
+                    '</html>';
+
+            var popupWin = window.open();
+            popupWin.document.open();
+            popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+            popupWin.document.close();
+        }
+</script>

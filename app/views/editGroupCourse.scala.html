@@ -1,0 +1,27 @@
+@(editGroupCourse: Form[GroupCourse],categoryCourseList : List[CategoryCourse])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>แก้ไขข้อมูลกลุ่มรายวิชา @editGroupCourse.get.getCategoryCourse.getName <br>
+            @editGroupCourse.get.getCategoryCourse.getSyllabusCourse.getNameTH </h3>
+        </center>
+        @if(flash.containsKey("dataGroupError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataGroupError"). </div>
+        }
+        @helper.form(action = routes.Application.updateGroupCourse(), 'enctype -> "multipart/form-data") {
+            @inputText(editGroupCourse("id"), '_label -> "รหัสกลุ่มรายวิชา", 'size -> "10px", 'required -> "required",'readonly->"readonly", 'class -> "form-control")
+            @inputText(editGroupCourse("name"), '_label -> "ชื่อกลุ่มรายวิชา", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @inputText(editGroupCourse("amount"), '_label -> "จำนวนหน่วยกิต", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            @select(editGroupCourse("categoryCourse.id"),
+                options = categoryCourseList.map(addGroupCourse => addGroupCourse.getId -> addGroupCourse.getName),
+                '_label -> "สาขา", 'class -> "form-control")
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <input type="reset" value="เคลียร์" class="btn btn-danger"  style="font-family: 'Mitr', sans-serif;">
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

@@ -1,0 +1,414 @@
+@(cat7: GeneralData,listCAS:List[CourseAssessmentStrategies],
+        teachingStrategiesDataList: List[TeachingStrategiesData],dataList7_3:List[ImproveTeachingData],
+        standardList :List[StandardReview],data7_5list:List[ReviewAndPlan])
+@import java.math.BigInteger; var i = 1; var n = 1; var j = 1; var r=1; var y=1;
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+<br>
+<br>
+<form action="/selectCat" method="post">
+    <input type="hidden" id="idDoc3" name="idDoc3" value="@cat7.getId">
+    <div class="row">
+        <div class="col-md-4" align="left"><h5 style="margin-top : 7px ;">วิชา:@cat7.getCourse.getNameTH</h5></div>
+        <div class="col-md-4">
+            <select id="nameCat" name="nameCat" class="form-control">
+                <option value="cat1">หมวดที่ 1 Success...</option>
+                @if(cat7.getCourseDestinationList.size()==0||cat7.getCourseObjectivesList.size()==0){
+                    <option value="cat2" style="color: red">หมวดที่ 2 wait...</option>
+                }else{
+                    <option value="cat2" style="color: green">หมวดที่ 2 Success...</option>
+                }
+                @if(cat7.getDataHoursList().size() == 0 || cat7.getSuggestion() == null){
+                    <option value="cat3" style="color: red">หมวดที่ 3 wait...</option>
+                }else{
+                    <option value="cat3" style="color: green">หมวดที่ 3 Success...</option>
+                }
+                @if(cat7.getData_listDevelopmentList().size() == 0|| cat7.getData_methodTeachingList().size() == 0 || cat7.getData_methodEvaluationList().size() == 0){
+                    <option value="cat4" style="color: red">หมวดที่ 4 wait...</option>
+                }else{
+                    <option value="cat4" style="color: green">หมวดที่ 4 Success...</option>
+                }
+                @if(cat7.getPlanTeachingDataList().size() == 0 ||cat7.getEvaluationPlanDataList().size() == 0){
+                    <option value="cat5" style="color: red">หมวดที่ 5 wait...</option>
+                }else{
+                    <option value="cat5" style="color: green">หมวดที่ 5 Success...</option>
+                }
+                @if(cat7.getMainDocumentList().size() == 0 ||cat7.getImportantDocumentList().size() == 0 || cat7.getSuggustionDocumentList().size() == 0){
+                    <option value="cat6" style="color: red">หมวดที่ 6 wait...</option>
+                }else{
+                    <option value="cat6" style="color: green">หมวดที่ 6 Success...</option>
+                }
+                @if(cat7.getCourseAssessmentStrategiesList().size() == 0 || cat7.getTeachingStrategiesDataList().size() == 0 ||cat7.getImproveTeachingDataList().size() == 0 || cat7.getStandardReviews().size() == 0 ||
+                        cat7.getReviewAndPlanList().size() == 0){
+                    <option value="cat7" style="color: red" selected>หมวดที่ 7 wait...</option>
+                }else{
+                    <option value="cat7" style="color: green" selected>หมวดที่ 7 Success...</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+    </div>
+</form>
+<br>
+@*<form method="post" action="/saveCategory7">*@
+    @*<input type="hidden" name="genId" value="@cat7.getId">*@
+    @*<button type="submit" class="btn btn-info" style="font-family : 'Mitr', sans-serif ;">*@
+        @*<i class='	fa fa-floppy-o' style="color : #f7fff6 ;*@
+        @*font-size : 18 px ;*@
+        @*" > บันทึก</i>*@
+    @*</button>*@
+@*</form>*@
+@*<br>*@
+<center>
+    <a href="/formatPrintCat7/@cat7.getId()" class="btn btn-outline-info">
+        <i class='far fa-file-alt' style="color: #000000;
+            font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์
+    </a>
+    <br>
+    <br>
+    <h3>หมวดที่ 7 การประเมินเเละการปรับปรุงการดำเนินการของรายวิชา</h3>
+</center>
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <b>1. กลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา</b> <br>
+        @for(data7_1 <- listCAS){
+                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/delete7_1/@data7_1.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและข้อมูลเเนะนำนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+            <a href="/edit7_1/@data7_1.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+            1.@n @data7_1.getDetail <br>
+            @(n=n+1)
+        }
+        @if(listCAS.size==0){
+            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+        }
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add7_1"> <i class='	fa fa-plus-circle'></i></button><br> <hr>
+        <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#select7_1"> <i class='fa fa-check-square-o'></i> เลือก</button>  -->
+        <b>2. กลยุทธ์การประเมินการสอน</b> <br>
+        @for(data7_2 <- teachingStrategiesDataList){
+                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/delete7_2/@data7_2.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและข้อมูลเเนะนำนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+            <a href="/edit7_2/@data7_2.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+            2.@j @data7_2.getDetail <br>
+            @(j=j+1)
+        }
+        @if(teachingStrategiesDataList.size==0){
+            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+        }
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add7_2"> <i class='	fa fa-plus-circle'></i></button><br> <hr>
+       <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#select7_2"> <i class='fa fa-check-square-o'></i> เลือก</button>  -->
+        <b>3. การปรับปรุงการสอน</b> <br>
+        @for(data7_3 <- dataList7_3){
+                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/delete7_3/@data7_3.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและข้อมูลเเนะนำนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+            <a href="/edit7_3/@data7_3.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+            3.@i @data7_3.getDetail <br>
+            @(i=i+1)
+        }
+        @if(dataList7_3.size==0){
+            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+        }
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add7_3"> <i class='	fa fa-plus-circle'></i></button><br> <hr>
+        <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#select7_3"> <i class='fa fa-check-square-o'></i> เลือก</button>  -->
+        <b>4. การสอบทวนมาตรฐานผลสัมฤทธิ์ของนักศึกษาในรายวิชา</b> <br>
+        @for(data7_4 <- standardList){
+                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/delete7_4/@data7_4.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและข้อมูลเเนะนำนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+            <a href="/edit7_4/@data7_4.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+            4.@r @data7_4.getDetail <br>
+            @(r=r+1)
+        }
+        @if(standardList.size==0){
+            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+        }
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add7_4"> <i class='	fa fa-plus-circle'></i></button> <br> <hr>
+        <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#select7_4"> <i class='fa fa-check-square-o'></i> เลือก</button>-->
+        <b>5. การดำเนินการทบทวนเเละการวางแผนปรับปรุงประสิทธิผลของรายวิชา</b>  <br>
+        @for(data7_5 <- data7_5list){
+                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/delete7_5/@data7_5.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารและข้อมูลเเนะนำนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt'style="color: #3b9bff;font-size: 14px;"></i></a>
+            <a href="/edit7_5/@data7_5.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 14px;"></i></a>
+            5.@y @data7_5.getDetail <br>
+            @(y=y+1)
+        }
+        @if(data7_5list.size==0){
+            <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+        }
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add7_5"> <i class='	fa fa-plus-circle'></i></button><br> <hr>
+        <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#select7_5"> <i class='fa fa-check-square-o'></i> เลือก</button> -->
+
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+    <!-- Modal Add7.1-->
+<div class="modal fade" id="add7_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">กลยุทธ์การประเมินประสืทธิผลของรายวิชาโดยนักศึกษา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/save7_1" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="detail" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Select7.1-->
+<div class="modal fade" id="select7_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">กลยุทธ์การประเมินประสืทธิผลของรายวิชาโดยนักศึกษา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/select7_1" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    @for(cas <- listCAS){
+                        <input type="checkbox" name="detail" value="@cas.getId"> @n. @cas.getDetail<br>
+                            @(n=n+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Add7.2-->
+<div class="modal fade" id="add7_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">กลยุทธ์การประเมินการสอน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/save7_2" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="detail" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Select7.2-->
+<div class="modal fade" id="select7_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">กลยุทธ์การประเมินการสอน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/select7_2" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    @for(tes <- teachingStrategiesDataList){
+                        <input type="checkbox" name="detail" value="@tes.getId"> @j. @tes.getDetail<br>
+                            @(j=j+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Add7.3-->
+<div class="modal fade" id="add7_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">การปรับปรุงการสอน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/save7_3" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="detail" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Select7.3-->
+<div class="modal fade" id="select7_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">การปรับปรุงการสอน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/select7_3" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    @for(data7_3 <- dataList7_3){
+                        <input type="checkbox" name="detail" value="@data7_3.getId"> @i. @data7_3.getDetail<br>
+                            @(i=i+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Add7.4-->
+<div class="modal fade" id="add7_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">การทบทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/save7_4" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="detail" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Select7.4-->
+<div class="modal fade" id="select7_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">การทบทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/select7_4" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    @for(data7_4 <- standardList){
+                        <input type="checkbox" name="detail" value="@data7_4.getId"> @r. @data7_4.getDetail<br>
+                            @(r=r+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Add7.5-->
+<div class="modal fade" id="add7_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">การทบทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/save7_5" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="detail" id="message-text" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Select7.5-->
+<div class="modal fade" id="select7_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">การทบทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/select7_5" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="genId" value="@cat7.getId">
+                    @for(data7_5 <- data7_5list){
+                        <input type="checkbox" name="detail" value="@data7_5.getId"> @y. @data7_5.getDetail<br>
+                            @(y=y+1)
+                        }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

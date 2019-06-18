@@ -1,0 +1,39 @@
+@(addTeacher : Form[Teacher],departmentList: List[Department])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>เพิ่มข้อมูลอาจารย์</h3>
+        </center>
+        @if(flash.containsKey("newTeachError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("newTeachError") </div>
+        }
+        @helper.form(action = routes.Application.insertTeacher(), 'enctype -> "multipart/form-data") {
+            @inputText(addTeacher("id"), '_label -> "รหัสอาจารย์", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            @inputText(addTeacher("name"), '_label -> "ชื่อ", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @inputText(addTeacher("sername"), '_label -> "นามสกุล", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            <label for="position">สถานะ</label>
+            <select id="position" name="position" class="form-control">
+                <option value="ผู้ดูเเลระบบ">ผู้ดูเเลระบบ</option>
+                <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
+                <option value="อาจารย์" selected="selected">อาจารย์</option>
+            </select>
+            <br>
+            @inputText(addTeacher("username"), '_label -> "Username", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @inputPassword(addTeacher("password"), '_label -> "password", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @select(addTeacher("department.id"),
+                options = departmentList.map(department => department.getId -> department.getNameTh),
+                '_label -> "สาขา", 'class -> "form-control")
+            <button type="submit" class="btn btn-success">
+                <i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px ;"></i> บันทึก
+            </button>
+            <button type="reset" class="btn btn-danger">
+                <i class='	fa fa-file-o' style="color : #f7fff6 ; font-size : 18px ;"></i> เคลียร์
+            </button>
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

@@ -1,0 +1,64 @@
+@(course: Course, listDev: List[DevelopmentalLearningList])
+@import java.math.BigInteger; var i = 0; var numr = 1;
+@import java.lang.String; var nameDev = ""; var chk = "1";
+@import java.lang.Boolean; var found = true;
+
+
+<br>
+<center>
+    <h3>Mappingรายวิชา : @course.getNameTH</h3>
+</center>
+<br>
+
+<div class="row">
+    <div class="col-md-11">
+<div align="right">
+        <b style="font-style: italic">หมายเหตุ*</b>&nbsp;&nbsp;&nbsp;1. ● รับผิดชอบหลัก&nbsp;&nbsp;&nbsp;  2 .○ รับผิดชอบรอง&nbsp;&nbsp;&nbsp; 3 .-ไม่รับผิดชอบ <br>
+</div>
+        <table class="table table-bordered">
+            <thead>
+                <tr style="background-color: #979fa5">
+                    <td align="center" ><b>หัวข้อการพัฒนาการเรียนรู้</b></td>
+                    <td align="center" ><b>รายการพัฒนาการเรียนรู้</b></td>
+                    <td colspan="3" align="center"><b>ความรับผิดชอบ</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                <form action="/sumMapping" method="post">
+                    @for(learn <- listDev) {
+                        <input type="hidden" name="id[@i]" value="@learn.getId">
+                        <input type="hidden" name="idc" value="@course.getId">
+                        <tr>
+                            @if(nameDev == ""){
+                                @(nameDev = learn.getDevelopmentalLearning.getName)
+                               <td>@nameDev</td>
+                            }else{
+                                @if(nameDev != learn.getDevelopmentalLearning.getName){
+                                    @(nameDev = learn.getDevelopmentalLearning.getName)
+                                    <td rowspan="@numr">@nameDev</td>
+                                }else{
+                                    <td></td>
+                                }
+                            }
+                        <td>@learn.getListDevelopmentalLearning</td>
+                        <td align="center" width="70px"> <input type="radio" name="learnId[@i]" value="2" required="required" style="font-size: 20px">
+                            ●</td>
+                        <td align="center" width="70px"> <input type="radio" name="learnId[@i]" value="1" required="required">
+                            ○</td>
+                        <td align="center" width="70px"> <input type="radio" name="learnId[@i]" value="0" checked required="required">
+                            -</td>
+                        </tr>
+                        @(i = i + 1)
+                    }
+                <button type="submit" class="btn btn-success">
+                    <i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px ;"></i> บันทึก
+                </button>
+                </form>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+

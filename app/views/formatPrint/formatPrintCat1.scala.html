@@ -1,0 +1,107 @@
+@(cat1: GeneralData)
+<br>
+<center>
+    <a onclick="PrintDiv()" class="btn btn-info" style="color: white" >
+        <i class='fa fa-print' style="color: #f7fff6;
+            font-size: 18px;" ></i> Print...
+    </a>
+</center>
+
+<div id="cat1">
+    <br><br><br><br><br>
+    <center>
+        <p class="titleForPrint">รายละเอียดของรายวิชา</p>
+    </center>
+    <br>
+    <table style="font-family: 'Sarabun', sans-serif;">
+        <tr>
+            <td valign="top"><div style="padding-left: 8em;font-size: 18px"><b>ชื่อสถาบันอุดมศึกษา</b></div>
+                <div style="padding-left: 8em;font-size: 18px"><b>วิทยาเขต/คณะ/สาขาวิชา</b></div>
+            </td>
+            <td valign="top">
+                <div style="padding-left: 4em;font-size: 18px">มหาวิทยาลัยเทคโนโลยีราชมงคบอีสาน</div>
+                <div style="padding-left: 4em;font-size: 18px">วิทยาเขตขอนแก่น</div>
+                <div style="padding-left: 4em;font-size: 18px">@cat1.getInstructors.getTeacher.getDepartment.getFaculty.getName </div>
+                <div style="padding-left: 4em;font-size: 18px">@cat1.getInstructors.getTeacher.getDepartment.getNameTh</div>
+        </tr>
+    </table>
+
+    <br>
+    <center>
+        <p class="titleForPrint">หมวดที่ 1 ข้อมูลโดยทั่วไป </p>
+    </center>
+    <div class="subTitleBlod">
+        1. รหัสเเละชื่อวิชา
+        <div class="detailForPrintCay1">
+            @cat1.getCourse.getIdCourse()
+            @cat1.getCourse.getNameTH <br>
+            <div style="padding-left: 5.4em;">@cat1.getCourse.getNameENG</div>
+        </div>
+            <br>
+        2. จำนวนหน่วยกิต<br>
+            <div class="detailForPrintCay1">
+                @cat1.getCourse.getAmount หน่วยกิต
+            </div>
+
+            <br>
+        3. หลักสูตรเเละประเภทของรายวิชา<br>
+            <div class="detailForPrintCay1">
+                @cat1.getCourse.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH@cat1.getCourse.getGroupCourse.getCategoryCourse.getName
+            </div>
+            <br>
+        4. อาจารย์ผู้รับผิดชอบรายวิชาเเละอาจารผู้สอน<br>
+            <div class="detailForPrintCay1">
+                    อาจารย์ผู้รับผิดชอบรายวิชา&nbsp;&nbsp;&nbsp;@cat1.getInstructors.getTeacher.getName @cat1.getInstructors.getTeacher.getSername <br>
+                        อาจารย์ผู้สอน&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@cat1.getInstructors.getTeacher.getName @cat1.getInstructors.getTeacher.getSername <br>
+            </div>
+            <br>
+        5. ภาคการศึกษา / ชั้นปีที่เรียน<br>
+            <div class="detailForPrintCay1">
+                ภาคการศึกษาที่ @cat1.getInstructors.getTerm/@cat1.getInstructors.getYear<br>
+                @cat1.getCourse.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH @cat1.getInstructors.getTeacher.getDepartment.getNameTh
+                    <br>ชั้นปีที่เรียน @cat1.getInstructors.getRoom
+            </div>
+            <br>
+
+        6. รายวิชาที่ต้องเรียนมาก่อน(Pre-requisite)<br>
+            <div class="detailForPrintCay1">
+            @cat1.getCourse.getRequiredCourses
+            </div>
+            <br>
+
+        7. รายวิชาที่ต้องเรียนพร้อมกัน(Co-requisite)<br>
+            <div class="detailForPrintCay1">
+                -
+            </div>
+            <br>
+        8. สถานที่เรียน(Co-requisite)<br>
+            <div class="detailForPrintCay1">
+                @cat1.getInstructors.getTeacher.getDepartment.getFaculty.getName
+                มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน วิทยาเขตขอนแก่น
+            </div>
+            <br>
+        9. วันที่จัดหรือปรับปรุงรายระเอียด<br>
+            <div class="detailForPrintCay1">
+            @cat1.getDetail
+            </div>
+    </div>
+</div>
+<script type="text/javascript">
+        function PrintDiv() {
+            var divToPrint = document.getElementById('cat1'); // เลือก div id ที่เราต้องการพิมพ์
+            var html = '<html>' + //
+                    '<head>' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/BS4/css/bootstrap.css">' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/main.css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">' +
+                    '</head>' +
+                    '<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>' +
+                    '</html>';
+
+            var popupWin = window.open();
+            popupWin.document.open();
+            popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+            popupWin.document.close();
+        }
+</script>

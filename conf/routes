@@ -1,0 +1,290 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                                           controllers.Application.login()
+POST        /submitLogin                                controllers.Application.subbmitLogin()
+GET         /logout                                     controllers.Application.logOut()
+#Faculty
+GET         /listFaculty                                controllers.Application.listFaculty()
+GET         /formAddFaculty                             controllers.Application.formAddFaculty()
+POST        /insertFaculty                              controllers.Application.insertFaculty()
+GET         /editFaculty/:id                            controllers.Application.editFaculty(id : String)
+POST        /updateFaculty                              controllers.Application.updateFaculty()
+GET         /deleteFaculty/:id                          controllers.Application.deleteFaculty(id : String)
+#Department
+GET         /listDepartment                             controllers.Application.listDepartment()
+GET         /formAddDepartment                          controllers.Application.formAddDepartment()
+POST        /insertDepartment                           controllers.Application.insertDepartment()
+GET         /editDepartment/:id                         controllers.Application.editDepartment(id : String)
+POST        /updateDepartment                           controllers.Application.updateDepartment()
+GET         /deleteDepartment/:id                       controllers.Application.deleteDepartment(id : String)
+#Teacher
+GET         /listTeacher                                controllers.Application.listTeacher()
+GET         /formAddTeacher                             controllers.Application.formAddTeacher()
+POST        /insertTeacher                              controllers.Application.insertTeacher()
+GET         /editTeacher/:id                            controllers.Application.editTeacher(id : String)
+POST        /updateTeacher                              controllers.Application.updateTeacher()
+GET         /deleteTeacher/:id                          controllers.Application.deleteTeacher(id : String)
+GET         /detailTeacher/:id                          controllers.Application.detailTeacher(id : String)
+#SyllabusCourse
+GET         /listSyllabusCourse                         controllers.Application.listSyllabusCourse()
+GET         /formAddSyllabusCourse                      controllers.Application.formAddSyllabusCourse()
+POST        /insertSyllabusCourse                       controllers.Application.insertSyllabusCourse()
+GET         /editSyllabusCourse/:id                     controllers.Application.editSyllabusCourse(id : String)
+POST        /updateSyllabusCourse                       controllers.Application.updateSyllabusCourse()
+GET         /deleteSyllabusCourse/:id                   controllers.Application.deleteSyllabusCourse(id : String)
+#CategoryCourse
+GET         /listCategoryCourse/:id                     controllers.Application.listCategoryCourse(id : String)
+GET         /formAddCategoryCourse                      controllers.Application.formAddCategoryCourse()
+POST        /insertCategoryCourse                       controllers.Application.insertCategoryCourse()
+GET         /editCategoryCourse/:id                     controllers.Application.editCategoryCourse(id : String)
+POST        /updateCategoryCourse                       controllers.Application.updateCategoryCourse()
+GET         /deleteCategoryCourse/:id                   controllers.Application.deleteCategoryCourse(id : String)
+#GroupCourse
+GET         /listGroupCourse/:id                        controllers.Application.listGroupCourse(id : String)
+GET         /formAddGroupCourse/:id                     controllers.Application.formAddGroupCourse(id : String)
+POST        /insertGroupCourse                          controllers.Application.insertGroupCourse()
+GET         /editGroupCourse/:id                        controllers.Application.editGroupCourse(id : String)
+POST        /updateGroupCourse                          controllers.Application.updateGroupCourse()
+GET         /deleteGroupCourse/:id                      controllers.Application.deleteGroupCourse(id : String)
+#Course
+GET         /listCourse/:id                             controllers.Application.listCourse(id : String)
+GET         /formAddCourse                              controllers.Application.formAddCourse()
+POST        /insertCourse                               controllers.Application.insertCourse()
+GET         /editCourse/:id                             controllers.Application.editCourse(id : String)
+POST        /updateCourse                               controllers.Application.updateCourse()
+GET         /deleteCourse/:id                           controllers.Application.deleteCourse(id : String)
+GET         /detailCourse/:id                           controllers.Application.detailCourse(id : String)
+#GeneralData
+GET         /listGeneralData                            controllers.Application.listGeneralData()
+GET         /formAddGeneralData                         controllers.Application.formAddGeneralData()
+POST        /insertGeneralData                          controllers.Application.insertGeneralData()
+GET         /editGeneralData/:id                        controllers.Application.editGeneralData(id : String)
+POST        /updateGeneralData                          controllers.Application.updateGeneralData()
+GET         /deleteGeneralData/:id                      controllers.Application.deleteGeneralData(id : String)
+GET         /detailGeneralData/:id                      controllers.Application.detailGeneralData(id : String)
+#DevelopmentalLearning
+GET         /selecCategoryCourseForDev                  controllers.Development.seleceCategoryCourseForDev()
+GET         /listDevelopmentalLearning/:id              controllers.Development.listDevelopmentalLearning(id : String)
+GET         /formAddDevelopmentalLearning               controllers.Development.formAddDevelopmentalLearning()
+POST        /insertDevelopmentalLearning                controllers.Development.insertDevelopmentalLearning()
+GET         /editDevelopmentalLearning/:id              controllers.Development.editDevelopmentalLearning(id : String)
+POST        /updateDevelopmentalLearning                controllers.Development.updateDevelopmentalLearning()
+GET         /deleteDevelopmentalLearning/:id            controllers.Development.deleteDevelopmentalLearning(id : String)
+#DevelopmentalLearningList
+GET         /listDevelopmentalLearningList/:id          controllers.Development.listDevelopmentalLearningList(id : String)
+GET         /formAddDevelopmentalLearningList           controllers.Development.formAddDevelopmentalLearningList()
+POST        /insertDevelopmentalLearningList            controllers.Development.insertDevelopmentalLearningList()
+GET         /editDevelopmentalLearningList/:id          controllers.Development.editDevelopmentalLearningList(id : String)
+POST        /updateDevelopmentalLearningList            controllers.Development.updateDevelopmentalLearningList()
+GET         /deleteDevelopmentalLearningList/:id        controllers.Development.deleteDevelopmentalLearningList(id : String)
+#TeachingStrategies
+GET         /listTeachingStrategies/:id                 controllers.Development.listTeachingStrategies(id : String)
+GET         /formAddTeachingStrategies                  controllers.Development.formAddTeachingStrategies()
+POST        /insertTeachingStrategies                   controllers.Development.insertTeachingStrategies()
+GET         /editTeachingStrategies/:id                 controllers.Development.editTeachingStrategies(id : String)
+POST        /updateTeachingStrategies                   controllers.Development.updateTeachingStrategies()
+GET         /deleteTeachingStrategies/:id               controllers.Development.deleteTeachingStrategies(id : String)
+#EvaluationStrategy
+GET         /listEvaluationStrategy/:id                 controllers.Development.listEvaluationStrategy(id : String)
+GET         /formAddEvaluationStrategy                  controllers.Development.formAddEvaluationStrategy()
+POST        /insertEvaluationStrategy                   controllers.Development.insertEvaluationStrategy()
+GET         /editEvaluationStrategy/:id                 controllers.Development.editEvaluationStrategy(id : String)
+POST        /updateEvaluationStrategy                   controllers.Development.updateEvaluationStrategy()
+GET         /deleteEvaluationStrategy/:id               controllers.Development.deleteEvaluationStrategy(id : String)
+#Curriculum
+GET         /listCourseMap                              controllers.Mapping.CouresList()
+POST        /loadCoorse                                 controllers.Mapping.loadCourse()
+POST         /loadCourse                                 controllers.testMapping.loadCourse()
+GET         /listCurriculum                             controllers.Mapping.listCurriculum()
+GET         /editCurriculum/:id                         controllers.Mapping.editCurriculum(id : String)
+POST        /updateCurriculum                           controllers.Mapping.updateCurriculum()
+GET         /deleteCurriculum/:id                       controllers.Mapping.deleteCurriculum(id : String)
+GET         /editMapping/:id                            controllers.Mapping.editMapping(id : String)
+POST        /updateMapping                              controllers.Mapping.updateMapping()
+#Instructors
+GET         /listCourseForMapping                       controllers.testMapping.listCourseForMapping()
+GET         /formAddMapping/:id                         controllers.testMapping.formAddMaipping(id : String)
+POST        /sumMapping                                 controllers.testMapping.inserttestMapping()
+GET         /detailMapping/:id                          controllers.testMapping.detailMapping(id : String)
+GET         /deleteMapping/:id                          controllers.testMapping.deleteMapping(id : String)
+#newInstructors
+GET         /listInstructors/:id                        controllers.FixTeaching.listIns(id : String)
+GET         /listYearAndTerm                            controllers.FixTeaching.listYearAndTerm()
+GET         /formAddyearAndTrem                         controllers.FixTeaching.formAddyearAndTrem()
+POST        /insertTandM                                controllers.FixTeaching.insertTandM()
+GET         /formFixTeaching/:id                        controllers.FixTeaching.formFixTeaching(id : String)
+POST        /loadData                                   controllers.FixTeaching.loadData()
+POST        /insertIns                                  controllers.FixTeaching.insertInsttrutors()
+GET         /detailInstructors/:id                      controllers.FixTeaching.detailIns(id : String )
+GET         /deleteIns/:id                              controllers.FixTeaching.deleteIns(id : String)
+GET         /editInstructors/:id                        controllers.FixTeaching.editFixTeaching(id : String)
+POST        /loadDataEdit                               controllers.FixTeaching.loadDataEdit()
+POST        /updateInsttrutors                          controllers.FixTeaching.updateInsttrutors()
+GET         /deleteYearAndTrem/:id                      controllers.FixTeaching.deleteTremAndYear(id : String)
+#CreateDoc
+#GET         /showDoc3                                   controllers.CreateDoc.showDoc3
+#POST        /loadDataIns                                controllers.CreateDoc.loadData
+#GET         /formAddDoc3                                controllers.CreateDoc.createDoc()
+#POST        /saveCat1                                   controllers.CreateDoc.saveCat1()
+
+
+#CourseDestination&CourseObjectives
+#POST        /saveCourseDes                              controllers.CreateDoc.addCourseDes()
+#POST        /selectDes                                  controllers.CreateDoc.selectDes()
+#POST        /addCourseObjectives                        controllers.CreateDoc.addCourseObjectives()
+#POST        /selectCourseObjectives                     controllers.CreateDoc.selectCourseObjectives()
+#POST        /saveCat2                                   controllers.CreateDoc.saveCategory2()
+#GET         /deleteCourseDestinations/:id               controllers.CreateDoc.deleteDes(id : String)
+
+
+#NewCreateDoc3
+GET         /newDoc3/:id                                controllers.CreateDoc3.newDoc3(id:  String)
+GET         /showDoc3                                   controllers.CreateDoc3.showDoc3()
+GET         /copyDoc3/:id                               controllers.CreateDoc3.copyDoc3(id : String)
+GET         /selectCourse                               controllers.CreateDoc3.selectCourseForDoc3()
+#POST        /saveDoc3                                   controllers.CreateDoc3.saveDoc3()
+GET         /editDoc3/:id                               controllers.CreateDoc3.editDoc3(id : String)
+POST        /selectCat                                  controllers.CreateDoc3.selectCat()
+GET         /deleteDoc3/:id                             controllers.CreateDoc3.deleteDoc3(id : String)
+#POST        /saveCategory2                              controllers.CreateDoc3.saveCateory2()
+#POST        /saveCategory5                              controllers.CreateDoc3.saveCategory5()
+
+
+
+#CourseDestinations
+POST        /saveDes                                    controllers.CourseDes.saveDes()
+#POST        /selectDes                                  controllers.CourseDes.selectCourseDes()
+GET         /deleteDes/:id                              controllers.CourseDes.deleteDes(id : String)
+
+#CourseObjectives
+POST        /saveObj                                    controllers.CourseObj.saveCourseObj()
+#POST        /selectObj                                  controllers.CourseObj.selectCourseObj()
+GET         /deleteObj/:id                              controllers.CourseObj.deleteObj(id : String)
+
+
+#DataHourse
+POST        /addHours                                   controllers.HourPerTrem.addHours()
+GET         /deleteHours/:id                            controllers.HourPerTrem.deleteHour(id : String)
+GET         /deleteSuggestion/:id                       controllers.HourPerTrem.deleteSuggestion(id : String)
+GET         /deleteHoursSession                         controllers.HourPerTrem.deleteHoursSession()
+#POST        /editHour                                   controllers.HourPerTrem.editHour
+POST        /addsuggestion                              controllers.HourPerTrem.addsuggestion()
+#POST        /saveCategory3                              controllers.CreateDoc3.saveCategory3()
+
+#PlanTeaching
+POST        /savePlanTeaching                           controllers.PlanTeaching.savePlanTeaching()
+POST        /savePlanvalutation                         controllers.PlanTeaching.savePlanvalutation()
+POST        /addtoBasket                                controllers.PlanTeaching.addToBasket()
+POST        /selectPlanEvaluation                       controllers.PlanTeaching.selectPlanEvaluation()
+GET         /deletePlanTeaching/:id                     controllers.PlanTeaching.deletePlanTeaching(id : String)
+GET         /deletePlanValutation/:id                   controllers.PlanTeaching.deletePlanValutation(id : String)
+
+#LearningResources
+POST        /addMainDoc                                 controllers.LearningResources.addMainDocument()
+POST        /addImportant                               controllers.LearningResources.addImportant()
+POST        /addSuggestion                              controllers.LearningResources.addSuggestion()
+GET         /deleteMainDoc/:id                          controllers.LearningResources.deleteMainDoc(id : String)
+GET         /deleteImportant/:id                        controllers.LearningResources.deleteImportant(id : String)
+GET         /deleteSuggestions/:id                      controllers.LearningResources.deleteSuggestion(id : String)
+#GET         /delBasKetMainDoc/:detail                   controllers.LearningResources.delBasKetMainDoc(detail : String)
+#GET         /delBasketImportant/:detail                 controllers.LearningResources.delBasketImportant(detail : String)
+#GET         /delBasketSuggestion/:detail                controllers.LearningResources.delBasketSuggestion(detail : String)
+#POST        /selectMainDoc                              controllers.LearningResources.selectMainDoc()
+#POST        /selectImportant                            controllers.LearningResources.selectImportant()
+#POST        /selectSuggestion                           controllers.LearningResources.selectSuggestion()
+
+#Category7
+POST        /save7_1                                    controllers.EvaluateAndImprove.saveData7_1()
+#POST        /select7_1                                  controllers.EvaluateAndImprove.selectData7_1()
+POST        /save7_2                                    controllers.EvaluateAndImprove.saveData7_2()
+#POST        /select7_2                                  controllers.EvaluateAndImprove.selectData7_2()
+POST        /save7_3                                    controllers.EvaluateAndImprove.saveData7_3()
+#POST        /select7_3                                  controllers.EvaluateAndImprove.selectData7_3()
+POST        /save7_4                                    controllers.EvaluateAndImprove.saveData7_4()
+#POST        /select7_4                                  controllers.EvaluateAndImprove.selectData7_4()
+POST        /save7_5                                    controllers.EvaluateAndImprove.saveData7_5()
+#POST        /select7_5                                  controllers.EvaluateAndImprove.selectData7_5()
+
+#POST        /saveCategory6                              controllers.CreateDoc3.saveCategory6()
+#POST        /saveCategory7                              controllers.CreateDoc3.saveCategory7()
+
+#EvaluateAndImprove
+GET         /delete7_1/:id                              controllers.EvaluateAndImprove.delete7_1(id : String)
+GET         /delete7_2/:id                              controllers.EvaluateAndImprove.delete7_2(id : String)
+GET         /delete7_3/:id                              controllers.EvaluateAndImprove.delete7_3(id : String)
+GET         /delete7_4/:id                              controllers.EvaluateAndImprove.delete7_4(id : String)
+GET         /delete7_5/:id                              controllers.EvaluateAndImprove.delete7_5(id : String)
+
+POST        /reciveData                                 controllers.Notifications.reciveData()
+GET         /sendData                                   controllers.Notifications.sendData()
+
+#Print
+GET         /formatPrintCat1/:id                        controllers.FormatPrintDoc3.formatCat1(id : String)
+GET         /formatPrintCat2/:id                        controllers.FormatPrintDoc3.formatCat2(id : String)
+GET         /formatPrintCat3/:id                        controllers.FormatPrintDoc3.formatCat3(id : String)
+POST        /formatPrintCat4                            controllers.FormatPrintDoc3.formatCat4()
+GET         /formatPrintCat5_1/:id                      controllers.FormatPrintDoc3.formatCat5_1(id : String)
+GET         /formatPrintCat5_2/:id                      controllers.FormatPrintDoc3.formatCat5_2(id : String)
+GET         /formatPrintCat6/:id                        controllers.FormatPrintDoc3.formatCat6(id : String)
+GET         /formatPrintCat7/:id                        controllers.FormatPrintDoc3.formatCat7(id : String)
+GET         /printmaimDoc/:id                           controllers.FormatPrintDoc3.mainDoc3(id : String)
+#จัดการข้อมูลหมวดที่4
+POST        /insertDevListData                          controllers.DataCategory4.insertDevListData()
+POST        /insertTeachingData                         controllers.DataCategory4.insertTeachingData()
+POST        /insertDataEvaluation                       controllers.DataCategory4.insertDataEvaluation()
+#แก้ไชหมวด2
+GET         /editDes/:id                                controllers.CourseDes.edit(id : String)
+GET         /editObj/:id                                controllers.CourseObj.edit(id : String)
+POST        /updateCourseDes                            controllers.CourseDes.update()
+POST        /updatecourseObj                            controllers.CourseObj.update()
+
+#แก้ไขหมวด3
+POST        /editHour                                   controllers.HourPerTrem.editHour()
+POST        /editSuggestion                             controllers.HourPerTrem.editSuggestion()
+
+#แก้ไชหมวดที่6
+GET         /editMainDoc/:id                            controllers.LearningResources.editMainDoc(id : String)
+GET         /editImportantDocument/:id                  controllers.LearningResources.editImportantDocument(id : String)
+GET         /editSuggestion/:id                         controllers.LearningResources.editSuggestion(id:String)
+POST        /updateMainDocument                         controllers.LearningResources.updateMainDoc()
+POST        /updateImportantDocument                    controllers.LearningResources.updateImportantDocument()
+POST        /updateSuggustionDocument                   controllers.LearningResources.updateSuggestion()
+
+#แก้ไขหมสด7
+GET         /edit7_1/:id                                controllers.EvaluateAndImprove.edit7_1(id:String)
+GET         /edit7_2/:id                                controllers.EvaluateAndImprove.edit7_2(id:String)
+GET         /edit7_3/:id                                controllers.EvaluateAndImprove.edit7_3(id:String)
+GET         /edit7_4/:id                                controllers.EvaluateAndImprove.edit7_4(id:String)
+GET         /edit7_5/:id                                controllers.EvaluateAndImprove.edit7_5(id:String)
+POST        /update7_1                                  controllers.EvaluateAndImprove.update7_1
+POST        /update7_2                                  controllers.EvaluateAndImprove.update7_2
+POST        /update7_3                                  controllers.EvaluateAndImprove.update7_3
+POST        /update7_4                                  controllers.EvaluateAndImprove.update7_4
+POST        /update7_5                                  controllers.EvaluateAndImprove.update7_5
+
+#แก้ไขหมวด5
+GET         /edit5_1/:id                                controllers.PlanTeaching.editPlanTeaching(id : String)
+POST        /updatePlanTeaching                         controllers.PlanTeaching.updatePlanTeaching()
+GET         /printAll/:id                               controllers.FormatPrintDoc3.printAll(id : String)
+GET         /printAllCat4/:id                           controllers.FormatPrintDoc3.printAllCat4(id : String)
+GET         /printAllCat5/:id                           controllers.FormatPrintDoc3.printAllCat5(id : String)
+GET         /deletePlanBasket/:id                       controllers.PlanTeaching.deletePlanBasket(id : String)
+
+#Report
+GET         /reportData                                 controllers.Report.conditionData()
+POST        /dataReport                                 controllers.Report.dataReport()
+POST        /dataReportBoss                             controllers.Report.DocOK()
+
+#Select Print
+GET         /selectPrint/:id                            controllers.FormatPrintDoc3.selectPrint(id : String)
+#ลบหมวดที่4
+POST        /deleteCat4_1                               controllers.DataCategory4.deleteCat4_1
+POST        /deleteCat4_2                               controllers.DataCategory4.deleteCat4_2
+POST        /deleteCat4_3                               controllers.DataCategory4.deleteCat4_3
+POST        /editToken                                  controllers.Notifications.editToken()
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                               controllers.Assets.at(path="/public", file)

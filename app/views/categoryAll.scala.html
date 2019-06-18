@@ -1,0 +1,123 @@
+@(content: Html, listIns: List[Instructors], nameCourse: String, nameCat: String)
+@import java.lang.String; var idIns = "";
+<br>
+<div class="row">
+
+    <div class="col-md-7">
+        <form action="/loadDataIns" method="post">
+            <lable for="InsId" ><b>เลือกรายวิชาที่จะทำการทำเอกสาร (มคอ.3)</b></lable>
+            <input type="hidden" name="nameCat" value="cat1">
+            <input type="hidden" name="nameCourse" value="@nameCourse">
+            <select id="InsId" name="InsId" onchange="this.form.submit()" class="form-control">
+                <option value="0">-----เลือกวิชา----- </option>
+                @for(ca <- listIns) {
+                    @if(nameCourse == ca.getCourse.getNameTH) {
+                        @(idIns = ca.getId)
+                        <option value="@ca.getId" selected>@ca.getCourse.getNameTH</option>
+                    } else {
+                        <option value="@ca.getId">@ca.getCourse.getNameTH</option>
+                    }
+                }
+                </select>
+        </form>
+        <form action="/loadDataIns" method="post">
+            <input type="hidden" name="nameCourse" value="@nameCourse">
+            <input type="hidden" name="InsId" value="@idIns">
+            <lable for="nameCat" ><b>เลือกหมวดในการจัดทำเอกสาร (มคอ.3)</b></lable>
+            <select id="nameCat" name="nameCat" onchange="this.form.submit()" class="form-control">
+            @if(nameCourse != "") {
+                @if(nameCat == "cat1") {
+                    <option value="cat1" selected>หมวดที่ 1</option>
+                    <option value="cat2">หมวดที่ 2</option>
+                    <option value="cat3">หมวดที่ 3</option>
+                    <option value="cat4">หมวดที่ 4</option>
+                    <option value="cat5">หมวดที่ 5</option>
+                    <option value="cat6">หมวดที่ 6</option>
+                    <option value="cat7">หมวดที่ 7</option>
+                } else {
+                    @if(nameCat == ("cat2")) {
+
+                        <option value="cat1">หมวดที่ 1</option>
+                        <option value="cat2" selected>หมวดที่ 2</option>
+                        <option value="cat3">หมวดที่ 3</option>
+                        <option value="cat4">หมวดที่ 4</option>
+                        <option value="cat5">หมวดที่ 5</option>
+                        <option value="cat6">หมวดที่ 6</option>
+                        <option value="cat7">หมวดที่ 7</option>
+                    } else {
+                        @if(nameCat == "cat3") {
+
+                            <option value="cat1">หมวดที่ 1</option>
+                            <option value="cat2">หมวดที่ 2</option>
+                            <option value="cat3" selected>หมวดที่ 3</option>
+                            <option value="cat4">หมวดที่ 4</option>
+                            <option value="cat5">หมวดที่ 5</option>
+                            <option value="cat6">หมวดที่ 6</option>
+                            <option value="cat7">หมวดที่ 7</option>
+                        } else {
+                            @if(nameCat == "cat4") {
+                                <option value="cat1">หมวดที่ 1</option>
+                                <option value="cat2">หมวดที่ 2</option>
+                                <option value="cat3">หมวดที่ 3</option>
+                                <option value="cat4" selected>หมวดที่ 4</option>
+                                <option value="cat5">หมวดที่ 5</option>
+                                <option value="cat6">หมวดที่ 6</option>
+                                <option value="cat7">หมวดที่ 7</option>
+                            } else {
+                                @if(nameCat == "cat5") {
+                                    <option value="cat1">หมวดที่ 1</option>
+                                    <option value="cat2">หมวดที่ 2</option>
+                                    <option value="cat3">หมวดที่ 3</option>
+                                    <option value="cat4">หมวดที่ 4</option>
+                                    <option value="cat5" selected>หมวดที่ 5</option>
+                                    <option value="cat6">หมวดที่ 6</option>
+                                    <option value="cat7">หมวดที่ 7</option>
+                                } else {
+                                    @if(nameCat == "cat6") {
+                                        <option value="cat1">หมวดที่ 1</option>
+                                        <option value="cat2">หมวดที่ 2</option>
+                                        <option value="cat3">หมวดที่ 3</option>
+                                        <option value="cat4">หมวดที่ 4</option>
+                                        <option value="cat5">หมวดที่ 5</option>
+                                        <option value="cat6" selected>หมวดที่ 6</option>
+                                        <option value="cat7">หมวดที่ 7</option>
+                                    } else {
+                                        @if(nameCat == "cat7") {
+                                            <option value="cat1">หมวดที่ 1</option>
+                                            <option value="cat2">หมวดที่ 2</option>
+                                            <option value="cat3">หมวดที่ 3</option>
+                                            <option value="cat4">หมวดที่ 4</option>
+                                            <option value="cat5">หมวดที่ 5</option>
+                                            <option value="cat6">หมวดที่ 6</option>
+                                            <option value="cat7" selected>หมวดที่ 7</option>
+                                        } else {
+                                            <option value="cat1">หมวดที่ 1</option>
+                                            <option value="cat2">หมวดที่ 2</option>
+                                            <option value="cat3">หมวดที่ 3</option>
+                                            <option value="cat4">หมวดที่ 4</option>
+                                            <option value="cat5">หมวดที่ 5</option>
+                                            <option value="cat6">หมวดที่ 6</option>
+                                            <option value="cat7">หมวดที่ 7</option>
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                <option value="0" selected>-----เลือกหมวด----- </option>
+            }
+            </select>
+        </form>
+    </div>
+    <div class="col-md-5"></div>
+</div>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-11">
+    @content
+    </div>
+    <div class="col-md-1"></div>
+</div>

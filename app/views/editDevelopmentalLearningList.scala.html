@@ -1,0 +1,22 @@
+@(addDevelopmentalLearningList: Form[DevelopmentalLearningList],DevelopmentalLearning: List[DevelopmentalLearning])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>แก้ไขข้อมูลรายการการพัฒนาการเรียนรู้</h3>
+        </center>
+        @if(flash.containsKey("datadevListError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("datadevListError"). </div>
+        }
+        @helper.form(action = routes.Development.updateDevelopmentalLearningList(), 'enctype -> "multipart/form-data") {
+            @inputText(addDevelopmentalLearningList("id"), '_label -> "รหัสการพัฒนาการเรียนรู้", 'size -> "10px", 'required -> "required",'readonly->"readonly", 'class -> "form-control")
+            @textarea(addDevelopmentalLearningList("listDevelopmentalLearning"), '_label -> "รายละเอียกรายการพัฒนาการเรียนรู้",'rows->"3",'cols->"60", 'required -> "required", 'class -> "form-control")
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <input type="reset" value="เคลียร์" class="btn btn-danger"  style="font-family: 'Mitr', sans-serif;">
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

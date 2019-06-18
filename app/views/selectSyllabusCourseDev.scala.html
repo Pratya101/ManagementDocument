@@ -1,0 +1,58 @@
+@(syllabusCourseList : List[SyllabusCourse])
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <center>
+            @if(flash.containsKey("noDelOK")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("noDelOK"). </div>
+            }
+            @if(flash.containsKey("nodata")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("nodata"). </div>
+            }
+            @if(flash.containsKey("delOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("delOK"). </div>
+            }
+            @if(flash.containsKey("insertOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("insertOK"). </div>
+            }
+            @if(flash.containsKey("updateOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("updateOK"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<br>
+<center>
+    @if(flash.containsKey("datasyllabusError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("datasyllabusError"). </div>
+    }
+    <h3>เลือกหลักสูตรในการสร้างข้อมูลการพัฒนาการเรียนรู้</h3>
+</center>
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-11">
+
+        <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+            <thead>
+                <tr style="background-color: #b3bbc1">
+                    <td style="font-weight: bold;" align="center">ชื่อหลักสูตรภาษาไทย</td>
+                    <td style="font-weight: bold;" align="center">การพัฒนาผลการเรียนรู้</td>
+                </tr>
+            </thead>
+            <tbody>
+            @for(syllabusCourse <- syllabusCourseList) {
+                <tr>
+                    <td>@syllabusCourse.getNameTH</td>
+                    <td align="center"><a href="/listDevelopmentalLearning/@syllabusCourse.getId"><i class='fa fa-folder-open' style="color: #3b9bff;font-size: 24px;" ></i></a></td>
+
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>

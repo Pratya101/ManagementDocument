@@ -1,0 +1,187 @@
+@(cat1: GeneralData)
+<br>
+<center>
+    <br>
+    @if(flash.containsKey("cat1")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("cat1"). </div>
+    }
+    @if(flash.containsKey("insertError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("insertError"). </div>
+    }
+    <form action="/selectCat" method="post">
+        <input type="hidden" id="idDoc3" name="idDoc3" value="@cat1.getId">
+        <div class="row">
+            <div class="col-md-4" align="left"> <h5 style="margin-top: 7px;">วิชา:@cat1.getCourse.getNameTH</h5></div>
+            <div class="col-md-4">
+                <select id="nameCat" name="nameCat" class="form-control">
+                    <option value="cat1" selected>หมวดที่ 1 Success...</option>
+                    @if(cat1.getCourseDestinationList.size()==0||cat1.getCourseObjectivesList.size()==0){
+                        <option value="cat2" style="color: red">หมวดที่ 2 wait...</option>
+                    }else{
+                        <option value="cat2" style="color: green">หมวดที่ 2 Success...</option>
+                    }
+                    @if(cat1.getDataHoursList().size() == 0 || cat1.getSuggestion() == null){
+                        <option value="cat3" style="color: red">หมวดที่ 3 wait...</option>
+                    }else{
+                        <option value="cat3" style="color: green">หมวดที่ 3 Success...</option>
+                    }
+                    @if(cat1.getData_listDevelopmentList().size() == 0|| cat1.getData_methodTeachingList().size() == 0 || cat1.getData_methodEvaluationList().size() == 0){
+                        <option value="cat4" style="color: red">หมวดที่ 4 wait...</option>
+                    }else{
+                        <option value="cat4" style="color: green">หมวดที่ 4 Success...</option>
+                    }
+                    @if(cat1.getPlanTeachingDataList().size() == 0 ||cat1.getEvaluationPlanDataList().size() == 0){
+                        <option value="cat5" style="color: red">หมวดที่ 5 wait...</option>
+                    }else{
+                        <option value="cat5" style="color: green">หมวดที่ 5 Success...</option>
+                    }
+                    @if(cat1.getMainDocumentList().size() == 0 ||cat1.getImportantDocumentList().size() == 0 || cat1.getSuggustionDocumentList().size() == 0){
+                        <option value="cat6" style="color: red">หมวดที่ 6 wait...</option>
+                    }else{
+                        <option value="cat6" style="color: green">หมวดที่ 6 Success...</option>
+                    }
+                    @if(cat1.getCourseAssessmentStrategiesList().size() == 0 || cat1.getTeachingStrategiesDataList().size() == 0 ||cat1.getImproveTeachingDataList().size() == 0 || cat1.getStandardReviews().size() == 0 ||
+                            cat1.getReviewAndPlanList().size() == 0){
+                        <option value="cat7" style="color: red">หมวดที่ 7 wait...</option>
+                    }else{
+                        <option value="cat7" style="color: green">หมวดที่ 7 Success...</option>
+                    }
+
+                </select>
+            </div>
+            <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+        </div>
+    </form>
+    <br>
+    <a href="/formatPrintCat1/@cat1.getId()" class="btn btn-outline-info">
+        <i class='far fa-file-alt' style="color: #000000;
+            font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์
+    </a>
+    <div id="con" style="font-family: 'Sarabun', sans-serif;">
+        <br>
+        <center style="font-family: 'Sarabun', sans-serif;">
+            <h3>หมวดที่ 1 ข้อมูลโดยทั่วไป </h3>
+        </center>
+        <br>
+        <br>
+
+        <div class="row" style="font-family: 'Sarabun', sans-serif;" >
+            <div class="col-md-11">
+                <table border="0" class="table table-hover table-bordered" style="font-size: 16px" >
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>ชื่อสถาบันอุดมศึกษา<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;วิทยาเขต/คณะ/สาขาวิชา</b>
+                        </td>
+                        <td valign="top"> &nbsp;&nbsp;&nbsp;&nbsp; มหาวิทยาลัยเทคโนโลยีราชมงคบอีสาน
+                            <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp; วิทยาเขตขอนแก่น
+                            <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getInstructors.getTeacher.getDepartment.getFaculty.getName <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getInstructors.getTeacher.getDepartment.getNameTh
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>1.รหัสเเละชื่อวิชา :</b></td>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getCourse.getIdCourse <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getCourse.getNameTH <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getCourse.getNameENG
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>2.จำนวนหน่วยกิต</b></td>
+                        <td valign="top">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getCourse.getAmount <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>3.หลักสูตรเเละประเภทของรายวิชา</b></td>
+                        <td valign="top">
+                                &nbsp;&nbsp;&nbsp;&nbsp; @cat1.getCourse.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getCourse.getGroupCourse.getCategoryCourse.getName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>4.อาจารย์ผู้รับผิดชอบรายวิชาเเละอาจารผู้สอน</b></td>
+                        <td valign="top">
+                                &nbsp;&nbsp;&nbsp;&nbsp; อาจารย์ผู้รับผิดชอบรายวิชา
+                            @cat1.getInstructors.getTeacher.getName <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp; อาจารย์ผู้สอน
+                            @cat1.getInstructors.getTeacher.getName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>5.ภาคการศึกษา / ชั้นปีที่เรียน</b></td>
+                        <td valign="top">
+                                &nbsp;&nbsp;&nbsp;&nbsp; วิทยาเขตขอนแก่น
+                            <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp; ภาคการศึกษาที่ @cat1.getInstructors.getTerm/
+                            @cat1.getInstructors.getYear <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getCourse.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH @cat1.getInstructors.getTeacher.getDepartment.getNameTh <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp; ชั้นปีที่ @cat1.getInstructors.getRoom
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>6.รายวิชาที่ต้องเรียนมาก่อน(Pre-requisite)</b></td>
+                        <td valign="top">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            @cat1.getCourse.getRequiredCourses
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>7.รายวิชาที่ต้องเรียนพร้อมกัน(Co-requisite)</b></td>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp; </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>8.สถานที่เรียน(Co-requisite)</b></td>
+                        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp; @cat1.getInstructors.getTeacher.getDepartment.getFaculty.getName
+    มหาวิทยาลัยเทคโนโลยีราชมงคบอีสาน วิทยาเขตขอนแก่น
+</tr>
+    <tr>
+        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>9.วันที่จัดหรือปรับปรุงรายระเอียด
+                <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; ของรายวิชาครั้งล่าสุด </b></td>
+        <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp; @cat1.getDetail </td>
+    </tr>
+
+</table>
+</div>
+    <div class="col-md-1"></div>
+</div>
+</div>
+
+    <script type="text/javascript">
+            function PrintDiv() {
+                var divToPrint = document.getElementById('con'); // เลือก div id ที่เราต้องการพิมพ์
+                var html = '<html>' + //
+                        '<head>' +
+                        '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/BS4/css/bootstrap.css">' +
+                        '  <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">' +
+                        '</head>' +
+                        '<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>' +
+                        '</html>';
+
+                var popupWin = window.open();
+                popupWin.document.open();
+                popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+                popupWin.document.close();
+            }
+    </script>

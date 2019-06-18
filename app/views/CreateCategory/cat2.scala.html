@@ -1,0 +1,236 @@
+@(generalData: GeneralData,courseDes : List[CourseDestination],courseObjectives : List[CourseObjectives],listDes : List[CourseDestination],listOb:List[CourseObjectives])
+@import java.math.BigInteger; var i = 1; var x = 1 ;var no =1;var noo =1;var nIndex=0;
+@import java.lang.String;var detail ="";
+@import scala.collection.mutable.ArrayBuffer;var fruits = ArrayBuffer[String]()
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+<br>
+<br>
+<form action="/selectCat" method="post">
+    <input type="hidden" name="idDoc3" value="@generalData.getId">
+    <div class="row">
+        <div class="col-md-4" align="left"><h5 style="margin-top : 7px ;">วิชา:@generalData.getCourse.getNameTH</h5></div>
+        <div class="col-md-4">
+            <select id="nameCat" name="nameCat" class="form-control">
+                <option value="cat1" >หมวดที่ 1 Success...</option>
+                @if(generalData.getCourseDestinationList.size()==0||generalData.getCourseObjectivesList.size()==0){
+                    <option value="cat2" style="color: red" selected>หมวดที่ 2 wait...</option>
+                }else{
+                    <option value="cat2" style="color: green" selected>หมวดที่ 2 Success...</option>
+                }
+                @if(generalData.getDataHoursList().size() == 0 || generalData.getSuggestion() == null){
+                    <option value="cat3" style="color: red">หมวดที่ 3 wait...</option>
+                }else{
+                    <option value="cat3" style="color: green">หมวดที่ 3 Success...</option>
+                }
+                @if(generalData.getData_listDevelopmentList().size() == 0|| generalData.getData_methodTeachingList().size() == 0 || generalData.getData_methodEvaluationList().size() == 0){
+                    <option value="cat4" style="color: red">หมวดที่ 4 wait...</option>
+                }else{
+                    <option value="cat4" style="color: green">หมวดที่ 4 Success...</option>
+                }
+                @if(generalData.getPlanTeachingDataList().size() == 0 ||generalData.getEvaluationPlanDataList().size() == 0){
+                    <option value="cat5" style="color: red">หมวดที่ 5 wait...</option>
+                }else{
+                    <option value="cat5" style="color: green">หมวดที่ 5 Success...</option>
+                }
+                @if(generalData.getMainDocumentList().size() == 0 ||generalData.getImportantDocumentList().size() == 0 || generalData.getSuggustionDocumentList().size() == 0){
+                    <option value="cat6" style="color: red">หมวดที่ 6 wait...</option>
+                }else{
+                    <option value="cat6" style="color: green">หมวดที่ 6 Success...</option>
+                }
+                @if(generalData.getCourseAssessmentStrategiesList().size() == 0 || generalData.getTeachingStrategiesDataList().size() == 0 ||generalData.getImproveTeachingDataList().size() == 0 || generalData.getStandardReviews().size() == 0 ||
+                        generalData.getReviewAndPlanList().size() == 0){
+                    <option value="cat7" style="color: red">หมวดที่ 7 wait...</option>
+                }else{
+                    <option value="cat7" style="color: green">หมวดที่ 7 Success...</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+    </div>
+</form>
+<br>
+
+<center>
+    <a href="/formatPrintCat2/@generalData.getId()" class="btn btn-outline-info">
+        <i class='far fa-file-alt' style="color: #000000;
+            font-size: 18px;" ></i> ดูตัวอย่างก่อนพิมพ์
+    </a>
+    <br>
+    <br>
+    <h3>หมวดที่ 2 จุดมุ่งหมายเเละวัตถุประสงค์</h3>
+</center>
+@*<br>*@
+@*<form action="/saveCategory2" method="post">*@
+@*<input type="hidden" name="InsId" value="@generalData.getInstructors.getId">*@
+@*<button type="submit"   class="btn btn-info" style="font-family : 'Mitr', sans-serif ;">*@
+@*<i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px; " > บันทึก</i>*@
+@*</button>*@
+@*<br>*@
+@*</form>*@
+@*<br>*@
+<div class="row">
+    <div class="col-md-11">
+        <table class="table table-hover">
+            <tr style="background-color: #b3bbc1">
+                <td align="center">
+                    <b> 1.จุดมุ่งหมายของรายวิชา </b>
+                </td>
+            </tr>
+            @for(dataDes<-listDes){
+                <tr>
+                    <td align="left">
+                        <a href="/deleteDes/@dataDes.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูล จุดมุ่งหมายนี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a>
+                        <a href="/editDes/@dataDes.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 18px;"></i></a>
+                        @no.  @dataDes.getDetail</td>
+                </tr>
+                @(no=no+1)
+                @(nIndex=nIndex+1)
+            }
+            <br>
+            <tr>
+                <td align="center">
+                    @if(courseDes.size==0){
+                        <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                    }
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCourseDes">  <i class='fa fa-plus-circle' style="color : #ffffff; font-size : 13px;" ></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="background-color: #b3bbc1">
+                    <b> 2. วัตุประสงค์ในการพัฒนา/ปรับปรุงรายวิชา </b>
+                </td>
+            </tr>
+
+            @for(dataOb<-listOb){
+                <tr>
+                    <td>
+                        <a href="/deleteObj/@dataOb.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลวัตุประสงค์ในการพัฒนา/ปรับปรุงรายวิชานี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a>
+                        <a href="/editObj/@dataOb.getId"> <i class='fas fa-edit'style="color: #3b9bff;font-size: 18px;"></i></a>
+                        @noo.  @dataOb.getDetail
+                    </td>
+                </tr>
+                @(noo=noo+1)
+            }
+            <br>
+            <tr>
+                <td align="center">
+                    @if(courseObjectives.size==0){
+                        <div class="alert alert-danger"><strong>เตือน !</strong>ท่านยังไม่ได้จัดการในหัวข้อนี้</div>
+                    }
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCourseObjectives">  <i class='fa fa-plus-circle' style="color : #ffffff; font-size : 13px;" ></i></button>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+        <!-- Modal -->
+    <div class="modal fade" id="editCourseDes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">แก้ไขจุดมุ่งหมายรายวิชา</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/editCourseDes" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="genId" value="@generalData.getId">
+                        <div class="form-group">
+                            <label for="message-text"  class="col-form-label">รายละเอียดจุดมุ่งหมายรายวิชา:</label>
+                            <textarea class="form-control" id="detailDes" name="detailDes" id="message-text">@detail</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addCourseDes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/saveDes" method="post">
+                    <input type="hidden" name="genId" value="@generalData.getId">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">จุดมุ่งหมายของรายวิชา</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="message-text"  class="col-form-label">รายละเอียดจุดมุ่งหมายรายวิชา:</label>
+                            <textarea class="form-control" id="detailDes" name="detailDes" id="message-text"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addCourseObjectives" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/saveObj" method="post">
+                    <input type="hidden" name="genId" value="@generalData.getId">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">วัตุประสงค์ในการพัฒนา/ปรับปรุงรายวิชา</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="message-text"  class="col-form-label">รายละเอียด วัตุประสงค์ในการพัฒนา/ปรับปรุงรายวิชา</label>
+                            <textarea class="form-control" name="detailOJT" id="message-text"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="selectCourseObjectives" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/selectObj" method="post">
+                    <input type="hidden" name="genId" value="@generalData.getId">
+                    <div class="modal-body">
+                        @for(ojt <- courseObjectives){
+                            <input type="checkbox" name="courseObjectives" value="@ojt.getId"> @ojt.getId @ojt.getDetail<br>
+                            @(x=x+1)
+                        }
+                        <input type="hidden" name="chkI" value="@(x+1)">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

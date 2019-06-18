@@ -1,0 +1,61 @@
+@(cat6: GeneralData,suggustionDocument: SuggustionDocument)
+@import java.math.BigInteger; var i = 1; var n=1; var j=1;
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+<br>
+<br>
+<form action="/selectCat" method="post">
+    <input type="hidden" id="idDoc3" name="idDoc3" value="@cat6.getId">
+    <div class="row">
+        <div class="col-md-4" align="right"><h5 style="margin-top: 7px ;">วิชา:@cat6.getCourse.getNameTH</h5></div>
+        <div class="col-md-4">
+            <select id="nameCat" name="nameCat" class="form-control">
+                <option value="cat1">หมวดที่ 1</option>
+                <option value="cat2">หมวดที่ 2</option>
+                <option value="cat3">หมวดที่ 3</option>
+                <option value="cat4">หมวดที่ 4</option>
+                <option value="cat5">หมวดที่ 5</option>
+                <option value="cat6" selected>หมวดที่ 6</option>
+                <option value="cat7">หมวดที่ 7</option>
+            </select>
+        </div>
+        <div class="col-md-4" align="left"><input type="submit" value="เลือก" class="btn btn-success"></div>
+    </div>
+</form>
+<br>
+@*<form method="post" action="/saveCategory6">*@
+@*<input type="hidden" name="genId" value="@cat6.getId">*@
+@*<button type="submit" class="btn btn-info" style="font-family: 'Mitr', sans-serif ;">*@
+@*<i class='	fa fa-floppy-o' style="color: #f7fff6 ;*@
+@*font-size: 18px ; " > บันทึก</i>*@
+@*</button>*@
+@*</form>*@
+@*<br>*@
+<center>
+    <br>
+    <br>
+    <h3>หมวดที่ 6 ทรัพยากรประกอบการเรียนการสอน</h3>
+</center>
+<br>
+<div class="row">
+    <div class="col-md-11">
+                <b>แก้ไขเอกสารและเอกสารเเละข้อมูลเเนะนำ</b>
+                <form action="/updateSuggustionDocument" method="post">
+                    @if(suggustionDocument!=null){
+                        <input type="hidden"name="suggesId" value="@suggustionDocument.getId">
+                    }
+                    <textarea name="detail" rows="5" class="form-control">@suggustionDocument.getDetail</textarea>
+                <br>
+                    <input type="submit" class="btn btn-success" value="บันทึก">
+                </form>
+        <button class="btn btn-info" onclick="goBack()" >Go Back</button>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<script>
+        function goBack() {
+            window.history.back();
+        }
+</script>
+

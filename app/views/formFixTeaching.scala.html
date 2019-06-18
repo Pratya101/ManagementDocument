@@ -1,0 +1,134 @@
+@(listC: List[Course], listT: List[Teacher], listCat: List[CategoryCourse], listG: List[GroupCourse], namecat: String, nameGroup: String)
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <center>
+            @if(flash.containsKey("FixError")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("FixError"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>เลือกรายวิชาที่จะกำหนดตัวผู้สอน <br> ภาคการศึกษาที่ @session.get("t")/@session.get("y") <br>
+            @session.get("nameSyll")
+             </h3>
+        </center>
+
+        @if(flash.containsKey("noData")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("noData"). </div>
+        }
+        @if(flash.containsKey("failFix")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("failFix"). </div>
+        }
+        <form action="/loadData" method="post">
+            <lable for="cat" ><b>หมวดหมู่รายวิชา</b></lable>
+            <select id="cat" name="cat" onchange="this.form.submit()" class="form-control">
+            @if(namecat == "") {
+                <option value="0">-----เลือกหมวดวิชา-----</option>
+                @for(ca <- listCat) {
+                    @if(namecat == ca.getName) {
+                        <option value="@ca.getId" selected>@ca.getName</option>
+                    } else {
+                        <option value="@ca.getId">@ca.getName</option>
+                    }
+                }
+            } else {
+                @for(ca <- listCat) {
+                    @if(namecat == ca.getName) {
+                        <option value="@ca.getId" selected>@ca.getName</option>
+                    } else {
+                        <option value="@ca.getId">@ca.getName</option>
+                    }
+                }
+            }
+
+            </select>
+        </form>
+        <form action="/loadData" method="post">
+            <lable for="group" ><b>กลุ่มรายวิชา : </b></lable>
+
+            <select id="group" name="group" onchange="this.form.submit()" class="form-control">
+                @if(namecat != "" && nameGroup == "") {
+                    <option value="0">-----เลือกกลุ่มวิชา-----</option>
+                    @for(lgs <- listG) {
+                        @if(nameGroup == lgs.getName) {
+                            <option value="@lgs.getId" selected>@lgs.getName</option>
+                        } else {
+                            <option value="@lgs.getId">@lgs.getName</option>
+                        }
+                    }
+                } else {
+                    @for(lgs <- listG) {
+                        @if(nameGroup == lgs.getName) {
+                            <option value="@lgs.getId" selected>@lgs.getName</option>
+                        } else {
+                            <option value="@lgs.getId">@lgs.getName</option>
+                        }
+                    }
+                }
+            </select>
+        </form>
+
+        <form action="/insertIns" method="post">
+            <lable for="course" ><b>รายวิชา : </b></lable>
+            <select id="course" name="course" class="form-control">
+                    @for(lc <- listC) {
+                        <option value="@lc.getId">@lc.getNameTH</option>
+            }
+
+
+            </select>
+            @if(listC.size != 0) {
+                <label for="nameT"><b>ผู้สอน : </b></label>
+                <select id="nameT" name="nameT" class="form-control" required="required">
+                @for(th <- listT) {
+                    <option value="@th.getId">@th.getName @th.getSername</option>
+                }
+                </select>
+                <label for="room"><b>ห้องที่สอน :</b></label>
+                <select id="room" name="room" class="form-control" required="required">
+                    <option value="BIS1/1N" selected >-----เลือกห้องที่สอน-----</option>
+                    <option value="BIS1/1N"  >BIS1/1N</option>
+                    <option value="BIS1/2N"  >BIS1/2N</option>
+                    <option value="BIS1/3N"  >BIS1/3N</option>
+                    <option value="BIS2/1N"  >BIS2/1N</option>
+                    <option value="BIS2/2N"  >BIS2/2N</option>
+                    <option value="BIS2/3N"  >BIS2/3N</option>
+                    <option value="BIS3/1N"  >BIS3/1N</option>
+                    <option value="BIS3/2N"  >BIS3/2N</option>
+                    <option value="BIS3/3N"  >BIS3/3N</option>
+                    <option value="BIS4/1N"  >BIS4/1N</option>
+                    <option value="BIS4/2N"  >BIS4/2N</option>
+                    <option value="BIS4/3N"  >BIS4/3N</option>
+                    <option value="BIS3Q"  >BIS3Q</option>
+                    <option value="BIS4Q"  >BIS4Q</option>
+                </select>
+                <br>
+                <label for="room"><b>สถานะการรับผิดชอบ : </b></label>
+                <input type="radio" name="status" value="1" required="required">ผู้รับผิดชอบหลัก
+                <input type="radio" name="status" value="0" required="required">ผู้รับผิดชอบร่วม
+            } else {
+
+            }
+            <br>
+            <input type="submit" value="Save" class="btn btn-success">
+        </form>
+        <br>
+
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" align="center"><a href="/listYearAndTerm" class="btn btn-dark" style="font-family : 'Mitr', sans-serif ;"><i class='	fa fa-undo' style="color : #3b9bff ; font-size : 18 px ; color : white" ></i>
+        กลับไปหน้ารายการเทอม/ปีการศึกษา</a>
+    </div>
+    <div class="col-md-2"></div>
+</div>

@@ -1,0 +1,57 @@
+@(dataListCurriculum: List[Curriculum],courseData: Course)
+@import java.util.ArrayList;
+@import java.lang.Integer; var i=0;
+
+@import java.lang.String; var nameDev = ""; var chk = "1";
+<br>
+
+<center>
+    <h3>ตารางรายละเอียดการMapping รายวิชา @courseData.getNameTH</h3>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-11">
+
+            <table class="table table-bordered">
+                <tr  style="background-color: #979fa5">
+                    <td align="center"><b>หัวข้อการพัฒนาผลการเรียนรู้</b></td>
+                    <td align="center"><b>รายการพัฒนาผลการเรียนรู้</b></td>
+                    <td align="center"><b>ระดับความสำคัญ</b></td>
+                </tr>
+                                   @for(course <- dataListCurriculum.sortWith(_.getDevelopmentalLearningList.getDevelopmentalLearning.getId() < _.getDevelopmentalLearningList.getDevelopmentalLearning.getId())) {
+                        <tr>
+                        @if(nameDev == ""){
+                            @(nameDev = course.getDevelopmentalLearningList.getDevelopmentalLearning.getName)
+                            <td>@nameDev</td>
+                        }else{
+                            @if(nameDev != course.getDevelopmentalLearningList.getDevelopmentalLearning.getName){
+                                @(nameDev = course.getDevelopmentalLearningList.getDevelopmentalLearning.getName)
+                                <td>@nameDev</td>
+                            }else{
+                                <td></td>
+                            }
+                        }
+                    <td>@course.getDevelopmentalLearningList.getListDevelopmentalLearning</td>
+                        @if(course.getImportance == "2" ){
+                            <td style="font-size: 20px;" align="center">●</td>
+                        }else{
+                            @if(course.getImportance == "1" ) {
+                                <td style="font-size: 20px;" align="center">○</td>
+                            }else{
+                                <td style="font-size: 20px;" align="center">...</td>
+                            }
+                        }
+                    </tr>
+
+                }
+            </table>
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" align="center"><a href="/listCourseForMapping" class="btn btn-dark" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-undo' style="color: #3b9bff;font-size: 18px; color: white" ></i> กลับไปหน้ารายการ Mapiing</a></div>
+        <div class="col-md-2"></div>
+    </div>
+</center>

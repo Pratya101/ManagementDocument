@@ -1,0 +1,69 @@
+@(teacherList : List[Teacher])
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <center>
+            @if(flash.containsKey("noDelOK")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("noDelOK"). </div>
+            }
+            @if(flash.containsKey("delOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("delOK"). </div>
+            }
+            @if(flash.containsKey("insertOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("insertOK"). </div>
+            }
+            @if(flash.containsKey("updateOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("updateOK"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<br>
+<center>
+
+        <h3>ข้อมูลอาจารย์</h3>
+
+    @if(flash.containsKey("noDataTeach")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("noDataTeach"). </div>
+    }
+    @if(flash.containsKey("dataTeachError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataTeachError"). </div>
+    }
+    </center>
+    <br>
+        <a href="/formAddTeacher" class="btn btn-info" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-plus-circle' style="color: #f7fff6;font-size: 18px;" ></i> เพิ่มอาจารย์</a>
+        <br>
+<br>
+
+<div class="row">
+    <div class="col-md-11">
+        <table id="example" class="table table-striped table-bordered">
+            <thead>
+                <tr style="background-color: #b3bbc1" align="center">
+                    <td>รหัสอาจารย์</td>
+                    <td>ชื่อ - นามสกุล</td>
+                    <td>ตำแหน่ง</td>
+                    <td>เพิ่มเติม</td>
+                    <td>แก้ไข</td>
+                    <td>ลบ</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            @for(teacher <- teacherList) {
+                <tr>
+                    <td>@teacher.getId</td>
+                    <td>@teacher.getName @teacher.getSername</td>
+                    <td>@teacher.getPosition</td>
+                    <td align="center"><a href="/detailTeacher/@teacher.getId"> <i class='fas fa-sticky-note' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    <td align="center"><a href="/editTeacher/@teacher.getId"> <i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    <td align="center"><a href="/deleteTeacher/@teacher.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลอาจารย์ท่านนี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>

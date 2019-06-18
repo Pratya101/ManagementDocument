@@ -1,0 +1,121 @@
+@(notifications: List[models.Notifications],tokenLine: List[TokenLine])
+@import java.lang.String;var status="";var token="";
+<br>
+<br>
+<center>
+    @if(flash.containsKey("sendOK")) {
+        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">
+            สำเร็จ!</span> @flash.get("sendOK"). </div>
+    }
+<h3>กรอกข้อมูลการเเจ้งเตือน</h3>
+</center>
+<br>
+@for(data<-tokenLine.take(1)){
+    @(token = data.getTokenLine)
+    <div class="row">
+        <div class="col-md-7">
+            <label for="Token" style="font-weight: bold">Token</label>
+            <input id="Token" type="text" name="Token" value="@data.getTokenLine" readonly="readonly" required="required" class="form-control" >
+        </div>
+        <div class="col-md-4">
+            <label for="name" style="font-weight: bold">ชื่อกลุ่ม</label>
+            <input id="name" type="text" name="name" value="@data.getName" readonly="readonly" required="required" class="form-control" >
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+} <br>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#editToken">Edit Token</button> <br><br> <hr>
+<form action="/reciveData" method="post">
+    <input type="hidden" name="token" value="@token">
+    <div class="row">
+        <div class="col-md-11">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="date" style="font-weight: bold">กำหนดวันที่ส่งเอกสาร</label>
+                    <input id="date" type="date" name="date" required="required" class="form-control" >
+                </div>
+                <div class="col-md-4">
+                    <label for="term" style="font-weight: bold">เทอมที่ส่งเอกสาร</label>
+                    <select id="term" name="term" class="form-control   ">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="year" style="font-weight: bold">ปีการศึกษาที่ส่งเอกสาร</label>
+                    <select id="year" name="year" class="form-control   ">
+                        <option value="2560">2560</option>
+                        <option value="2561">2561</option>
+                        <option value="2562">2562</option>
+                        <option value="2563">2563</option>
+                        <option value="2564">2564</option>
+                        <option value="2565">2565</option>
+                        <option value="2566">2566</option>
+                        <option value="2567">2567</option>
+                        <option value="2568">2568</option>
+                        <option value="2569">2569</option>
+                        <option value="2570">2570</option>
+                    </select>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="detail" style="font-weight: bold">ฝากข้อความ</label>
+                    <textarea id="detail" name="detail" rows="5" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <br>
+    <input type="submit" class="btn btn-success" value="Send">
+</form>
+<div class="row">
+    <div class="col-md-11">
+        <label for="detail" style="font-weight: bold">เเจ้งเตือนล่าสุด</label>
+        <textarea id="detail" name="detail" rows="15" class="form-control" style="font-size: 14px;
+            line-height: 0.8"> @for(data <- notifications.sortWith(_.getId > _.getId)){
+            วันที่: @data.getDate เทอม/ปี: @data.getTerm/@data.getYear ข้อความที่ฝาก :@data.getDetail
+        }
+        </textarea>
+    </div>
+    <div class="col-md-1"></div>
+
+</div>
+
+
+<div class="modal fade" id="editToken" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/editToken" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Token</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @for(data<-tokenLine){
+                        <div class="form-group">
+                            <label for="token-text" class="col-form-label" style="font-weight: bold">Token</label>
+                            <input type="text   " class="form-control" value="@data.getTokenLine" name="token" id="token-text">
+                            <br>
+                            <label for="name" class="col-form-label" style="font-weight: bold">name</label>
+                            <input type="text   " class="form-control" value="@data.getName" name="name" id="name-text">
+                        </div>
+                    }
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

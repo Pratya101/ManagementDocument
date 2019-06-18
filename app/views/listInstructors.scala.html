@@ -1,0 +1,79 @@
+@(instructorsList : List[Instructors],tandY: TandY)
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <center>
+            @if(flash.containsKey("noDataInstructors")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("noDataInstructors"). </div>
+            }
+            @if(flash.containsKey("dataInstructorsError")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("dataInstructorsError"). </div>
+            }
+            @if(flash.containsKey("nodata")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("nodata"). </div>
+            }
+            @if(flash.containsKey("delOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("delOK"). </div>
+            }
+            @if(flash.containsKey("insertOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("insertOK"). </div>
+            }
+            @if(flash.containsKey("updateOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("updateOK"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<br>
+<br>
+<center>
+    <h3>รายการกำหนดผู้สอน@tandY.getSyllabusCourse.getNameTH ของเทอม @tandY.getT/@tandY.getY </h3>
+</center>
+<br>
+<a href="/formFixTeaching/@tandY.getId" class="btn btn-info" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-plus-circle' style="color: #f7fff6;font-size: 18px;" ></i> เพิ่มรายวิชาที่สอน</a>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-11">
+
+        <table id="example" class="table table-striped table-bordered">
+            <thead>
+            <tr style="background-color: #b3bbc1">
+                <td style="font-weight: bold" align="center">ชื่อรายวิชาที่สอน</td>
+                <td style="font-weight: bold" align="center">ผู้สอน</td>
+                <td style="font-weight: bold" align="center">ห้อง</td>
+                <td style="font-weight: bold" align="center">สถานะ</td>
+                <td style="font-weight: bold" align="center">เพิ่มเติม</td>
+                <td style="font-weight: bold" align="center">แก้ไข</td>
+                <td style="font-weight: bold" align="center">ลบ</td>
+            </tr>
+            </thead>
+            <tbody>
+            @for(Instructors <- instructorsList) {
+                <tr>
+                    <td>@Instructors.getCourse.getNameTH</td>
+                    <td>@Instructors.getTeacher.getName @Instructors.getTeacher.getSername</td>
+                    <td align="center">@Instructors.getRoom</td>
+                    <td align="center">
+                    @if(Instructors.getStatus()=="1"){
+                        ผู้รับผิดชอบหลัก
+                    }else{
+                        ผู้รับผิดชอบรอง
+                    }
+                    </td>
+                    <td align="center"><a href="/detailInstructors/@Instructors.getId"> <i class='fas fa-sticky-note' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    <td align="center"><a href="/editInstructors/@Instructors.getId"> <i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    <td align="center"><a href="/deleteIns/@Instructors.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลกำหนดผู้สอนนี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" align="center"><a href="/listYearAndTerm" class="btn btn-dark" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-undo' style="color: #3b9bff;font-size: 18px; color: white" ></i> กลับไปหน้ารายการเทอม/ปีการศึกษา</a></div>
+    <div class="col-md-2"></div>
+</div>

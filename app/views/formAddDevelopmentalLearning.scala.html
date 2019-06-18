@@ -1,0 +1,25 @@
+@(addDevelopmentalLearning : Form[DevelopmentalLearning],syllabusCourse: SyllabusCourse)
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>เพิ่มการพัฒนาผลการเรียนรู้ ของ@syllabusCourse.getNameTH</h3>
+        </center>
+        @if(flash.containsKey("newDevError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("newDevError") </div>
+        }
+        @if(flash.containsKey("newDevListError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("newDevListError") </div>
+        }
+        @helper.form(action = routes.Development.insertDevelopmentalLearning(), 'enctype -> "multipart/form-data") {
+            @inputText(addDevelopmentalLearning("numDomain"), '_label -> "ลำดับหัวข้อพัฒนาการเรียนรู้",'type->"number", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            @inputText(addDevelopmentalLearning("name"), '_label -> "ชื่อการพัฒนาการเรียนรู้", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <a href="/listFaculty" class="btn btn-danger">ยกเลิก</a>
+        }
+    </div>
+    <div class="col-md-3"></div>
+</div>

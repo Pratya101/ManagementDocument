@@ -1,0 +1,58 @@
+@(curriculumList: List[Curriculum])
+<br>
+<br>
+<center>
+    @if(flash.containsKey("dataCurriculumError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataCurriculumError"). </div>
+    }
+<h3>ข้อมูลการกระจายความรับผิดชอบ</h3>
+</center>
+<br>
+<div class="row">
+    <div class="col-md-2">
+@*
+        <form action="" method="post">
+            <input type="text" name="search" placeholder=".รายวิชาที่ต้องการค้นหา..." class="form-control">
+            <input type="submit" class="btn btn-Warning" align="right" value="ค้นหา">
+        </form>
+        *@
+
+    </div>
+    <div class="col-md-7" align="center"></div>
+    <div class="col-md-3" align="right"><a href="/listCourseMap" class="btn btn-info" style="font-family: 'Mitr', sans-serif;">กำหนดการกระจายความรับผิดชอบ</a></div>
+</div>
+<br>
+
+<table class="table table-bordered">
+    <tr  style="background-color: #979fa5">
+        <td align="center"><b>แก้ไข</b></td>
+        <td align="center"><b>ลบ</b></td>
+        <td align="center"><b>รหัสการกระจาย</b></td>
+        <td align="center"><b>ความสำคัญ</b></td>
+        <td align="center"><b>รายวิชา</b></td>
+        <td align="center"><b>หัวข้อการพัฒนาการเรียนรู้</b></td>
+        <td align="center"><b>รายการการพัฒนาการเรียนรู้</b></td>
+
+    </tr>
+    @for(Curriculum <- curriculumList) {
+        <tr>
+            <td align="center"><a href="/editCurriculum/@Curriculum.getId"><i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+            <td align="center"><a href="/deleteCurriculum/@Curriculum.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูล สาขานี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a></td>
+
+            <td align="center">@Curriculum.getId</td>
+                @if(Curriculum.getImportance == "1" ){
+                    <td style="font-size: 20px;" align="center">●</td>
+                }else{
+                    @if(Curriculum.getImportance == "0" ) {
+                        <td style="font-size: 20px;" align="center">○</td>
+                    }else{
+                            <td style="font-size: 20px;" align="center">...</td>
+                    }
+                }
+            <td align="center">@Curriculum.getCourse.getNameTH</td>
+            <td align="center">@Curriculum.getDevelopmentalLearningList.getDevelopmentalLearning.getName</td>
+            <td align="center">@Curriculum.getDevelopmentalLearningList.getListDevelopmentalLearning</td>
+            </tr>
+
+    }
+</table>

@@ -1,0 +1,29 @@
+@(addCurriculum: Form[Curriculum],DevelopmentalLearningList: List[DevelopmentalLearningList],course: List[Course])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>แก้ไขข้อมูลการกระจาย</h3>
+        </center>
+        @if(flash.containsKey("dataCurriculumError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataCurriculumError"). </div>
+        }
+        @helper.form(action = routes.Mapping.updateCurriculum(), 'enctype -> "multipart/form-data") {
+            @inputText(addCurriculum("id"), '_label -> "รหัสการกระจาย", 'size -> "10px", 'required -> "required",'readonly->"readonly", 'class -> "form-control")
+            @inputRadioGroup(addCurriculum("importance"),options = Seq("1"->"ทึบ","0"->"โปร่ง","2"->"ว่าง"),'_label->"ความสำคัญ",'required -> "required")
+            @select(addCurriculum("course.id"),
+                options = course.map(course => course.getId -> course.getNameTH),
+                '_label -> "รายวิชา", 'class -> "form-control")
+            @select(addCurriculum("developmentalLearningList.id"),
+                options = DevelopmentalLearningList.map(DevelopmentalLearningList => DevelopmentalLearningList.getId -> DevelopmentalLearningList.getListDevelopmentalLearning),
+                '_label -> "รายการการพัฒนาการเรียนรู้", 'class -> "form-control")
+
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <input type="reset" value="เคลียร์" class="btn btn-danger"  style="font-family: 'Mitr', sans-serif;">
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

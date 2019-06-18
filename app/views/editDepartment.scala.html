@@ -1,0 +1,31 @@
+@(editDepartment : Form[Department],facultyList: List[Faculty])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>เพิ่มข้อมูลคณะ</h3>
+        </center>
+        @if(flash.containsKey("newDepartError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("newDepartError"). </div>
+        }
+        @helper.form(action = routes.Application.updateDepartment(), 'enctype -> "multipart/form-data") {
+            @inputText(editDepartment("id"), '_label -> "รหัสสาขา", 'size -> "10px", 'required -> "required",'readonly ->"readonly", 'class -> "form-control")
+            @inputText(editDepartment("nameTh"), '_label -> "ชื่อสาขาภาษาไทย", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @inputText(editDepartment("nameEng"), '_label -> "ชื่อชื่อสาขาภาษาอังกฤษ", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @inputText(editDepartment("shotname"), '_label -> "ชื่อย่อสาขา", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            @select(editDepartment("faculty.id"),
+                options = facultyList.map(faculty=> faculty.getId -> faculty.getName),
+                '_label -> "คณะ", 'class -> "form-control")
+            <button type="submit" class="btn btn-success">
+                <i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px ;"></i> บันทึก
+            </button>
+            <button type="reset" class="btn btn-danger">
+                <i class='	fa fa-file-o' style="color : #f7fff6 ; font-size : 18px ;"></i> เคลียร์
+            </button>
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

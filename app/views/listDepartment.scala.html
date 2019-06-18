@@ -1,0 +1,67 @@
+@(departmentList: List[Department])
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <center>
+            @if(flash.containsKey("noDelOK")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("noDelOK"). </div>
+            }
+            @if(flash.containsKey("delOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("delOK"). </div>
+            }
+            @if(flash.containsKey("insertOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("insertOK"). </div>
+            }
+            @if(flash.containsKey("updateOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("updateOK"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<br>
+<center>
+    @if(flash.containsKey("dataDepartError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataDepartError"). </div>
+    }
+<h3>รายชื่อข้อมูลสาขาวิชาทั้งหมด</h3>
+</center>
+<br>
+<a href="/formAddDepartment" class="btn btn-info" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-plus-circle' style="color: #f7fff6;font-size: 18px;" ></i> เพิ่มสาขา</a>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-md-11">
+        <table id="example" class="table table-striped table-bordered">
+            <thead>
+                <tr style="background-color: #b3bbc1">
+                    <td align="center">ชื่อภาษาไทย</td>
+                    <td align="center">ชื่อภาษาอังกฤษ</td>
+                    <td align="center">ชื่อย่อ</td>
+                    <td align="center">แก้ไข</td>
+                    <td align="center">ลบ</td>
+                </tr>
+            </thead>
+            <tbody>
+            @for(department <- departmentList) {
+                <tr>
+                    <td>@department.getNameTh</td>
+                    <td>@department.getNameEng</td>
+                    <td>@department.getShotname</td>
+                    <td align="center"><a href="/editDepartment/@department.getId"><i class='fas fa-edit' style="color: #3b9bff;
+                        font-size: 18px;"></i>
+                    </a>
+                    </td>
+                    <td align="center"><a href="/deleteDepartment/@department.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูล สาขานี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;
+                        font-size: 18px;"></i>
+                    </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>

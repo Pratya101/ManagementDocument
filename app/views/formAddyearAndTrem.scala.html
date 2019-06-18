@@ -1,0 +1,55 @@
+@(addYandT: Form[TandY],syllabusCourse: List[SyllabusCourse])
+@import helper._;
+<br>
+    <div class="row">
+        <div class="col-md-11">
+            <center>
+                @if(flash.containsKey("ErrorInsert")) {
+                    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("ErrorInsert"). </div>
+                }
+            </center>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>เพิ่มข้อมูลรายวิชา</h3>
+        </center>
+        @if(flash.containsKey("newCourseError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("newCourseError"). </div>
+        }
+        @helper.form(action = routes.FixTeaching.insertTandM(), 'enctype -> "multipart/form-data") {
+            <label for="term">เทอม</label>
+            <select id="term" name="t" class="form-control   ">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <br>
+            <label for="year">ปี</label>
+            <select id="year" name="y" class="form-control   ">
+                <option value="2560">2560</option>
+                <option value="2561">2561</option>
+                <option value="2562">2562</option>
+                <option value="2563">2563</option>
+                <option value="2564">2564</option>
+                <option value="2565">2565</option>
+                <option value="2566">2566</option>
+                <option value="2567">2567</option>
+                <option value="2568">2568</option>
+                <option value="2569">2569</option>
+                <option value="2570">2570</option>
+            </select>
+            @select(addYandT("syllabusCourse.id"),
+                options = syllabusCourse.map(faculty=> faculty.getId -> faculty.getNameTH),
+                '_label -> "คณะ",'readonly->"readonly", 'class -> "form-control")
+            <br>
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <input type="reset" value="เคลียร์" class="btn btn-danger"  style="font-family: 'Mitr', sans-serif;">
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

@@ -1,0 +1,105 @@
+@(cc : List[Course],listCur : List[Curriculum],syllabusCourseList: List[SyllabusCourse],syllabusCourse: SyllabusCourse)
+@import scala.util.control._; val loop = new Breaks;
+@import java.lang.Integer; var i=0;
+@import java.lang.String; var status="";var statusSyll="";
+    @import java.util.ArrayList;
+    @import java.util.List;
+
+    <br>
+<div class="row">
+    <div class="col-md-11">
+        <center>
+        @if(flash.containsKey("chkCourse")) {
+            <div class="alert alert-danger">@flash.get("chkCourse"). </div>
+        }
+            @if(flash.containsKey("nodata")) {
+                <div class="alert alert-danger">@flash.get("nodata"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+    <center><h3>กรุณาเลือกรายวิชาที่จะทำการ Mapping</h3></center>
+    <br>
+    <div class="row">
+        <div class="col-md-4" align="right" style="margin-top: 8px"><b>หลักสูตร</b></div>
+        <div class="col-md-4" >
+            <form action="/loadCoorse" method="post">
+            <select id="syll" name="syll" onchange="this.form.submit()" class="form-control">
+                <option value="" selected>-----เลือกหลักสูตร-----</option>
+                @for(ca<-syllabusCourseList){
+                    @if(syllabusCourse!=null){
+                        @if(syllabusCourse.getId==ca.getId){
+                            <option value="@ca.getId" selected >@ca.getNameTH</option>
+                        }else{
+                            <option value="@ca.getId" >@ca.getNameTH</option>
+                        }
+                    }else{
+                        <option value="@ca.getId" >@ca.getNameTH</option>
+                    }
+
+                }
+            </select>
+            </form>
+        </div>
+        <div class="col-md-4" ></div>
+    </div>
+    <br>
+<div class="row">
+    <div class="col-md-11">
+        <table  id="example" class="table table-striped table-bordered">
+            <thead>
+                <tr style="background-color: #979fa5">
+                    <td align="center">รหัสรายวิชา</td>
+                    <td align="center">ชื่อรายวิชาภาษาไทย</td>
+                    <td align="center">จำนวนหน่วยกิต</td>
+
+                </tr>
+            </thead>
+
+            @for(c <- cc) {
+@loop.breakable{
+    @for(cu <- listCur){
+        @if(cu.getCourse.getId.equals(c.getId)) {
+            @{
+                status = "Success"
+            }
+            @{loop.break};
+        }else{
+            @{
+                status = "s"
+            }
+        }
+
+    }
+
+}
+                @if(status == "Success"){
+                    <tbody>
+<tr>
+</tr>
+                    </tbody>
+                }else{
+                    <tbody>
+                    <tr>
+                        <td align="center"><a href="/formAddMapping/@c.getId" style="color: blue">@c.getIdCourse</a></td>
+                        <td>@c.getNameTH</td>
+                        <td align="center">@c.getAmount</td>
+                    </tr>
+                    </tbody>
+                }
+
+            }
+
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" align="center"><a href="/listCourseForMapping" class="btn btn-dark" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-undo' style="color: #3b9bff;font-size: 18px; color: white" ></i> กลับไปหน้ารายการ Mapiing</a></div>
+    <div class="col-md-2"></div>
+</div>

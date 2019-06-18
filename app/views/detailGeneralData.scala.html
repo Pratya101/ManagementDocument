@@ -1,0 +1,112 @@
+@(generalData: GeneralData,teacher: Teacher)
+<br>
+
+<center>
+    <h3>ตารางรายละเอียดข้อมูลอาจารย์</h3>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-11">
+
+            <table class="table table-hover">
+                <tr>
+                    <th>รหัสข้อมูลทั่วไป</th>
+                    <td>@generalData.getId</td>
+                </tr>
+                <tr>
+                    <th>รายละเอียดของรายวิชา</th>
+                </tr>
+                <tr>
+                    <td>ชื่อสถาบันอุดมศึกษา<br>
+                        วิทยาเขต/คณะ/สาขาวิชา
+            </td>
+                    <td>มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน<br>
+                        วิทยาเขต ขอนแก่น
+                        คณะ @teacher.getDepartment.getFaculty <br>
+                        สาขาวิชา @teacher.getDepartment.getNameEng <br>
+            </td>
+                </tr>
+
+                <tr>
+                    <th colspan="2">หมวดที่ 1 ข้อมูลทั่วไป </th>
+                </tr>
+
+                <tr>
+                    <th>1. รหัสเเละชื่อรายวิชา</th>
+                    <td>@generalData.getCourse.getId @generalData.getCourse.getNameTH<br>
+                    @generalData.getCourse.getDetailENG
+                    </td>
+                </tr>
+                <tr>
+                    <th>2. จำนวนหน่วยกิต</th>
+                    <td>@generalData.getCourse.getAmount </td>
+                </tr>
+                <tr>
+                    <th>3. หลักสูครและประเภทของรายวิชา</th>
+                    <td>@generalData.getCourse.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH</td>
+                </tr>
+                <tr>
+                    <th>4. อาจารย์ผู้รับผิดชอบรายวิชาเเละอาจารย์ผู้สอน</th>
+                    <td>@teacher.getName @teacher.getSername</td>
+                </tr>
+                <tr>
+                    <th>5. ภาคการศึกษา / ชั่นปีที่เรียน</th>
+                    <td>@generalData.getInstructors.getTerm/@generalData.getInstructors.getYear</td>
+                </tr>
+
+                <tr>
+                    <th>6. รายวิชาที่ต้องเรียนมาก่อน(Pre-requisite)</th>
+                    <td>@generalData.getCourse.getRequiredCourses</td>
+                </tr>
+                <tr>
+                    <th>7. รายวิชาที่ต้องเรียนพร้อมกัน(Co-requisites)</th>
+                    <td>ยังไม่ได้สร้างฟิลด์</td>
+                </tr>
+                <tr>
+                    <th>8. สถานที่เรียน</th>
+                    <td>คณะ @generalData.getInstructors.getTeacher.getDepartment.getFaculty.getName มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน</td>
+                </tr>
+                <tr>
+                    <th>วันที่ปรับปรุงครของรายวิชาครั้งล่าสุด</th>
+                    <td>ยังไม่ได้สร้างฟิลด์</td>
+                </tr>
+                <tr>
+                    <td colspan="2">หมวดที่ 2 จุดมุ่งหมายเเละวัตถุประสงค์</td>
+                </tr>
+                <tr>
+                    <th>1. จุดมุ่งหมายรายวิชา</th>
+                    <td>@generalData.getCourseDestinationList</td>
+                </tr>
+                <tr>
+                    <th>2. วัตถุประสงค์รายวิชา</th>
+                    <td>@generalData.getCourseObjectivesList</td>
+                </tr>
+                <tr>
+                    <td colspan="2">หมวดที่ 3 ลักษณะเเละการดำเนินการ</td>
+                </tr>
+                <tr>
+                    <th>1. คำอธิบายรายวิชา</th>
+                    <td>@generalData.getCourse.getDetialTH</td>
+                </tr>
+                <tr>
+                    <th>2. จำนวนชั่วโมงต่อภาคการศึกษา</th>
+                    <td>ยังไม่ได้ทำ</td>
+                </tr>
+
+                <tr>
+                    <th>3. จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษา เเละเเนะนำทางวิชาการแก่นักศึกษาเป็นรายบุคคล</th>
+                    <td>ยังไม่ได้ทำ</td>
+                </tr>
+                <tr>
+                    <td colspan="2">หมวดที่ 4 การพัฒนาการเรียนรู้ของนักศึกษา</td>
+                </tr>
+                <tr>
+                    <th>1. คุณธรรม จริยะธรรม</th>
+                    <td>@generalData.getCourse.getCurriculum.getDevelopmentalLearningList.getDevelopmentalLearning.getName</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+</center>

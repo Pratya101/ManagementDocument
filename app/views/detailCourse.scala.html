@@ -1,0 +1,53 @@
+@(course: Course)
+<br>
+<center>
+    <h3>ตารางรายละเอียดข้อมูลรายวิชา</h3>
+    <br>
+    <div class="row">
+        <div class="col-md-11">
+            <table class="table table-striped">
+                <tr>
+                    <td>รหัสรายวิชา</td>
+                    <td>@course.getId</td>
+                </tr>
+                <tr>
+                    <td>ชื่อรายวิชาภาษาไทย</td>
+                    <td>@course.getNameTH</td>
+                </tr>
+                <tr>
+                    <td>ชื่อรายวิชาภาษาอังกฤษ</td>
+                    <td>@course.getNameENG</td>
+                </tr>
+                <tr>
+                    <th>คำอธิบายรายวิชาภาษาไทย</th>
+                    <td>@course.getDetialTH</td>
+                </tr>
+                <tr>
+                    <th>คำอธิบายรายวิชาภาษาอังกฤษ</th>
+                    <td>@course.getDetailENG</td>
+                </tr>
+                <tr>
+                    <th>รายวิชาบังคับก่อน</th>
+                    <td>@course.getRequiredCourses</td>
+                </tr>
+                <tr>
+                    <th>กลุ่มวิชา</th>
+                    <td>@course.getGroupCourse.getName</td>
+                </tr>
+                <tr>
+                    <th>หมวดวิชา</th>
+                    <td>@course.getGroupCourse.getCategoryCourse.getName</td>
+                </tr>
+                <tr>
+                    <th>หลักสูตร</th>
+                    <td>@course.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH</td>
+                </tr>
+                <tr>
+                    <th>จำนวนหน่วยกิต</th>
+                    <td>@course.getAmount   </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</center>

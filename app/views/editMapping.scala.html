@@ -1,0 +1,86 @@
+@(dataListCurriculum: List[Curriculum],course: Course)
+@import java.math.BigInteger; var i = 0;
+@import java.lang.String; var vall = ""; var nameDev = "";
+<br>
+    <div class="row">
+        <div class="col-md-11">
+            <center>
+                <h3>แก้ไขรายละเอียดการMapping รายวิชา @course.getNameTH </h3>
+            </center>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+
+<center>
+    <br>
+    <div class="row">
+        <div class="col-md-11">
+            <div align="right">
+                <b style="font-style: italic">หมายเหตุ*</b>&nbsp;&nbsp;&nbsp;1. ●:รับผิดชอบหลัก&nbsp;&nbsp;&nbsp;  2 .○:รับผิดชอบรอง&nbsp;&nbsp;&nbsp; 3 .─:ไม่รับผิดชอบ <br>
+            </div>
+            <table class="table table-bordered">
+                <tr  style="background-color: #979fa5">
+                    <td align="center"><b>หัวข้อการพัฒนาผลการเรียนรู้</b></td>
+                    <td align="center"><b>รายการพัฒนาผลการเรียนรู้</b></td>
+                    <td align="center" colspan="3"><b>ระดับความสำคัญ</b></td>
+                </tr>
+                <form action="/updateMapping" method="post">
+                @for(cur <- dataListCurriculum.sortWith(_.getDevelopmentalLearningList.getDevelopmentalLearning.getId() < _.getDevelopmentalLearningList.getDevelopmentalLearning.getId())) {
+                    <input type="hidden" name="id[@i]" value="@cur.getId">
+                    <input type="hidden" name="idc" value="@cur.getId">
+                    <tr>
+                        @if(nameDev == ""){
+                            @(nameDev = cur.getDevelopmentalLearningList.getDevelopmentalLearning.getName)
+                            <td>@nameDev</td>
+                        }else{
+                            @if(nameDev != cur.getDevelopmentalLearningList.getDevelopmentalLearning.getName){
+                                @(nameDev = cur.getDevelopmentalLearningList.getDevelopmentalLearning.getName)
+                                <td>@nameDev</td>
+                            }else{
+                                <td></td>
+                            }
+                        }
+                        <td>@cur.getDevelopmentalLearningList.getListDevelopmentalLearning</td>
+                        @if(cur.getImportance == "2" ) {
+                            <td align="center" width="70"> <input type="radio" checked name="learnId[@i]" value="2" required="required">
+                                ●</td>
+                            <td align="center" width="70"> <input type="radio"  name="learnId[@i]" value="1" required="required">
+                                ○</td>
+                            <td align="center" width="70"> <input type="radio"  name="learnId[@i]" value="0" required="required">
+                                -</td>
+                        }else{
+                            @if(cur.getImportance == "1"){
+                                <td align="center" width="70"> <input type="radio"  name="learnId[@i]" value="2" required="required">
+                                    ●</td>
+                                <td align="center" width="70"> <input type="radio"  checked name="learnId[@i]" value="1" required="required">
+                                    ○</td>
+                                <td align="center" width="70"> <input type="radio"  name="learnId[@i]" value="0" required="required">
+                                    -</td>
+                            }else{
+                                <td align="center" width="70"> <input type="radio"  name="learnId[@i]" value="2" required="required">
+                                    ●</td>
+                                <td align="center" width="70"> <input type="radio"   name="learnId[@i]" value="1" required="required">
+                                    ○</td>
+                                <td align="center" width="70"> <input type="radio"  checked name="learnId[@i]" value="0" required="required">
+                                    -</td>
+                            }
+                        }
+                    </tr>
+                    @(i = i + 1)
+                }
+                <button type="submit" class="btn btn-success" >
+                    <i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px ;"></i> บันทึก
+                </button>
+                </form>
+            </table>
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" align="center"><a href="/listCourseForMapping" class="btn btn-dark" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-undo' style="color: #3b9bff;font-size: 18px; color: white" ></i> กลับไปหน้ารายการ Mapiing</a></div>
+        <div class="col-md-2"></div>
+    </div>
+</center>

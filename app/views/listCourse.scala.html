@@ -1,0 +1,89 @@
+@(courseList : List[Course],GPName : GroupCourse ,categoryCourse: CategoryCourse)
+@import java.math.BigInteger; var sum = 0;var count=0;
+@import java.lang.String;var name="";
+<div class="row">
+    <div class="col-md-11">
+        <center>
+            @if(flash.containsKey("noDelOK")) {
+                <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"><span class="badge badge-pill badge-danger">ผิดพลาด!</span> @flash.get("noDelOK"). </div>
+            }
+            @if(flash.containsKey("delOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("delOK"). </div>
+            }
+            @if(flash.containsKey("insertOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("insertOK"). </div>
+            }
+            @if(flash.containsKey("updateOK")) {
+                <div class="sufee-alert alert with-close alert-success alert-dismissible fade show"><span class="badge badge-pill badge-success">สำเร็จ!</span> @flash.get("updateOK"). </div>
+            }
+        </center>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+<br>
+<center>
+    <h3>ข้อมูลรายวิชาของ @GPName.getName @categoryCourse.getName <br>
+    @categoryCourse.getSyllabusCourse.getNameTH
+    </h3>
+
+
+    @if(flash.containsKey("noDataCourse")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("noDataCourse"). </div>
+    }
+    @if(flash.containsKey("dataCourseError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataCourseError"). </div>
+    }
+    </center>
+<br>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" align="center"><a href="/formAddCourse" class="btn btn-success" style="font-family: 'Mitr', sans-serif;" align="right"><i class='	fa fa-plus-circle' style="color: #3b9bff;font-size: 18px; color: white" ></i> เพิ่มรายวิชา</a></div>
+    <div class="col-md-2" ></div>
+</div>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-11">
+
+        <table id="example" class="table table-striped">
+            <thead>
+                <tr style="background-color: #979fa5">
+                    <td align="center">เพิ่มเติม</td>
+                    <td align="center">แก้ไข</td>
+                    <td align="center">ลบ</td>
+                    <td align="center">รหัสรายวิชา</td>
+                    <td align="center">ชื่อรายวิชาภาษาไทย</td>
+                    <td align="center">ชื่อรายวิชาภาษาอังกฤษ</td>
+                    <td align="center">จำนวนหน่วยกิต</td>
+                </tr>
+            </thead>
+            <tbody>
+            @for(course <- courseList) {
+                <tr>
+                    <td align="center"><a href="/detailCourse/@course.getId"><i class="fa fa-sticky-note" style="color: #3b9bff;font-size: 18px;"></i> </a></td>
+                    <td align="center"><a href="/editCourse/@course.getId"> <i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    <td align="center"><a href="/deleteCourse/@course.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลรายวิชานี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    <td>@course.getIdCourse</td>
+                    <td>@course.getNameTH</td>
+                    <td>@course.getNameENG</td>
+                    <td align="center">@course.getAmount</td>
+                </tr>
+                @(sum=sum+course.getAmount)
+            }
+                <tr>
+                    <td colspan="6" align="center">รวม</td>
+                    <td colspan="6">@sum</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" align="center"><a href="/listGroupCourse/@categoryCourse.getId" class="btn btn-dark" style="font-family: 'Mitr', sans-serif;"><i class='	fa fa-undo' style="color: #3b9bff;font-size: 18px; color: white" ></i> กลับไปหน้ากลุ่มรายวิชา</a></div>
+    <div class="col-md-2" ></div>
+</div>

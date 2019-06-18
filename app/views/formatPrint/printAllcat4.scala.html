@@ -1,0 +1,326 @@
+@(generalData: GeneralData, datamain1_1: List[Data_ListDevelopment], datamain1_2: List[Data_ListDevelopment]
+        , datamain1_3: List[Data_ListDevelopment], datamain1_4: List[Data_ListDevelopment]
+        , datamain1_5: List[Data_ListDevelopment], teachmain1_1: List[Data_MethodTeaching]
+        , teachmain1_2: List[Data_MethodTeaching], teachmain1_3: List[Data_MethodTeaching]
+        , teachmain1_4: List[Data_MethodTeaching], teachmain1_5: List[Data_MethodTeaching]
+        , evaluation1_1: List[Data_MethodEvaluation], evaluation1_2: List[Data_MethodEvaluation]
+        , evaluation1_3: List[Data_MethodEvaluation], evaluation1_4: List[Data_MethodEvaluation]
+        , evaluation1_5: List[Data_MethodEvaluation])
+@import java.math.BigInteger; var i = 1;var n = 1;var d = 1;var y = 1;var x = 1;var z = 1;var c = 1;var a = 1;var b = 1;var e = 1;var f = 1;var g = 1;var h = 1;var j = 1;var k = 1;var l = 1;var m = 1;var o = 1;var p = 1;var q = 1;var r = 1;
+<br>
+<a onclick="PrintDiv()" class="btn btn-info" style="color: white" >
+    <i class='fa fa-print' style="color: #f7fff6;
+        font-size: 18px;" ></i> Print...
+</a>
+<br>
+<div id="allCat4">
+    <br><br><br><br><br>
+    <center>
+        <p class="titleForPrint"><b>หมวดที่ 4 การพัฒนาการเรียนรู้ของนักศึกษา</b></p>
+    </center>
+    <br>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subTitleBlod">1. คุณธรรม จริยธรรม</div>
+            <div class="subcat4">1.1 คุณธรรม จริยธรรมที่ต้องพัฒนา</div>
+            <div>
+            @for(data <- datamain1_1) {
+                <div class="listcat4">
+                    @if(data.getCurriculum.getImportance == "1") {
+                        ●
+                    } else {
+                        @if(data.getCurriculum.getImportance == "2") {
+                            ○
+                        } else {
+
+                        }
+                    }1.1.@n @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                </div>
+                @(n = n + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">1.2 วิธีการสอน</div>
+            <div>
+            @for(data <- teachmain1_1) {
+                <div class="listcat4">
+                   1.2.@d @data.getTeachingStrategies.getTeachingMethods()
+                </div>
+                @(d = d + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">1.3 วิธีการประเมิน</div>
+            <div>
+            @for(data <- evaluation1_1) {
+                <div class="listcat4">
+                    1.3.@y @data.getEvaluationStrategy.getEvaluationMethod()
+                </div>
+                @(y = y + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    @*555555555555555*@
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subTitleBlod">2. ความรู้</div>
+            <div class="subcat4">2.1 ความรู้ที่ต้องไดรับ</div>
+            <div>
+            @for(data <- datamain1_2) {
+                <div class="listcat4">
+                    @if(data.getCurriculum.getImportance == "1") {
+                        ●
+                    } else {
+                        @if(data.getCurriculum.getImportance == "2") {
+                            ○
+                        } else {
+
+                        }
+                    }1.1.@x @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                    @if(x == 4) {
+                        <div style="page-break-after: always    "></div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        }
+                </div>
+                @(x = x + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">2.2 วิธีการสอน</div>
+            <div>
+            @for(data <- teachmain1_2) {
+                <div class="listcat4">
+                   2.2.@c @data.getTeachingStrategies.getTeachingMethods()
+                </div>
+                @(c = c + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">2.3 วิธีการประเมิน</div>
+            <div>
+            @for(data <- evaluation1_2) {
+                <div class="listcat4">
+                    2.3.@z @data.getEvaluationStrategy.getEvaluationMethod()
+                </div>
+                @(z = z + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    @*555555555555555*@
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subTitleBlod">3. ทักษะทางปัญญา </div>
+            <div class="subcat4">3.1 ทักษะทางปัญาที่ต้องพัฒนา</div>
+            <div>
+            @for(data <- datamain1_3) {
+                <div class="listcat4">
+                    @if(data.getCurriculum.getImportance == "1") {
+                        ●
+                    } else {
+                        @if(data.getCurriculum.getImportance == "2") {
+                            ○
+                        } else {
+
+                        }
+                    }3.1.@a @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                </div>
+                @(a = a + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">3.2 วิธีการสอน</div>
+            <div>
+            @for(data <- teachmain1_3) {
+                <div class="listcat4">
+                   3.2.@b @data.getTeachingStrategies.getTeachingMethods()
+                </div>
+                @(b = b + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">3.3 วิธีการประเมิน</div>
+            <div>
+            @for(data <- evaluation1_3) {
+                <div class="listcat4">
+                    3.3.@e @data.getEvaluationStrategy.getEvaluationMethod()
+                </div>
+                @(e = e + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    @*555555555555555*@
+    <div style="page-break-after: always"></div>
+    <br><br><br><br><br>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subTitleBlod">4. ทักษะความสัมพันธ์ระหว่างบุคคลเเละความรับผิดชอบ</div>
+            <div class="subcat4">4.1 ทักษะความสัมพันธ์ระหว่างบุคคลเเละความรับผิดชอบที่ต้องพัฒนา </div>
+            <div>
+            @for(data <- datamain1_4) {
+                <div class="listcat4">
+                    @if(data.getCurriculum.getImportance == "1") {
+                        ●
+                    } else {
+                        @if(data.getCurriculum.getImportance == "2") {
+                            ○
+                        } else {
+
+                        }
+                    }4.1.@f @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                </div>
+                @(f = f + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">4.2 วีธีการสอน </div>
+            <div>
+            @for(data <- teachmain1_4) {
+                <div class="listcat4">
+                   4.2.@g @data.getTeachingStrategies.getTeachingMethods()
+                </div>
+                @(g = g + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">4.3 วีธีการประเมินผล </div>
+            <div>
+            @for(data <- evaluation1_4) {
+                <div class="listcat4">
+                    4.3.@h @data.getEvaluationStrategy.getEvaluationMethod()
+                </div>
+                @(h = h + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    @*555555555555555*@
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subTitleBlod">5. ทักษะการวิเคราะห์เชิงตัวเลข การสื่อสาร และการใช้เทคโนโลยีสารสนเทศ </div>
+            <div class="subcat4">5.1 ทักษะการวิเคราะห์เชิงตัวเลข การสื่อสาร และการใช้เทคโนโลยีสารสนเทศที่ต้องพัฒนา</div>
+            <div>
+            @for(data <- datamain1_5) {
+                <div class="listcat4">
+                    @if(data.getCurriculum.getImportance == "1") {
+                        ●
+                    } else {
+                        @if(data.getCurriculum.getImportance == "2") {
+                            ○
+                        } else {
+
+                        }
+                    }5.1.@j @data.getCurriculum.getDevelopmentalLearningList.getListDevelopmentalLearning()
+                </div>
+                @(j = j + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div style="page-break-after: always"></div>
+            <br><br><br><br><br>
+            <div class="subcat4">5.2 วีธีการสอน </div>
+            <div>
+            @for(data <- teachmain1_5) {
+                <div class="listcat4">
+                   5.2.@k @data.getTeachingStrategies.getTeachingMethods()
+                </div>
+                @(k = k + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="subcat4">5.3 วีธีการประเมินผล </div>
+            <div>
+            @for(data <- evaluation1_5) {
+                <div class="listcat4">
+                    5.3.@l @data.getEvaluationStrategy.getEvaluationMethod()
+                </div>
+                @(l = l + 1)
+            }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<script type="text/javascript">
+        function PrintDiv() {
+            var divToPrint = document.getElementById('allCat4'); // เลือก div id ที่เราต้องการพิมพ์
+            var html = '<html>' + //
+                    '<head>' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/BS4/css/bootstrap.css">' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/main.css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">' +
+                    '</head>' +
+                    '<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>' +
+                    '</html>';
+
+            var popupWin = window.open();
+            popupWin.document.open();
+            popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+            popupWin.document.close();
+        }
+</script>

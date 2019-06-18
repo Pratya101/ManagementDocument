@@ -1,0 +1,111 @@
+@(course: Instructors)
+    @if(flash.containsKey("data")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+    }
+    @if(course == null) {
+        ---
+    } else {
+        <form method="post" action="/saveCat1">
+            <input type="hidden" value="@course.getId" name="dataIns">
+            <button type="submit" class="btn btn-info" style="font-family : 'Mitr', sans-serif ;">
+                <i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px " > บันทึก</i>
+            </button>
+        </form>
+        <br>
+    <center>
+        <h3> หมวดที่ 1 ข้อมูลโดยทั่วไป </h3>
+    </center>
+        <br>
+
+    <table class="table">
+            <tr>
+                <td><b>ชื่อสถาบันอุดมศึกษา/<br>
+                    วิทยาเขต/คณะ/สาขาวิชา</b></td>
+                <td>มหาวิทยาลัยเทคโนโลยีราชมงคบอีสาน <br>
+                    วิทยาเขตขอนแก่น <br>
+                    @course.getTeacher.getDepartment.getFaculty.getName <br>
+                    @course.getTeacher.getDepartment.getNameTh
+                </td>
+            </tr>
+            <tr>
+                <td><b>1.รหัสเเละชื่อวิชา :</b></td>
+                <td>@course.getCourse.getId <br>
+                    @course.getCourse.getNameTH <br>
+                    @course.getCourse.getNameENG
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>2.จำนวนหน่วยกิต</b></td>
+                <td>
+                    @course.getCourse.getAmount <br>
+                </td>
+            </tr>
+            <tr>
+                <td><b>3.หลักสูตรเเละประเภทของรายวิชา</b></td>
+                <td>
+                    @course.getCourse.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH
+                    @course.getCourse.getGroupCourse.getCategoryCourse.getName
+                </td>
+            </tr>
+            <tr>
+                <td><b>4.อาจารย์ผู้รับผิดชอบรายวิชาเเละอาจารผู้สอน</b></td>
+                <td>
+                    อาจารย์ผู้รับผิดชอบรายวิชา @course.getTeacher.getName <br>
+                    อาจารย์ผู้สอน @course.getTeacher.getName
+                </td>
+            </tr>
+            <tr>
+                <td><b>5.ภาคการศึกษา / ชั้นปีที่เรียน</b></td>
+                <td>
+                    วิทยาเขตขอนแก่น <br>
+                    ภาคการศึกษาที่ @course.getTerm/@course.getYear <br>
+                    @course.getCourse.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH @course.getTeacher.getDepartment.getNameTh
+                    ชั้นปีที่ ---
+                </td>
+            </tr>
+            <tr>
+                <td><b>6.รายวิชาที่ต้องเรียนมาก่อน(Pre-requisite)</b></td>
+                <td>
+                @course.getCourse.getRequiredCourses
+                </td>
+            </tr>
+            <tr>
+                <td><b>7.รายวิชาที่ต้องเรียนพร้อมกัน(Co-requisite)</b></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>8.สถานที่เรียน(Co-requisite)</b></td>
+                <td> @course.getTeacher.getDepartment.getFaculty.getName
+                    มหาวิทยาลัยเทคโนโลยีราชมงคบอีสาน วิทยาเขตขอนแก่น
+            </tr>
+            <tr>
+                <td><b>9.วันที่จัดหรือปรับปรุงรายระเอียด <br>ของรายวิชาครั้งล่าสุด</b></td>
+                <td></td>
+            </tr>
+
+        </table>
+
+    <br><br>
+
+    <!--
+        <pre>
+            <center>
+                <h4>
+                รายละเอียดของรายวิชา
+                    </h4>
+            </center>
+
+            <b>ชื่อสถาบันอุดมศึกษา</b>              มหาวิทยาลัยเทคโนโลยีราชมงคบอีสาน
+            <b>วิทยาเขต/คณะ/สาขาวิชา</b>            วิทยาเขตขอนแก่น
+                                            @course.getTeacher.getDepartment.getFaculty.getName
+                                            @course.getTeacher.getDepartment.getNameTh
+            <center>
+                <h4>
+                รายละเอียดของรายวิชา
+                    </h4>
+            </center>
+        </pre>
+    -->
+
+    }

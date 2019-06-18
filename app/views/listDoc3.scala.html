@@ -1,0 +1,65 @@
+@(docNow: List[GeneralData])
+<br>
+<br>
+<center>
+    @if(flash.containsKey("dataTeachingStrategiesError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataTeachingStrategiesError"). </div>
+    }
+
+<h3>รายการเอกสาร (มอค.3)</h3>
+</center>
+<br>
+
+<div class="row">
+    <div class="col-md-10"><a href="/selectCourse" class="btn btn-info" style="font-family: 'Mitr', sans-serif;" align="right">
+        <i class='	fa fa-plus-circle' style="color: #3b9bff;font-size: 18px; color: white" ></i> สร้างเอกสาร(มคอ.3)ใหม่</a></div>
+    <div class="col-md-2"></div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <b>ตารางเอกสารรายการล่าสุด</b><br>
+        <table class="table table-striped table-bordered" >
+            <thead>
+                <tr style="background-color: #b3bbc1">
+                    <td align="center"><b>รหัส(มคอ.3)</b></td>
+                    <td align="center"><b>รายวิชา</b></td>
+                    <td align="center"><b>เทอม</b></td>
+                    <td align="center"><b>ปีการศึกษา</b></td>
+                    <td align="center"><b>สถานะ</b></td>
+                    <td align="center"><b>จัดการ</b></td>
+                    <td align="center"><b>ลบ</b></td>
+                </tr>
+            </thead>
+            <tbody>
+            @for(doc <- docNow.sortWith(_.getId() > _.getId())) {
+                <tr>
+                    <td align="center">@doc.getId</td>
+                    <td align="center">@doc.getInstructors.getCourse.getNameTH</td>
+                    <td align="center">@doc.getInstructors.getTerm</td>
+                    <td align="center">@doc.getInstructors.getYear</td>
+                    <td align="center">
+                        @if(doc.getCourseDestinationList().size()==0||doc.getCourseObjectivesList().size()==0||
+                                doc.getDataHoursList().size()==0||doc.getSuggestion()==null||doc.getData_listDevelopmentList().size()==0
+                                ||doc.getData_methodTeachingList().size()==0||doc.getData_methodEvaluationList().size()==0||doc.getPlanTeachingDataList().size()==0||
+                                doc.getEvaluationPlanDataList().size()==0||doc.getMainDocumentList().size()==0||
+                                doc.getImportantDocumentList().size()==0||doc.getSuggustionDocumentList().size()==0||
+                                doc.getCourseAssessmentStrategiesList().size()==0||doc.getTeachingStrategiesDataList().size()==0||
+                                doc.getImproveTeachingDataList().size()==0||doc.getStandardReviews().size()==0||
+                                doc.getReviewAndPlanList().size()==0){
+                            <font style="color: red">รอการแก้ไข</font>
+                        }else{
+                            <font style="color: green">เรียบร้อย</font>
+                        }
+                    </td>
+                    <td align="center"><a href="/editDoc3/@doc.getId"> <i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    <td align="center"><a href="/deleteDoc3/@doc.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารเล่มนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+

@@ -1,0 +1,100 @@
+@(cat3: GeneralData)
+    @import java.math.BigInteger;    var i = 1;
+    <br>
+    <center>
+        <a onclick="PrintDiv()" class="btn btn-info" style="color: white" >
+            <i class='fa fa-print' style="color: #f7fff6;
+                font-size: 18px;" ></i> Print...
+        </a>
+    </center>
+
+    <div id="cat3" style="font-family: 'Sarabun', sans-serif;">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <center>
+            <h5 style="font-family: 'Sarabun', sans-serif;"><b>หมวดที่ 3 ลักษณะของการดำเนินงาน </b></h5>
+        </center>
+        <br>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="subTitleBlod">1. คำอธิบายรายวิชา</div>
+                <div class="fontForPrint" style="padding-left: 4em;padding-right: 2em;text-indent: 4em;">
+                @cat3.getCourse.getDetialTH
+                </div>
+                <br>
+                <div class="subTitleBlod">2. จำนวนชั่วโมงที่ใช้ต่อภาคการศึกษา</div>
+                <div class="fontForPrint" style="padding-left: 4em;padding-right: 2em;">
+                    <table border="1" width="100%">
+                        <tr>
+                            <td valign="middle" align="center"><b>บรรยาย</b></td>
+                            <td valign="middle" align="center"><b>สอนเสริม</b></td>
+                            <td valign="middle" align="center"><b>การฝึกปฏิบัติ/งาน<br>ภาคสนาม/การฝึกงาน</b></td>
+                            <td valign="middle" align="center"><b>การศึกษาด้วยตนเอง</b></td>
+                        </tr>
+                        <tr>
+                            <td> @if(cat3.getDataHoursList().size() !=0) {
+                                @cat3.getDataHoursList().get(0).gethDescribe() ชั่วโมง
+                            } else {
+                                -
+                            }
+                            <td>
+                            @if(cat3.getDataHoursList().get(0).gethSupplementary==null||cat3.getDataHoursList().get(0).gethSupplementary=="") {
+                                -
+                            } else {
+                                @cat3.getDataHoursList().get(0).gethSupplementary() ชั่วโมง
+                            }
+
+                            </td>
+                            <td>
+                            @if(cat3.getDataHoursList().get(0).gethWork()==null||cat3.getDataHoursList().get(0).gethWork()=="") {
+                                -
+                            } else {
+                                @cat3.getDataHoursList().get(0).gethWork() ชั่วโมง
+
+                            }
+
+                            </td>
+                            <td>
+                            @if(cat3.getDataHoursList().get(0).gethStudy()==null||cat3.getDataHoursList().get(0).gethStudy()=="") {
+                                -
+                            } else {
+
+                                @cat3.getDataHoursList().get(0).gethStudy() ชั่วโมง
+                            }
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <div class="subTitleBlod">3. จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษา เเละนำทางวิชาการแก่นักศึกษาเป็นรายบุคคล</div>
+                <div class="fontForPrint" style="padding-left: 4em;padding-right: 2em;text-indent: 4em;">@cat3.getSuggestion</div>
+
+            </div>
+            <div class="col-1"></div>
+        </div>
+
+
+    </div>
+    <script type="text/javascript">
+        function PrintDiv() {
+            var divToPrint = document.getElementById('cat3'); // เลือก div id ที่เราต้องการพิมพ์
+            var html = '<html>' + //
+                    '<head>' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/BS4/css/bootstrap.css">' +
+                    '<link type="text/css" rel="stylesheet" href="/assets/stylesheets/main.css">' +
+                    '  <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">' +
+                    '</head>' +
+                    '<body onload="window.print(); window.close();">' + divToPrint.innerHTML + '</body>' +
+                    '</html>';
+
+            var popupWin = window.open();
+            popupWin.document.open();
+            popupWin.document.write(html); //โหลด print.css ให้ทำงานก่อนสั่งพิมพ์
+            popupWin.document.close();
+        }
+</script>

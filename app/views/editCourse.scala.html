@@ -1,0 +1,33 @@
+@(editCourse: Form[Course],groupCourseList: List[GroupCourse])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>เพิ่มข้อมูลรายวิชาของ @editCourse.get.getGroupCourse.getName @editCourse.get.getGroupCourse.getCategoryCourse.getName <br>
+            @editCourse.get.getGroupCourse.getCategoryCourse.getSyllabusCourse.getNameTH
+            </h3>
+        </center>
+        @if(flash.containsKey("dataCourseError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("dataCourseError"). </div>
+        }
+        @helper.form(action = routes.Application.updateCourse(), 'enctype -> "multipart/form-data") {
+            @inputText(editCourse("id"), '_label -> "รหัส", 'size -> "10px",  'required -> "required",'readonly -> "readonly", 'class -> "form-control")
+            @inputText(editCourse("idCourse"), '_label -> "รหัสรายวิชา", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            @inputText(editCourse("nameTH"), '_label -> "ชื่อรายวิชาภาษาไทย", 'size -> "100px", 'required -> "required", 'class -> "form-control")
+            @inputText(editCourse("nameENG"), '_label -> "ชื่อรายวิชาภาษาอังกฤษ", 'size -> "100px", 'required -> "required", 'class -> "form-control")
+            @textarea(editCourse("detialTH"), '_label -> "คำอธิบายรายวิชาภาษาไทย", 'rows->"3",'cols->"60", 'required -> "required", 'class -> "form-control")
+            @textarea(editCourse("detailENG"), '_label -> "คำอธิบายรายวิชาภาษาอังกฤษ", 'rows->"3",'cols->"60", 'required -> "required", 'class -> "form-control")
+            @inputText(editCourse("requiredCourses"), '_label -> "รายวิชาบังคับก่อน", 'size -> "100px", 'required -> "required", 'class -> "form-control")
+            @select(editCourse("groupCourse.id"),
+                options = groupCourseList.map(groupCourseList => groupCourseList.getId -> groupCourseList.getName),
+                '_label -> "สาขา", 'class -> "form-control")
+            @inputText(editCourse("amount"), '_label -> "จำนวนหน่วยกิต", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <input type="reset" value="เคลียร์" class="btn btn-danger"  style="font-family: 'Mitr', sans-serif;">
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

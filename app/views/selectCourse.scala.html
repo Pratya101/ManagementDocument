@@ -1,0 +1,164 @@
+@(data2: List[Instructors], listDoc: List[GeneralData])
+@import java.math.BigInteger; var y = 1; var x = 1 ;var n = 0 ;var k = 0 ;
+    @import scala.util.control._; val loop = new Breaks;
+<br>
+@*//@session.get("useTerm")*@
+@*//@session.get("useYear")*@
+<center>
+    @if(flash.containsKey("insertError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด! </strong> @flash.get("insertError"). </div>
+    }
+    @if(flash.containsKey("nodata")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด! </strong> @flash.get("nodata"). </div>
+    }
+    @if(flash.containsKey("NoDoc")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด! </strong> @flash.get("NoDoc"). </div>
+    }
+</center>
+
+<center>
+    @if(flash.containsKey("dataTeachingStrategiesError")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด! </strong> @flash.get("dataTeachingStrategiesError"). </div>
+    }
+    @if(flash.containsKey("NotMakt")) {
+        <div class="alert alert-danger"><strong>ผิดพลาด! </strong> @flash.get("NotMakt"). </div>
+    }
+    <h3>เลือกรายวิชาที่จะสร้างเอกสาร(มคอ.3)</h3>
+</center>
+<br>
+
+<br>
+<div class="row">
+    <div class="col-md-11">
+        <b>รายวิชาที่จะนำมาสร้างเอกสาร(มคอ.3)</b>
+        <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+            <thead>
+                <tr style="background-color: #b3bbc1">
+                    <td align="center"><b>ลำดับที่</b></td>
+                    <td align="center"><b>รายวิชา</b></td>
+                    <td align="center"><b>ภาคการศึกษา</b></td>
+                    <td align="center"><b>ปีการศึกษา</b></td>
+                    <td align="center"><b>สร้างเอกสารใหม่</b></td>
+                    <td align="center"><b>สำเนาเอกสารเดิมฉบับล่าสุด</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                    @for(doc <- data2.sortWith(_.getId() > _.getId())) {
+                        <tr>
+                            <td align="center">@y</td>
+                            <td>@doc.getCourse.getNameTH</td>
+                            <td align="center">@doc.getTerm</td>
+                            <td align="center">@doc.getYear</td>
+                            <td align="center"><a href="/newDoc3/@doc.getId"> <i class='fa fa-file-o' style="color: #3b9bff;
+                                font-size: 18px;"></i></a>
+                            </td>
+                           @for(data<-listDoc){
+                               @if(data.getCourse.getId==doc.getCourse.getId){
+                                   @if(data.getCourseDestinationList().size()==0||data.getCourseObjectivesList().size()==0||
+                                           data.getDataHoursList().size()==0||data.getSuggestion()==null||data.getData_listDevelopmentList().size()==0
+                                           ||data.getData_methodTeachingList().size()==0||data.getData_methodEvaluationList().size()==0||data.getPlanTeachingDataList().size()==0||
+                                           data.getEvaluationPlanDataList().size()==0||data.getMainDocumentList().size()==0||
+                                           data.getImportantDocumentList().size()==0||data.getSuggustionDocumentList().size()==0||
+                                           data.getCourseAssessmentStrategiesList().size()==0||data.getTeachingStrategiesDataList().size()==0||
+                                           data.getImproveTeachingDataList().size()==0||data.getStandardReviews().size()==0||
+                                           data.getReviewAndPlanList().size()==0){
+                                       <td align="center"> </td>
+                                   }else{
+                                       <td align="center"><a href="/copyDoc3/@doc.getId"> <i class='fa fa-copy' style="color: #3b9bff;
+                                           font-size: 18px;"></i></a></td>
+                                   }
+                               }else{
+                                   @if(y==0){
+                                       <td align="center">---</td>
+                                   }
+                               }
+                               @(k=k+1)
+                           }
+                            @(y = y + 1)
+                        </tr>
+                    }
+
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-11">
+        <b>ตาราง(มคอ.3)รายการล่าสุด</b><br>
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr style="background-color: #b3bbc1">
+                    <td align="center"><b>ลำดับที่</b></td>
+                    <td align="center"><b>รายวิชา</b></td>
+                    <td align="center"><b>ผู้รับผิดชอบ</b></td>
+                    <td align="center"><b>ภาคการศึกษา/ปีการศึกษา</b></td>
+                    <td align="center"><b>สถานะ</b></td>
+                    <td align="center"><b>ปริ้น</b></td>
+                    <td align="center"><b>จัดการ</b></td>
+                    <td align="center"><b>ลบ</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                @if(listDoc==null){
+
+                }else{
+
+                }
+            @for(doc <- listDoc.sortWith(_.getId() > _.getId())) {
+                <tr>
+                    <td align="center">@x</td>
+                    <td>@doc.getInstructors.getCourse.getNameTH</td>
+                    <td >@doc.getTeacher.getName</td>
+                    <td align="center">@doc.getInstructors.getTerm/@doc.getInstructors.getYear</td>
+                    <td align="center">
+                    @if(doc.getCourseDestinationList().size()==0||doc.getCourseObjectivesList().size()==0||
+                            doc.getDataHoursList().size()==0||doc.getSuggestion()==null||doc.getData_listDevelopmentList().size()==0
+                            ||doc.getData_methodTeachingList().size()==0||doc.getData_methodEvaluationList().size()==0||doc.getPlanTeachingDataList().size()==0||
+                            doc.getEvaluationPlanDataList().size()==0||doc.getMainDocumentList().size()==0||
+                            doc.getImportantDocumentList().size()==0||doc.getSuggustionDocumentList().size()==0||
+                            doc.getCourseAssessmentStrategiesList().size()==0||doc.getTeachingStrategiesDataList().size()==0||
+                            doc.getImproveTeachingDataList().size()==0||doc.getStandardReviews().size()==0||
+                            doc.getReviewAndPlanList().size()==0){
+                        <font style="color: red">กำลังดำเนินการ...</font>
+                    }else{
+                        <font style="color: green">เรียบร้อย</font>
+                    }
+                    </td>
+                    <td align="center">
+                    @if(doc.getCourseDestinationList().size()==0||doc.getCourseObjectivesList().size()==0||
+                            doc.getDataHoursList().size()==0||doc.getSuggestion()==null||doc.getData_listDevelopmentList().size()==0
+                            ||doc.getData_methodTeachingList().size()==0||doc.getData_methodEvaluationList().size()==0||doc.getPlanTeachingDataList().size()==0||
+                            doc.getEvaluationPlanDataList().size()==0||doc.getMainDocumentList().size()==0||
+                            doc.getImportantDocumentList().size()==0||doc.getSuggustionDocumentList().size()==0||
+                            doc.getCourseAssessmentStrategiesList().size()==0||doc.getTeachingStrategiesDataList().size()==0||
+                            doc.getImproveTeachingDataList().size()==0||doc.getStandardReviews().size()==0||
+                            doc.getReviewAndPlanList().size()==0){
+                        <i class='fas fa-print' style="color: rgba(131, 134, 130, 0.57);
+                            font-size: 18px;" ></i>
+                    }else{
+                        <a href="/selectPrint/@doc.getId()"><i class='fas fa-print' style="color: rgba(24, 27, 255, 0.57);
+                            font-size: 18px;" ></i></a>
+                    }
+                    </td>
+                    @if(!doc.getTeacher.getId.equals(session.get("userId"))){
+                        <td align="center"><i class='fas fa-edit' style="color: rgba(131, 134, 130, 0.53);font-size: 18px;"></i></td>
+                    }else{
+                        <td align="center"><a href="/editDoc3/@doc.getId"> <i class='fas fa-edit' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    }
+                    @if(!doc.getTeacher.getId.equals(session.get("userId"))){
+                        <td align="center"><i class='fas fa-trash-alt' style="color: rgba(131, 134, 130, 0.53);font-size: 18px;"></i></td>
+                    }else{
+                        <td align="center"><a href="/deleteDoc3/@doc.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูลเอกสารเล่มนี้ใช่หรือไม่?')"> <i class='fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;"></i></a></td>
+                    }
+
+                </tr>
+            @(x=x+1)
+            }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+</div>

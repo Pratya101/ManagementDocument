@@ -1,0 +1,27 @@
+@(addGeneral : Form[GeneralData],course: List[Course])
+@import helper._;
+<br>
+<br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+        <center>
+            <h3>เพิ่มข้อมูลอาจารย์</h3>
+        </center>
+        @if(flash.containsKey("newGeneralError")) {
+            <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("newGeneralError") </div>
+        }
+        @helper.form(action = routes.Application.insertGeneralData(), 'enctype -> "multipart/form-data") {
+            @inputText(addGeneral("id"), '_label -> "รหัสข้อมูลทั่วไป", 'size -> "10px", 'required -> "required", 'class -> "form-control")
+            @inputText(addGeneral("hour"), '_label -> "จำนวนชั่วโมงต่อภาคการศึกษา", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @inputText(addGeneral("suggestion"), '_label -> "การให้่คำปรึกษา", 'size -> "50px", 'required -> "required", 'class -> "form-control")
+            @textarea(addGeneral("detail"), '_label -> "รายละเอียด", 'rows ->"3",'cols->"60", 'required -> "required", 'class -> "form-control")
+            @select(addGeneral("course.id"),
+                options = course.map(course => course.getId -> course.getNameTH),
+                '_label -> "รายวิชา", 'class -> "form-control")
+            <input type="submit" value="บันทึก" class="btn btn-success">
+            <input type="reset" value="เคลียร์" class="btn btn-danger"  style="font-family: 'Mitr', sans-serif;">
+            }
+    </div>
+    <div class="col-md-3"></div>
+</div>

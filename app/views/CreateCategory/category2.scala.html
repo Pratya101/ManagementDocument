@@ -1,0 +1,199 @@
+@(generalData: GeneralData,courseDes : List[CourseDestination],courseObjectives : List[CourseObjectives],basketDestination: List[BasketDestination],basketObjectives: List[BasketObjectives],listDes : List[CourseDestination],listOb:List[CourseObjectives])
+@import java.math.BigInteger; var i = 1; var x = 1 ;var no =1;var noo =1;
+@if(flash.containsKey("data")) {
+    <div class="alert alert-danger"><strong>ผิดพลาด</strong>@flash.get("data"). </div>
+}
+<form action="/saveCat2" method="post">
+    <input type="hidden" name="InsId" value="@generalData.getInstructors.getId">
+    <button type="submit"   class="btn btn-info" style="font-family : 'Mitr', sans-serif ;">
+        <i class='	fa fa-floppy-o' style="color : #f7fff6 ; font-size : 18px; " > บันทึก</i>
+    </button>
+<br>
+    </form>
+<center>
+    <h3> หมวดที่ 2 จุดมุ่งหมายเเละวัตถุประสงค์ </h3>
+</center>
+<br>
+
+<table class="table table-hover">
+    <tr style="background-color: #b3bbc1">
+        <td align="center">
+            <b> 1.จุดมุ่งหมายของรายวิชา </b>
+        </td>
+    </tr>
+        <tr>
+            <td align="center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectCourseDes">
+                    เลือกจุดมุ่งหมายรายวิชา
+                </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCourseDes"> เพิ่มจุดมุ่งหมาย </button>
+            </td>
+        </tr>
+
+        @for(dataDes<-listDes){
+            <tr>
+                <td align="left">@no.  @dataDes.getDetail</td>
+                <td align="right"><a href="/deleteCourseDestinations/@dataDes.getId" onclick="return confirm('คุณต้องการที่จะลบข้อมูล จุดมุ่งหมายนี้ใช่หรือไม่?')"><i class='	fas fa-trash-alt' style="color: #3b9bff;font-size: 18px;" ></i></a></td>
+            </tr>
+            @(no=no+1)
+        }
+
+        @for(dess <- basketDestination){
+            <tr>
+                <td>@no.  @dess.getDetail</td>
+            </tr>
+            @(no=no+1)
+        }
+    <tr>
+        <td align="center" style="background-color: #b3bbc1">
+            <b> 2. วัตุประสงค์ในการพัฒนา/ปรับปรุงรายวิชา </b>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectCourseObjectives">
+                เลือกวัตถุประสงค์
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCourseObjectives"> เพิ่มวัตถุประสงค์ </button>
+        </td>
+    </tr>
+    @if(listOb != null){
+        @for(dataOb<-listOb){
+            <tr>
+                <td>@noo.  @dataOb.getDetail</td>
+            </tr>
+            @(noo=noo+1)
+        }
+    }else{
+        @for(dess <- basketObjectives){
+            <tr>
+                <td>@noo.  @dess.getDetail</td>
+            </tr>
+            @(noo=noo+1)
+        }
+    }
+
+</table>
+
+<br> <br>
+
+<!-- Modal -->
+<div class="modal fade" id="selectCourseDes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/selectDes" method="post">
+            <div class="modal-body">
+                <input type="hidden" name="genId" value="@generalData.getId">
+                <input type="hidden" name="InsId" value="@generalData.getInstructors.getId">
+                <input type="hidden" name="nameCourse" value="@generalData.getCourse.getNameTH">
+                <input type="hidden" name="nameCat" value="@session.get("nameCat")" >
+        @for(des <- courseDes){
+            <input type="hidden" name="valI" value="@i">
+            <input type="hidden" name="id[@i]" value="@des.getId">
+            <input type="checkbox" name="courseDes" value="@des.getId"> @des.getId @des.getDetail<br>
+                @(i=i+1)
+        }
+                <input type="hidden" name="chkI" value="@(i-1)">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addCourseDes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/saveCourseDes" method="post">
+                <input type="hidden" name="genId" value="@generalData.getId">
+                <input type="hidden" name="InsId" value="@generalData.getInstructors.getId">
+                <input type="hidden" name="nameCourse" value="@generalData.getCourse.getNameTH">
+                <input type="hidden" name="nameCat" value="@session.get("nameCat")" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text"  class="col-form-label">รายละเอียดจุดมุ่งหมายรายวิชา:</label>
+                        <textarea class="form-control" name="detailDes" id="message-text"></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                <button type="submit" class="btn btn-primary">บันทึก</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addCourseObjectives" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/addCourseObjectives" method="post">
+                <input type="hidden" name="genId" value="@generalData.getId">
+                <input type="hidden" name="InsId" value="@generalData.getInstructors.getId">
+                <input type="hidden" name="nameCourse" value="@generalData.getCourse.getNameTH">
+                <input type="hidden" name="nameCat" value="@session.get("nameCat")" >
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text"  class="col-form-label">รายละเอียดจุดมุ่งหมายรายวิชา:</label>
+                        <textarea class="form-control" name="detailOJT" id="message-text"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="selectCourseObjectives" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/selectCourseObjectives" method="post">
+                <input type="hidden" name="genId" value="@generalData.getId">
+                <input type="hidden" name="InsId" value="@generalData.getInstructors.getId">
+                <input type="hidden" name="nameCourse" value="@generalData.getCourse.getNameTH">
+                <input type="hidden" name="nameCat" value="@session.get("nameCat")" >
+                <div class="modal-body">
+                    @for(ojt <- courseObjectives){
+                        <input type="checkbox" name="courseObjectives" value="@ojt.getId"> @ojt.getId @ojt.getDetail<br>
+                        @(x=x+1)
+                    }
+                    <input type="hidden" name="chkI" value="@(x+1)">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
